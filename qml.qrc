@@ -1,0 +1,14 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>view.js</file>
+        <file>backend.js</file>
+        <file>Elements.qml</file>
+        <file>Window.qml</file>
+        <file>main.cpp</file>
+        <file>images/delete_icon.png</file>
+        <file>images/list-add.png</file>
+        <file>images/list-remove.png</file>
+        <file>images/notes.png</file>
+    </qresource>
+</RCC>
