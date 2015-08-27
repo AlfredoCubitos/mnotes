@@ -4,6 +4,8 @@ import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
 
+
+
 import "backend.js" as DB
 import "view.js" as View
 
@@ -13,8 +15,9 @@ ApplicationWindow  {
    height: 300
    visible: true
 
- // property var db
 
+    signal sbSignal(string txt)
+    signal winSignal(var win)
 
   ListModel{
       id: notesModel
@@ -72,5 +75,7 @@ ApplicationWindow  {
           }
 
     }
+
+
 
 }
