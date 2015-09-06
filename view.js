@@ -1,4 +1,5 @@
 var win;
+var countPos =0;
 
 function openNote(id)
 {
@@ -68,3 +69,5 @@ function search()
         console.log("c start: "+searchBox.selectionStart)
     }
 }
+
+

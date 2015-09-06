@@ -19,6 +19,7 @@ ApplicationWindow  {
     signal sbSignal(string txt)
     signal winSignal(var win)
 
+
   ListModel{
       id: notesModel
 

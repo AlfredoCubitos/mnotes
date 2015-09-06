@@ -27,7 +27,6 @@ void MNotesHandler::searchSignal(const QString &str)
 
                     d_mnote = qqdoc->textDocument();
 
-                   dumpObjectTree();
                     highLighter(str);
                 }
 
@@ -48,10 +47,10 @@ void MNotesHandler::highLighter(const QString &search)
         if (! d_mnote)
             return;
 
+        QList<QVariant> curpos;
+
         if (isFirstTime == false)
                 d_mnote->undo();
-
-        bool found = false;
 
 
        QTextCursor highlightCursor = QTextCursor(d_mnote);
@@ -61,16 +60,18 @@ void MNotesHandler::highLighter(const QString &search)
 
         QTextCharFormat plainFormat(highlightCursor.charFormat());
         QTextCharFormat colorFormat = plainFormat;
-        colorFormat.setForeground(Qt::red);
+        // colorFormat.setForeground(Qt::red);
+        colorFormat.setBackground(QColor("#EEFBFF"));
 
 
        while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
         highlightCursor = d_mnote->find(search, highlightCursor, 0);
 
         if (!highlightCursor.isNull()) {
-                found = true;
-                highlightCursor.movePosition(QTextCursor::WordRight,
-                                               QTextCursor::KeepAnchor);
+
+                curpos.append(highlightCursor.position());
+
+                highlightCursor.movePosition(QTextCursor::WordRight,  QTextCursor::KeepAnchor);
                 highlightCursor.mergeCharFormat(colorFormat);
             }
         }
@@ -80,6 +81,7 @@ void MNotesHandler::highLighter(const QString &search)
                 isFirstTime = false;
 
 
+                setCurpos(curpos);
     }
 
 void MNotesHandler::setTarget(QQuickItem *target)
@@ -101,7 +103,6 @@ void MNotesHandler::setTarget(QQuickItem *target)
 
 QString MNotesHandler::text() const
 {
-
     return m_text;
 }
 
@@ -112,3 +113,15 @@ void MNotesHandler::setText(const QString &arg)
         emit textChanged();
     }
 }
+
+void MNotesHandler::setCurpos(const QVariant cur)
+    {
+       // qDebug() << cur;
+       m_target->parent()->setProperty("curpos",cur);
+       emit curposChanged("foundPos",App);
+    }
+
+void MNotesHandler::callQmlFuntion(const char *fn, QObject *obj)
+    {
+        QMetaObject::invokeMethod(m_target->parent(),fn);
+    }

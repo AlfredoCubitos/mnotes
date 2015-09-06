@@ -12,7 +12,20 @@ ApplicationWindow {
 
     property int noteId
     property string content: ""
+    property var curpos: []
+    property int countPos: 0
 
+    function foundPos()
+    {
+        if (countPos > curpos.length-1)
+            countPos = 0;
+
+        console.log("search signal"+ curpos.length + " ::" + countPos);
+        noteText.cursorPosition = curpos[ countPos]
+
+        countPos++;
+
+    }
 
     id: note
     objectName: "noteWindow"
@@ -67,6 +80,7 @@ ApplicationWindow {
         id: noteText
         objectName: "noteText"
          Accessible.name: "mnotesHandler"
+
         backgroundVisible: false
         selectByMouse: true
         anchors.fill: parent
@@ -86,12 +100,7 @@ ApplicationWindow {
 
             notesApp.winSignal(noteText)
 
-        }
 
-        Keys.onPressed: {
-            if (event.key == Qt.Key_Up || event.key == Qt.Key_Down || event.key == Qt.Key_Left || event.key == Qt.Key_Right  )
-                console.log(noteText.cursorPosition)
-             //  console.log(event.modifiers +"::"+event.key)
         }
 
     }
@@ -109,6 +118,7 @@ ApplicationWindow {
                     Label {
                         text: "Search:"
                     }
+
                 }
                 Rectangle{
                     Layout.fillWidth: true
@@ -127,11 +137,24 @@ ApplicationWindow {
                 }
             }
 
+            Keys.onPressed: {
+                if (event.key == Qt.Key_F3  )
+                {
+
+                    foundPos();
+                }
+
+            }
+
         }
 
    MNotesHandler{
         id: mnotesHandler
         target: noteText
+
+        onCurposChanged: {
+            console.log("curpos:" + curpos)
+        }
 
     }
 
