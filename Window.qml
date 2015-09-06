@@ -20,7 +20,7 @@ ApplicationWindow {
         if (countPos > curpos.length-1)
             countPos = 0;
 
-        console.log("search signal"+ curpos.length + " ::" + countPos);
+       // console.log("search signal"+ curpos.length + " ::" + countPos);
         noteText.cursorPosition = curpos[ countPos]
 
         countPos++;
@@ -102,6 +102,14 @@ ApplicationWindow {
 
 
         }
+        Keys.onPressed: {
+            if (event.key == Qt.Key_F3  )
+            {
+                if (curpos.length > 0)
+                    foundPos();
+            }
+
+        }
 
     }
 
@@ -140,8 +148,8 @@ ApplicationWindow {
             Keys.onPressed: {
                 if (event.key == Qt.Key_F3  )
                 {
-
-                    foundPos();
+                    if (curpos.length > 0)
+                        foundPos();
                 }
 
             }
@@ -153,7 +161,7 @@ ApplicationWindow {
         target: noteText
 
         onCurposChanged: {
-            console.log("curpos:" + curpos)
+           // console.log("curpos:" + curpos)
         }
 
     }

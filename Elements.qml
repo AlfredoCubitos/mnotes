@@ -1,5 +1,6 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
+import QtQuick.Dialogs 1.2
 import "."
 import "view.js" as View
 import "backend.js" as DB
@@ -28,6 +29,19 @@ Rectangle {
 		}
 		
 
+      Dialog {
+          id: delDialog
+          title: "MNotes Delete Dialog"
+          standardButtons: StandardButton.Ok | StandardButton.Abort
+          Text{
+              text: "realy delete this note?"
+              anchors.centerIn: parent
+          }
+          onAccepted: {
+              DB.deleteNote(buttonLabel.iD);
+              View.removeFromList(index);
+          }
+      }
 	  
 	  Item {
         id: button
@@ -83,10 +97,7 @@ Rectangle {
                 MouseArea {
                     id: remove
                     anchors.fill: parent
-                    onClicked: {
-                                        DB.deleteNote(buttonLabel.iD);
-                                        View.removeFromList(index);
-                                    }
+                    onClicked:  delDialog.visible =true
                     hoverEnabled: true
 
                 }
