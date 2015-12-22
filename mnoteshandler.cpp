@@ -6,6 +6,9 @@
 #include <QTextCursor>
 #include <QMessageBox>
 
+#define BGCOLOR "#FFEBCD"
+
+
 MNotesHandler::MNotesHandler() :d_mnote(0), m_target(0)
     {
 
@@ -36,7 +39,6 @@ void MNotesHandler::searchSignal(const QString &str)
 void MNotesHandler::winSignal(const QVariant &obj)
     {
 
-      //  mn_target  = 0;
        QQuickItem *item = qobject_cast<QQuickItem*>(obj.value<QObject*>());
        m_target = item;
 
@@ -47,21 +49,21 @@ void MNotesHandler::highLighter(const QString &search)
         if (! d_mnote)
             return;
 
-        QList<QVariant> curpos;
-
-        if (isFirstTime == false)
-                d_mnote->undo();
+        if (cur_pos.length() > 0)
+                 clearHighlight();
 
 
        QTextCursor highlightCursor = QTextCursor(d_mnote);
-        QTextCursor cursor = QTextCursor(d_mnote);
+       QTextCursor cursor = QTextCursor(d_mnote);
+
 
         cursor.beginEditBlock();
 
+
         QTextCharFormat plainFormat(highlightCursor.charFormat());
         QTextCharFormat colorFormat = plainFormat;
-        // colorFormat.setForeground(Qt::red);
-        colorFormat.setBackground(QColor("#EEFBFF"));
+
+        colorFormat.setBackground(QColor(BGCOLOR));
 
 
        while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
@@ -69,19 +71,43 @@ void MNotesHandler::highLighter(const QString &search)
 
         if (!highlightCursor.isNull()) {
 
-                curpos.append(highlightCursor.position());
+                cur_pos.append(highlightCursor.position());
 
                 highlightCursor.movePosition(QTextCursor::WordRight,  QTextCursor::KeepAnchor);
                 highlightCursor.mergeCharFormat(colorFormat);
             }
         }
 
-
                 cursor.endEditBlock();
-                isFirstTime = false;
 
+                setCurpos(cur_pos);
+    }
 
-                setCurpos(curpos);
+void MNotesHandler::clearHighlight()
+    {
+            QTextCursor ccursor (d_mnote);
+
+            QTextCharFormat format( ccursor.charFormat());
+            QTextCharFormat colorFormart = format;
+            QColor bgcolor =  m_target->parent()->property("color").value<QColor>();
+            colorFormart.setBackground(bgcolor);
+
+            ccursor.beginEditBlock();
+
+            if (cur_pos.length() > 0)
+                {
+                    for (int i = 0; i < cur_pos.size(); ++i)
+                        {
+                            ccursor.setPosition(cur_pos.at(i).toInt());
+                            ccursor.movePosition(QTextCursor::NextCharacter,QTextCursor::MoveAnchor,2);
+                            ccursor.movePosition(QTextCursor::WordLeft,  QTextCursor::KeepAnchor);
+                            ccursor.mergeCharFormat(colorFormart);
+
+                        }
+                }
+
+            ccursor.endEditBlock();
+
     }
 
 void MNotesHandler::setTarget(QQuickItem *target)
@@ -116,7 +142,6 @@ void MNotesHandler::setText(const QString &arg)
 
 void MNotesHandler::setCurpos(const QVariant cur)
     {
-       // qDebug() << cur;
        m_target->parent()->setProperty("curpos",cur);
        emit curposChanged("foundPos",App);
     }

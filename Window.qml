@@ -20,7 +20,6 @@ ApplicationWindow {
         if (countPos > curpos.length-1)
             countPos = 0;
 
-       // console.log("search signal"+ curpos.length + " ::" + countPos);
         noteText.cursorPosition = curpos[ countPos]
 
         countPos++;
@@ -35,6 +34,7 @@ ApplicationWindow {
     height: 300
     toolBar: ToolBar {
         height: 30
+        width: parent.width
         RowLayout {
             anchors.fill: parent
             Rectangle {
@@ -80,7 +80,7 @@ ApplicationWindow {
         id: noteText
         objectName: "noteText"
          Accessible.name: "mnotesHandler"
-
+         focus: true
         backgroundVisible: false
         selectByMouse: true
         anchors.fill: parent
@@ -90,7 +90,7 @@ ApplicationWindow {
             DB.initDB()
             DB.getNoteData(noteId)
 
-            console.log("contentHeight: " + noteText.text.length + ":: "+ noteText.lineCount)
+            //console.log("contentHeight: " + noteText.text.length + ":: "+ noteText.lineCount)
 
             if (noteTitel.text.length < 1)
                 noteTitel.text = "New Note"
@@ -109,40 +109,42 @@ ApplicationWindow {
                     foundPos();
             }
 
+            if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) )
+            {
+                statusbar.visible = true;
+                noteText.focus = false;
+                statusbar.focus = true;
+
+            }
+
         }
 
     }
 
     statusBar: StatusBar {
-            RowLayout {
+        id: statusbar
+        visible: false
+        height: 30
+            Row {
                 anchors.fill: parent
                 spacing: 5
-                Rectangle{
-                    color: "#EFF0F1"
-                    Layout.preferredWidth:  50
-                    Layout.preferredHeight: 17
-                    Layout.fillWidth: true
 
                     Label {
                         text: "Search:"
                     }
 
-                }
-                Rectangle{
-                    Layout.fillWidth: true
-                    Layout.preferredHeight: 17
-                    Layout.preferredWidth:  150
-                    TextInput{
-                        id: searchBox
-                    //    anchors.left: parent.right
-                        property var svalues: []
 
-                        width: 100
-                        text: ""
-                        // onEditingFinished: View.search()
-                        onEditingFinished:  notesApp.sbSignal(searchBox.text)
+                    TextField{
+                        id: searchBox
+                        property var svalues: []
+                        width: 150
+                        onEditingFinished:  {
+
+                            notesApp.sbSignal(searchBox.text)
+                            noteText.focus = true;
+                        }
                     }
-                }
+
             }
 
             Keys.onPressed: {

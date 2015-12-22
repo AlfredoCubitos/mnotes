@@ -32,8 +32,8 @@ private:
     bool isFirstTime;
     QString m_text;
     QVariant m_curpos;
-
-
+    void clearHighlight();
+     QList<QVariant> cur_pos;
 
 signals:
 

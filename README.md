@@ -1,5 +1,10 @@
 # MNotes
-MNotes is a replacement for knotes, written in Qt's qml language
+New sticky notes app for KDE
+
+MNotes is aimed to replace Knotes.
+
+MNotes works without akonadi
 
 Backend is a sqlite database
-This version is based on Qt 5.5
+
+This version needs Qt 5.5 to run
