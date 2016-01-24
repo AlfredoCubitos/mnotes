@@ -18,6 +18,7 @@ ApplicationWindow  {
 
     signal sbSignal(string txt)
     signal winSignal(var win)
+    signal sbActiveSignal(var obj)
 
 
   ListModel{
@@ -30,17 +31,18 @@ ApplicationWindow  {
      Rectangle{
          color:"#d7d7cd"
          width: ListView.view.width
-         height: 25
+         height: 32
 
          Image{
              anchors.right: parent.right
-            // anchors.rightMargin: 10
-            // anchors.topMargin: 10
-             anchors.margins: 10
+
+            anchors.margins: 10
              source: "images/list-add.png"
 
              MouseArea{
-                 anchors.fill: parent
+                 anchors.right: parent.right
+                 width: 30
+                 height: 25
                  onClicked:{ View.openNote(0) }
              }
          }

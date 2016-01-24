@@ -9,7 +9,7 @@ function openNote(id)
       var component = Qt.createComponent("Window.qml");
         if (component.status == Component.Ready)
         {
-            var	win = component.createObject(parent,{"noteId":id});
+            var	win = component.createObject(notesApp,{"noteId":id});
 
         }else{
             console.log(component.errorString())

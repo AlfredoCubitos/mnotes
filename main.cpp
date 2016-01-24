@@ -26,6 +26,7 @@ int main(int argc, char *argv[])
     MNotesHandler mnotes;
 
     QObject::connect(noteApp,SIGNAL(sbSignal(QString)),&mnotes,SLOT(searchSignal(QString)));
+    QObject::connect(noteApp,SIGNAL(sbActiveSignal(QVariant)),&mnotes,SLOT(activeSb(QVariant)));
     QObject::connect(noteApp,SIGNAL(winSignal(QVariant)),&mnotes,SLOT(winSignal(QVariant)));
     QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
 

@@ -20,9 +20,11 @@ ApplicationWindow {
         if (countPos > curpos.length-1)
             countPos = 0;
 
-        noteText.cursorPosition = curpos[ countPos]
+        if (curpos[ countPos])
+            noteText.cursorPosition = curpos[ countPos];
 
         countPos++;
+      //  console.log(countPos)
 
     }
 
@@ -113,7 +115,8 @@ ApplicationWindow {
             {
                 statusbar.visible = true;
                 noteText.focus = false;
-                statusbar.focus = true;
+                searchBox.focus = true;
+                notesApp.sbActiveSignal(searchBox)
 
             }
 
@@ -123,6 +126,7 @@ ApplicationWindow {
 
     statusBar: StatusBar {
         id: statusbar
+        objectName: "statusBar"
         visible: false
         height: 30
             Row {
@@ -133,17 +137,22 @@ ApplicationWindow {
                         text: "Search:"
                     }
 
-
                     TextField{
                         id: searchBox
+                        objectName: "searchbox"
                         property var svalues: []
                         width: 150
+                        focus: true
                         onEditingFinished:  {
 
                             notesApp.sbSignal(searchBox.text)
-                            noteText.focus = true;
+
+                            //noteText.focus = true;
                         }
+
+
                     }
+
 
             }
 
@@ -155,6 +164,7 @@ ApplicationWindow {
                 }
 
             }
+
 
         }
 
