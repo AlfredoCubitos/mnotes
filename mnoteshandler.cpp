@@ -80,7 +80,8 @@ void MNotesHandler::highLighter(const QString &search)
 
                 cursor.endEditBlock();
 
-                setCurpos(cur_pos);
+                if (cur_pos.length() > 0)
+                    setCurpos(cur_pos);
     }
 
 /**
@@ -130,6 +131,8 @@ void MNotesHandler::clearHighlight()
 
        ccursor.endEditBlock();
        setStatusBar();
+       cur_pos.clear();
+
 
     }
 

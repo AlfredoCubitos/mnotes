@@ -28,12 +28,14 @@ ApplicationWindow {
 
     }
 
+
     id: note
     objectName: "noteWindow"
     color: "#FFFF00"
     visible: true
     width: 300
     height: 300
+
     toolBar: ToolBar {
         height: 30
         width: parent.width
@@ -99,6 +101,8 @@ ApplicationWindow {
 
             if (noteText.text.length > 0)
                 note.height = noteText.contentHeight + 30
+
+            note.title = noteTitel.text
 
             notesApp.winSignal(noteText)
 

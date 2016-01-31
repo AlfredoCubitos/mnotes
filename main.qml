@@ -3,6 +3,7 @@ import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
+import QtQuick.Layouts 1.2
 
 
 
@@ -20,7 +21,18 @@ ApplicationWindow  {
     signal winSignal(var win)
     signal sbActiveSignal(var obj)
 
+  /*
+   menuBar: MenuBar {
+          Menu {
+              title: "Config"
+              MenuItem {
+                  text: "OwnCloud"
+                  onTriggered: ownclodDlg.open()
+              }
+          }
 
+       }
+*/
   ListModel{
       id: notesModel
 
@@ -59,6 +71,7 @@ ApplicationWindow  {
  * modified: time in s since
  * titel: String
  * content: String
+ *
  */
 
 
@@ -79,6 +92,33 @@ ApplicationWindow  {
 
     }
 
+Dialog {
+    id: ownclodDlg
+    title: "OwnCloud Access Dialog"
+    GridLayout {
+            columns: 2
+            Label {
+                text: "URL"
+            }
+            TextField{
+                width: 180
+            }
 
+            Label {
+                text: "Login"
+            }
+            TextField{
+                width: 180
+            }
+
+            Label {
+                text: "Password"
+            }
+            TextField{
+                width: 180
+            }
+     }
+
+}
 
 }
