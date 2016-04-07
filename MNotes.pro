@@ -3,7 +3,8 @@ TEMPLATE = app
 QT += qml quick widgets
 
 SOURCES += main.cpp \
-    mnoteshandler.cpp
+    mnoteshandler.cpp \
+    mnotesconfig.cpp
 
 RESOURCES += qml.qrc
 
@@ -16,4 +17,5 @@ QML_IMPORT_PATH = "."
 include(deployment.pri)
 
 HEADERS += \
-    mnoteshandler.h
+    mnoteshandler.h \
+    mnotesconfig.h

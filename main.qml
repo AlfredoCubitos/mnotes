@@ -5,63 +5,89 @@ import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.2
 
-
-
 import "backend.js" as DB
 import "view.js" as View
+
 
 ApplicationWindow  {
     id: notesApp
     width: 300
-   height: 300
+   //height: 300
+   minimumHeight: 300
    visible: true
 
 
     signal sbSignal(string txt)
     signal winSignal(var win)
     signal sbActiveSignal(var obj)
+    signal dialogOkSignal(var values)
+    signal dialogSetGroups()
 
-  /*
-   menuBar: MenuBar {
+   property var dialogGroups: "Moin"
+
+
+   /**
+     * functions call from C++ has to be defined here
+     * call it from import doesn't work
+     **/
+   function addMenuItem(items)
+   {
+       for (var i=0;i<items.length;i++)
+       {
+
+            var itm = configMenu.addItem(items[i])
+           itm.action = callSync
+
+       }
+
+     //  console.log("addMenuitem: " + items[0])
+   }
+
+   Action{
+       id: callSync
+       onTriggered:  View.menuItemAction(source.text)
+   }
+/**
+  * Menubar for future use
+  **/
+  /* menuBar: MenuBar {
           Menu {
+              id: configMenu
               title: "Config"
               MenuItem {
-                  text: "OwnCloud"
-                  onTriggered: ownclodDlg.open()
+                  text: "New"
+                  onTriggered: {
+                      configDlg.open()
+                  }
               }
+
           }
 
        }
 */
+
   ListModel{
       id: notesModel
 
   }
 
- Component{
-     id: listHeader
+
      Rectangle{
-         color:"#d7d7cd"
-         width: ListView.view.width
-         height: 32
+         id: listHeader
+         color:"#C3C3C3"
+         width: notesApp.width
+         height: 29
 
-         Image{
-             anchors.right: parent.right
-
-            anchors.margins: 10
-             source: "images/list-add.png"
-
-             MouseArea{
-                 anchors.right: parent.right
-                 width: 30
-                 height: 25
-                 onClicked:{ View.openNote(0) }
-             }
+         Button{
+             width: notesApp.width
+             height: 29
+             text: qsTr("New Note")
+        //     iconSource: "images/list-add.png"
+             onClicked:{ View.openNote(0) }
          }
 
 
      }
- }
 
 
 
@@ -74,33 +100,55 @@ ApplicationWindow  {
  *
  */
 
-
+ScrollView{
+    id: scrollview
+    implicitHeight:  notesApp.minimumHeight
+    height: notesApp.height
+    width: notesApp.width
+    anchors.top: listHeader.bottom
+    anchors.topMargin: 0
     ListView {
-         anchors.fill: parent
-        header: listHeader
+        id: listview
+      //   anchors.fill: parent
+      //  header: listHeader
         model: notesModel
          delegate: Elements {}
 
     }
+}
 
     Item {
 
         Component.onCompleted:{
+
               DB.initDB();
               DB.getTitels();
+            scrollview.height = listview.height+5
+            listview.width = scrollview.viewport.width
+            console.log("Group:" +dialogGroups )
           }
 
     }
 
 Dialog {
-    id: ownclodDlg
-    title: "OwnCloud Access Dialog"
+    id: configDlg
+
+    title: "Config Dialog"
     GridLayout {
             columns: 2
+            Label {
+                text: "Name"
+            }
+            TextField{
+                id: dlgGroupName
+                width: 180
+            }
+
             Label {
                 text: "URL"
             }
             TextField{
+                id: dlgUrl
                 width: 180
             }
 
@@ -108,6 +156,7 @@ Dialog {
                 text: "Login"
             }
             TextField{
+                id: dlgLogin
                 width: 180
             }
 
@@ -115,9 +164,21 @@ Dialog {
                 text: "Password"
             }
             TextField{
+                id: dlgPassword
                 width: 180
             }
      }
+    onAccepted: {
+        var config = {}
+        config["group"] = dlgGroupName.text
+        config["url"] = dlgUrl.text
+        config["login"] = dlgLogin.text
+        config["password"] = dlgPassword.text
+
+        dialogOkSignal(config)
+    }
+
+
 
 }
 

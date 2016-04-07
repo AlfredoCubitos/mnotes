@@ -48,8 +48,8 @@ Rectangle {
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.bottom: parent.bottom
-        implicitHeight: col.height
-        height: implicitHeight
+      //  implicitHeight: col.height
+       // height: implicitHeight
         width: buttonLabel.width + 20
 		 
         MouseArea {

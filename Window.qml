@@ -47,20 +47,18 @@ ApplicationWindow {
                 radius: 4
                 color: "#EEE"
 
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        titelinput.border.color = "#FFDCA8"
-                        titelinput.color = "#FFF"
-                    }
-                }
-
                 TextInput {
                     id: noteTitel
+                    width: parent.width
                     anchors.left: parent.left
                     anchors.leftMargin: 5
                     anchors.verticalCenter: parent.verticalCenter
                     text: titel
+                    onActiveFocusChanged:{
+                        titelinput.border.color = "#FFDCA8"
+                        titelinput.color = "#FFF"
+                    }
+
                 }
             }
         }

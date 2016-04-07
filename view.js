@@ -1,3 +1,5 @@
+var inc = Qt.include("file:./plugin.js")
+console.log("include: "+inc.status)
 var win;
 var countPos =0;
 
@@ -20,9 +22,24 @@ function openNote(id)
 
 }
 
+
+function menuItemAction(item)
+{
+    console.log("Item:"+item)
+
+    if (typeof eval(item) === 'function')
+    {
+        eval(item+'()')
+    }else{
+        console.log("no function")
+    }
+
+}
+
 function addToList(id, titel)
 {
     notesModel.append({"nId": id, "titel": titel})
+
 }
 
 function updateList(id, titel)

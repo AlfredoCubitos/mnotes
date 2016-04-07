@@ -200,6 +200,8 @@ void MNotesHandler::callQmlFuntion(const char *fn, QObject *obj)
     }
 
 
+
+
 /**********************
  * SLOTS
  * ********************/
@@ -252,6 +254,10 @@ void MNotesHandler::activeSb(const QVariant &obj)
         QQuickItem *item = qobject_cast<QQuickItem*>(obj.value<QObject*>());
         QMetaObject::invokeMethod(item,"forceActiveFocus");
 
+    }
+void MNotesHandler::setDialogGroups()
+    {
+        qDebug() << "Signal received";
     }
 
 /*********************

@@ -1,0 +1,18 @@
+This binary is for testing only!
+
+Its compiled on opensuse Leap 42.1 x86_64
+If you want to test it, you can copy the binary into your home directory $HOME/bin
+If you get an error try 
+    ~> ldd MNotes
+to find out whats missing
+
+At least this library should be installed:
+    ibQt5Quick.so.5 
+    libQt5Widgets.so.5 
+    libQt5Gui.so.5
+    libQt5Qml.so.5 
+    libQt5Network.so.5 
+    libQt5Core.so.5
+    libGL.so.1 
+
+

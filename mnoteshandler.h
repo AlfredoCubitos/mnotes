@@ -24,6 +24,7 @@ public:
     void setTarget(QQuickItem *target);
     void setCurpos(const QVariant cur);
     QVariant curpos() { return m_curpos; }
+    
 
 
     QString text() const;
@@ -55,10 +56,13 @@ public slots:
     void searchSignal(const QString &str);
     void winSignal(const QVariant &obj);
 
+
+
 public Q_SLOTS:
    // void setText(const QString &arg);
     void callQmlFuntion(const char *fn, QObject *obj);
     void activeSb(const QVariant &obj);
+    void setDialogGroups();
 
 };
 
