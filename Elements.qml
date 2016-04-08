@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
 import QtQuick.Dialogs 1.2
+import QtQuick.Layouts 1.2
 import "."
 import "view.js" as View
 import "backend.js" as DB
@@ -15,18 +16,18 @@ Rectangle {
       color: "#eeed94"
 
 	  
-	  gradient: Gradient {
-        GradientStop {
-            position: 0
-            Behavior on color {ColorAnimation { duration: 100 }}
-            color: button.pressed ? "#C0C000" : "#EBEB00"
-        }
-        GradientStop {
-            position: 1
-            Behavior on color {ColorAnimation { duration: 100 }}
-            color: button.pressed ? "#C0C000" : button.containsMouse ? "#F5F4CD" : "#F3F6B9"
-        }
-		}
+      gradient: Gradient {
+          GradientStop {
+              position: 0
+              Behavior on color {ColorAnimation { duration: 100 }}
+              color: button.pressed ? "#C0C000" : "#EBEB00"
+          }
+          GradientStop {
+              position: 1
+              Behavior on color {ColorAnimation { duration: 100 }}
+              color: button.pressed ? "#C0C000" : button.containsMouse ? "#F5F4CD" : "#F3F6B9"
+          }
+      }
 		
 
       Dialog {
@@ -65,45 +66,51 @@ Rectangle {
         }
         
 
-        Column {
+        RowLayout{
             spacing: 2
             id: col
-            anchors.verticalCenter: parent.verticalCenter
-            width: parent.width
-            
-            Text {
-                id: buttonLabel
-                anchors.left: parent.left
-                anchors.leftMargin: 10
-                anchors.right: parent.right
-                anchors.rightMargin: 10
-                text: titel
-                color: "black"
-                font.pixelSize: 12
-                wrapMode: Text.WrapAtWordBoundaryOrAnywhere
-                styleColor: "white"
-                style: Text.Raised
-                property int iD: nId
+           // anchors.verticalCenter: parent.verticalCenter
+            width: notesApp.width
 
-            }
-
-
-            Image{
-                id: del
-                source: "images/list-remove.png"
-                anchors.left: parent.right
-                anchors.leftMargin:  notesApp.width - 50
-
-                MouseArea {
-                    id: remove
-                    anchors.fill: parent
-                    onClicked:  delDialog.visible =true
-                    hoverEnabled: true
+                implicitWidth: notesApp.width
+                Text {
+                    id: buttonLabel
+                    anchors.left: parent.left
+                    anchors.leftMargin: 10
+                    // anchors.right: parent.right
+                    //   anchors.rightMargin: 10
+                  //  anchors.horizontalCenter: parent.horizontalCenter
+                //    anchors.verticalCenter: parent.verticalCenter
+                    text: titel
+                    color: "black"
+                    font.pixelSize: 12
+                    //      wrapMode: Text.WrapAtWordBoundaryOrAnywhere
+                    styleColor: "white"
+                    style: Text.Raised
+                    property int iD: nId
 
                 }
 
-            }
-            
+
+                Item { Layout.fillWidth: true }
+
+                Image{
+                    id: del
+                    source: "images/list-remove.png"
+                    anchors.right:  parent.right
+                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.rightMargin: 8
+
+                    MouseArea {
+                        id: remove
+                        anchors.fill: parent
+                        onClicked:  delDialog.visible =true
+                        hoverEnabled: true
+
+                    }
+
+                }
+
         }
     }
 	  

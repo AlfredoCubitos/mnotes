@@ -10,5 +10,6 @@
         <file>images/list-remove.png</file>
         <file>images/notes.png</file>
         <file>README.md</file>
+        <file>images/menu.png</file>
     </qresource>
 </RCC>

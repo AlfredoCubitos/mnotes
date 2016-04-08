@@ -47,45 +47,54 @@ ApplicationWindow  {
        id: callSync
        onTriggered:  View.menuItemAction(source.text)
    }
+
+   ListModel{
+       id: notesModel
+
+   }
 /**
   * Menubar for future use
   **/
-  /* menuBar: MenuBar {
-          Menu {
-              id: configMenu
-              title: "Config"
-              MenuItem {
-                  text: "New"
-                  onTriggered: {
-                      configDlg.open()
-                  }
-              }
 
-          }
-
+   toolBar: ToolBar{
+       height: 29
+       RowLayout{
+           anchors.fill: parent
+           Item { Layout.fillWidth: true }
+           ToolButton {
+              implicitHeight: 22
+              implicitWidth: 22
+               iconSource: "images/menu.png"
+               //onClicked: configDlg.open()
+                       }
        }
-*/
+   }
 
-  ListModel{
-      id: notesModel
-
-  }
-
+ColumnLayout {
+    spacing: 0
 
      Rectangle{
          id: listHeader
-         color:"#C3C3C3"
+         color:"#EBEBB1"
          width: notesApp.width
-         height: 29
-
-         Button{
-             width: notesApp.width
-             height: 29
+         implicitWidth: notesApp.width
+         height: 35
+         Text {
+             id: lh
+             anchors.horizontalCenter: parent.horizontalCenter
+             anchors.verticalCenter: parent.verticalCenter
              text: qsTr("New Note")
-        //     iconSource: "images/list-add.png"
-             onClicked:{ View.openNote(0) }
          }
 
+         Button{
+             width: 30
+             anchors.right: parent.right
+             anchors.rightMargin: 8
+             anchors.verticalCenter: parent.verticalCenter
+             height: 29
+             iconSource: "images/list-add.png"
+             onClicked:{ View.openNote(0) }
+         }
 
      }
 
@@ -100,23 +109,21 @@ ApplicationWindow  {
  *
  */
 
-ScrollView{
-    id: scrollview
-    implicitHeight:  notesApp.minimumHeight
-    height: notesApp.height
-    width: notesApp.width
-    anchors.top: listHeader.bottom
-    anchors.topMargin: 0
-    ListView {
-        id: listview
-      //   anchors.fill: parent
-      //  header: listHeader
-        model: notesModel
-         delegate: Elements {}
+     ScrollView{
+         id: scrollview
+         implicitHeight:  notesApp.minimumHeight+5
+         implicitWidth: notesApp.width
 
-    }
+         ListView {
+             id: listview
+             //   anchors.fill: parent
+             //  header: listHeader
+             model: notesModel
+             delegate: Elements {}
+
+         }
+     }
 }
-
     Item {
 
         Component.onCompleted:{
