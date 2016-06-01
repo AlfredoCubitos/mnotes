@@ -3,7 +3,8 @@ import QtQuick.Controls 1.3
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
-import QtQuick.Layouts 1.2
+import QtQuick.Layouts 1.0
+import QtQuick.Controls.Styles 1.4
 
 import "backend.js" as DB
 import "view.js" as View
@@ -12,8 +13,8 @@ import "view.js" as View
 ApplicationWindow  {
     id: notesApp
     width: 300
-   //height: 300
-   minimumHeight: 300
+   height: 300
+ //  minimumHeight: 300
    visible: true
 
 
@@ -25,23 +26,9 @@ ApplicationWindow  {
 
    property var dialogGroups: "Moin"
 
+   property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
 
-   /**
-     * functions call from C++ has to be defined here
-     * call it from import doesn't work
-     **/
-   function addMenuItem(items)
-   {
-       for (var i=0;i<items.length;i++)
-       {
 
-            var itm = configMenu.addItem(items[i])
-           itm.action = callSync
-
-       }
-
-     //  console.log("addMenuitem: " + items[0])
-   }
 
    Action{
        id: callSync
@@ -57,18 +44,23 @@ ApplicationWindow  {
   **/
 
    toolBar: ToolBar{
+       id: toolbar
        height: 29
        RowLayout{
            anchors.fill: parent
            Item { Layout.fillWidth: true }
            ToolButton {
-              implicitHeight: 22
-              implicitWidth: 22
+               implicitHeight: 22
+               implicitWidth: 22
                iconSource: "images/menu.png"
                //onClicked: configDlg.open()
-                       }
+              onClicked:tbmenu.visible ? tbmenu.visible=false : tbmenu.visible= true
+
+           }
+
        }
    }
+
 
 ColumnLayout {
     spacing: 0
@@ -89,7 +81,7 @@ ColumnLayout {
          Button{
              width: 30
              anchors.right: parent.right
-             anchors.rightMargin: 8
+             anchors.rightMargin: 12
              anchors.verticalCenter: parent.verticalCenter
              height: 29
              iconSource: "images/list-add.png"
@@ -97,7 +89,6 @@ ColumnLayout {
          }
 
      }
-
 
 
 /*
@@ -110,14 +101,23 @@ ColumnLayout {
  */
 
      ScrollView{
-         id: scrollview
-         implicitHeight:  notesApp.minimumHeight+5
          implicitWidth: notesApp.width
+         implicitHeight: notesApp.height - listHeader.height - toolbar.height
+         style: ScrollViewStyle{
+            frame: Rectangle{
+                 color: "#eeec52"
+                 border.color: "#141312"
+                // opacity: 0.7
+             }
+
+             scrollBarBackground : Item  {
+                 implicitWidth: 14
+                 implicitHeight: 26
+             }
+         }
 
          ListView {
              id: listview
-             //   anchors.fill: parent
-             //  header: listHeader
              model: notesModel
              delegate: Elements {}
 
@@ -130,63 +130,26 @@ ColumnLayout {
 
               DB.initDB();
               DB.getTitels();
-            scrollview.height = listview.height+5
-            listview.width = scrollview.viewport.width
+
             console.log("Group:" +dialogGroups )
           }
 
     }
 
-Dialog {
-    id: configDlg
-
-    title: "Config Dialog"
-    GridLayout {
-            columns: 2
-            Label {
-                text: "Name"
-            }
-            TextField{
-                id: dlgGroupName
-                width: 180
-            }
-
-            Label {
-                text: "URL"
-            }
-            TextField{
-                id: dlgUrl
-                width: 180
-            }
-
-            Label {
-                text: "Login"
-            }
-            TextField{
-                id: dlgLogin
-                width: 180
-            }
-
-            Label {
-                text: "Password"
-            }
-            TextField{
-                id: dlgPassword
-                width: 180
-            }
-     }
-    onAccepted: {
-        var config = {}
-        config["group"] = dlgGroupName.text
-        config["url"] = dlgUrl.text
-        config["login"] = dlgLogin.text
-        config["password"] = dlgPassword.text
-
-        dialogOkSignal(config)
+    ToolBarMenu{
+        id: tbmenu
+        height: 32
+        anchors.right: parent.right
+        visible: false
+        onClicked: {
+            configDlg.show()
+           tbmenu.visible = false
+        }
     }
 
+    ToolBarDialog{
+        id: configDlg
+    }
 
-
-}
 
 }

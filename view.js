@@ -1,5 +1,5 @@
 var inc = Qt.include("file:./plugin.js")
-console.log("include: "+inc.status)
+
 var win;
 var countPos =0;
 

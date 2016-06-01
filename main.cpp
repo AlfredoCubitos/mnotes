@@ -31,7 +31,7 @@ int main(int argc, char *argv[])
 
     QObject *noteApp = component.create();
 
-    QMetaObject::invokeMethod(noteApp,"addMenuItem",Q_ARG(QVariant, groups));
+  //  QMetaObject::invokeMethod(noteApp,"addMenuItem",Q_ARG(QVariant, groups));
 
     QObject::connect(noteApp,SIGNAL(sbSignal(QString)),&mnotes,SLOT(searchSignal(QString)));
     QObject::connect(noteApp,SIGNAL(sbActiveSignal(QVariant)),&mnotes,SLOT(activeSb(QVariant)));

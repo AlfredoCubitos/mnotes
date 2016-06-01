@@ -11,5 +11,8 @@
         <file>images/notes.png</file>
         <file>README.md</file>
         <file>images/menu.png</file>
+        <file>ToolBarDialog.qml</file>
+        <file>ToolBarMenu.qml</file>
+        <file>DelDialog.qml</file>
     </qresource>
 </RCC>

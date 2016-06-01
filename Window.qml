@@ -39,6 +39,7 @@ ApplicationWindow {
     toolBar: ToolBar {
         height: 30
         width: parent.width
+        implicitWidth: parent.width
         RowLayout {
             anchors.fill: parent
             Rectangle {
