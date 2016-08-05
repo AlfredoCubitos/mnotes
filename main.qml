@@ -42,6 +42,7 @@ ApplicationWindow  {
    property int curIndex
    property int noteID
    property int btnHeight: 38 // = Elements.container.height
+   property int stackIndex
 
 
    Action{
@@ -78,6 +79,7 @@ ApplicationWindow  {
    TabView{
 
        Tab{
+           id: localTab
          title: qsTr("Local")
 
            ColumnLayout {
@@ -139,7 +141,7 @@ ApplicationWindow  {
 
                }
 
-               StackView{
+              StackView{
                    id: stackview
                    initialItem: scrollview
                     implicitWidth: notesApp.width-3
@@ -170,6 +172,9 @@ ApplicationWindow  {
                        // Stack.onStatusChanged:  console.log("Stackstatus: "+Stack.status )
                    }
 
+                   onCurrentItemChanged: {
+                       stackIndex = stackview.depth
+                   }
                }
            }
        }
@@ -185,6 +190,7 @@ ApplicationWindow  {
           }
 
     }
+
 
     ToolBarMenu{
         id: tbmenu
@@ -223,9 +229,73 @@ ApplicationWindow  {
                // textFormat: TextEdit.RichText
 
             }
-            Component.onCompleted: {noteID = 0}
+            Component.onCompleted: {
+                noteID = 0;
+
+            }
+            Keys.onPressed: {
+                if (event.key == Qt.Key_F3  )
+                {
+                    if (curpos.length > 0)
+                        foundPos();
+                }
+
+                if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) && (stackIndex  > 1))
+                {
+                    console.log("StackStatus: " + stackIndex)
+                    statusbar.visible = true;
+                    searchBox.focus = true;
+                    notesApp.sbActiveSignal(searchBox)
+
+                }
+
+            }
 
         }
+        statusBar: StatusBar {
+            id: statusbar
+            objectName: "statusBar"
+            visible: false
+            height: 30
+                Row {
+                    anchors.fill: parent
+                    spacing: 5
 
+                        Label {
+                            text: "Search:"
+                        }
+
+                        TextField{
+                            id: searchBox
+                            objectName: "searchbox"
+                            property var svalues: []
+               //             anchors.topMargin: 3
+                            width: 180
+                            height: 18
+                            focus: true
+                            onEditingFinished:  {
+
+                                notesApp.sbSignal(searchBox.text)
+
+                                //noteText.focus = true;
+                            }
+
+
+                        }
+
+
+                }
+
+                Keys.onPressed: {
+                    if (event.key == Qt.Key_F3  )
+                    {
+                        if (curpos.length > 0)
+                            foundPos();
+                    }
+
+                }
+
+
+            }
 
 }
