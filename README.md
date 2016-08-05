@@ -1,10 +1,11 @@
 # MNotes
-New sticky notes app for KDE or any other Qt-based Desktop
 
-MNotes is aimed to be a replacement for Knotes.
+The master branch version is now ready to include different backends.
+The UI has also changed so there is no extra window showing the content.
+The app may run on mobile devices as well.
 
-MNotes ist develpoed in plain Qt and QML and works without akonadi
+Other backends like OwnCloud/Nextcloud or MS Notes are planned
 
-The backend for storing Notes is a sqlite database, so this may work on mny other plattforms
+This version needs Qt >= 5.5 to run
 
-This version needs Qt 5.5 to run
+ 

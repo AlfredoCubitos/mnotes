@@ -98,7 +98,8 @@
 	  if (data.rows.length > 0)
 	  {
 			noteText.text = data.rows.item(0).content;
-			noteTitel.text = data.rows.item(0).titel;
+            notesApp.noteTitel = data.rows.item(0).titel;
+          //note.noteId = id;
 	  }
   }
   

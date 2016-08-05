@@ -42,7 +42,7 @@ Window {
         }
 
         Label {
-            text: "URL"
+            text: qsTr("URL")
         }
         TextField{
             id: dlgUrl
@@ -50,7 +50,7 @@ Window {
         }
 
         Label {
-            text: "Login"
+            text: qsTr("Login")
         }
         TextField{
             id: dlgLogin
@@ -58,11 +58,18 @@ Window {
         }
 
         Label {
-            text: "Password"
+            text: qsTr("Password")
         }
         TextField{
             id: dlgPassword
             Layout.fillWidth: true
+        }
+
+        Label{
+            text: qsTr("visible")
+        }
+        CheckBox{
+            id: dlgVisible
         }
 
         Item {
@@ -89,10 +96,11 @@ Window {
                 text: qsTr("save")
                 onClicked: {
                     var config = {}
-                    config["group"] = dlgGroupName.text
+                    config["group"] = tbmenu.title
                     config["url"] = dlgUrl.text
                     config["login"] = dlgLogin.text
                     config["password"] = dlgPassword.text
+                    config["visible"] = dlgVisible.checked
 
                     dialogOkSignal(config)
 

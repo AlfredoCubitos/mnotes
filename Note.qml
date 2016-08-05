@@ -8,12 +8,15 @@ import de.bibuweb.mnotes 1.0
 import "backend.js" as DB
 import "view.js" as View
 
-ApplicationWindow {
+Rectangle {
 
     property int noteId
     property string content: ""
     property var curpos: []
     property int countPos: 0
+    property alias noteTxt: noteText
+
+
 
     function foundPos()
     {
@@ -36,50 +39,8 @@ ApplicationWindow {
     width: 300
     height: 300
 
-    toolBar: ToolBar {
-        height: 30
-        width: parent.width
-        implicitWidth: parent.width
-        RowLayout {
-            anchors.fill: parent
-            Rectangle {
-                id: titelinput
-                anchors.fill: parent
-                radius: 4
-                color: "#EEE"
-
-                TextInput {
-                    id: noteTitel
-                    width: parent.width
-                    anchors.left: parent.left
-                    anchors.leftMargin: 5
-                    anchors.verticalCenter: parent.verticalCenter
-                    text: titel
-                    onActiveFocusChanged:{
-                        titelinput.border.color = "#FFDCA8"
-                        titelinput.color = "#FFF"
-                    }
-
-                }
-            }
-        }
-    }
-    onClosing: {
-
-        DB.initDB()
-
-        if (noteId == 0) {
-            var inId = DB.insertData(noteTitel.text, noteText.text)
-
-            if (inId > 0)
-                View.addToList(inId, noteTitel.text)
-        } else {
-            DB.updateData(noteId, noteTitel.text, noteText.text)
-            View.updateList(container.curIdx, noteTitel.text)
-        }
-    }
-
     TextArea {
+        width: note.width
         id: noteText
         objectName: "noteText"
          Accessible.name: "mnotesHandler"
@@ -92,84 +53,13 @@ ApplicationWindow {
         Component.onCompleted: {
             DB.initDB()
             DB.getNoteData(noteId)
-
-            //console.log("contentHeight: " + noteText.text.length + ":: "+ noteText.lineCount)
-
-            if (noteTitel.text.length < 1)
-                noteTitel.text = "New Note"
-
-            if (noteText.text.length > 0)
-                note.height = noteText.contentHeight + 30
-
-            note.title = noteTitel.text
-
+           console.log("Note: ")
             notesApp.winSignal(noteText)
-
-
-        }
-        Keys.onPressed: {
-            if (event.key == Qt.Key_F3  )
-            {
-                if (curpos.length > 0)
-                    foundPos();
-            }
-
-            if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) )
-            {
-                statusbar.visible = true;
-                noteText.focus = false;
-                searchBox.focus = true;
-                notesApp.sbActiveSignal(searchBox)
-
-            }
 
         }
 
     }
 
-    statusBar: StatusBar {
-        id: statusbar
-        objectName: "statusBar"
-        visible: false
-        height: 30
-            Row {
-                anchors.fill: parent
-                spacing: 5
-
-                    Label {
-                        text: "Search:"
-                    }
-
-                    TextField{
-                        id: searchBox
-                        objectName: "searchbox"
-                        property var svalues: []
-                        width: 150
-                        focus: true
-                        onEditingFinished:  {
-
-                            notesApp.sbSignal(searchBox.text)
-
-                            //noteText.focus = true;
-                        }
-
-
-                    }
-
-
-            }
-
-            Keys.onPressed: {
-                if (event.key == Qt.Key_F3  )
-                {
-                    if (curpos.length > 0)
-                        foundPos();
-                }
-
-            }
-
-
-        }
 
    MNotesHandler{
         id: mnotesHandler

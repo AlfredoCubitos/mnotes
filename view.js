@@ -1,6 +1,7 @@
 var inc = Qt.include("file:./plugin.js")
 
 var win;
+var note;
 var countPos =0;
 
 function openNote(id)
@@ -19,6 +20,23 @@ function openNote(id)
 
 
         win.show();
+
+}
+
+function showNote(id)
+{
+    var component = Qt.createComponent("Note.qml");
+      if (component.status == Component.Ready)
+      {
+          note = component.createObject(notesApp,{"noteId":id});
+
+      }else{
+          console.log(component.errorString())
+      }
+
+      isNote = true;
+
+      stackview.push({item:note});
 
 }
 

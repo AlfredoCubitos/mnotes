@@ -11,7 +11,7 @@ class MNotesHandler : public QObject
     Q_OBJECT
 
    Q_PROPERTY(QQuickItem *target READ target WRITE setTarget NOTIFY targetChanged)
-   // Q_PROPERTY(QString text READ text WRITE setText)
+   Q_PROPERTY(QString text READ text WRITE setText)
    Q_PROPERTY(QVariant curpos READ curpos  WRITE setCurpos  NOTIFY curposChanged)
 
 
@@ -34,7 +34,7 @@ private:
     QTextDocument *d_mnote;
     QQuickItem *m_target;
     bool isFirstTime;
-//    QString m_text;
+    QString m_text;
     QVariant m_curpos;
     QQuickItem *sItem;
     void clearHighlight();
@@ -59,7 +59,7 @@ public slots:
 
 
 public Q_SLOTS:
-   // void setText(const QString &arg);
+    void setText(const QString &arg);
     void callQmlFuntion(const char *fn, QObject *obj);
     void activeSb(const QVariant &obj);
     void setDialogGroups();

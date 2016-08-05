@@ -159,20 +159,20 @@ void MNotesHandler::setTarget(QQuickItem *target)
         emit targetChanged();
     }
 
-/*
+
 QString MNotesHandler::text() const
 {
     return m_text;
 }
-*/
-/*
+
+
 void MNotesHandler::setText(const QString &arg)
 {
     if (m_text != arg) {
         m_text = arg;
         emit textChanged();
     }
-}*/
+}
 
 /**
  * @brief MNotesHandler::setCurpos

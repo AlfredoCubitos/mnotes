@@ -58,7 +58,7 @@ Item {
                 id: newBtn
                 width: parent.width
                 anchors.bottom: parent.bottom
-                text: qsTr("New")
+                text: qsTr("OneNote")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true
                 onClicked: {

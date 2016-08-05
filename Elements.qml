@@ -10,6 +10,7 @@ Rectangle {
       property int curIdx
       property alias btnLabel: buttonLabel.iD
 
+
       width: notesApp.width
 	  height:38
       color: "#eeed94"
@@ -42,8 +43,11 @@ Rectangle {
             height: container.height
             width: container.width - del.width - 8
             onClicked: {
-               View.openNote(buttonLabel.iD);
-                curIdx = index;
+              // View.openNote(buttonLabel.iD);
+                View.showNote(buttonLabel.iD);
+                notesApp.curIndex = index;
+                notesApp.noteID = buttonLabel.iD;
+                //curIdx = index;
             }
             hoverEnabled: true
 
@@ -79,7 +83,7 @@ Rectangle {
                     source: "images/list-remove.png"
                     anchors.right:  parent.right
                     anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: 18
+                    anchors.rightMargin: 25
 
                     MouseArea {
                         id: remove

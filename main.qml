@@ -5,16 +5,25 @@ import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Styles 1.4
+import "."
 
 import "backend.js" as DB
 import "view.js" as View
 
+/*
+* Ownnotes Datamodel
+* id: integer
+* modified: time in s since
+* titel: String
+* content: String
+*
+*/
 
 ApplicationWindow  {
     id: notesApp
     width: 300
-   height: 300
- //  minimumHeight: 300
+   //height: 300
+   minimumHeight: 300
    visible: true
 
 
@@ -28,6 +37,11 @@ ApplicationWindow  {
 
    property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
 
+   property bool isNote: false
+   property string noteTitel: "New Note"
+   property int curIndex
+   property int noteID
+   property int btnHeight: 38 // = Elements.container.height
 
 
    Action{
@@ -61,69 +75,105 @@ ApplicationWindow  {
        }
    }
 
+   TabView{
 
-ColumnLayout {
-    spacing: 0
+       Tab{
+         title: qsTr("Local")
 
-     Rectangle{
-         id: listHeader
-         color:"#EBEBB1"
-         width: notesApp.width
-         implicitWidth: notesApp.width
-         height: 35
-         Text {
-             id: lh
-             anchors.horizontalCenter: parent.horizontalCenter
-             anchors.verticalCenter: parent.verticalCenter
-             text: qsTr("New Note")
-         }
+           ColumnLayout {
+               spacing: 0
 
-         Button{
-             width: 30
-             anchors.right: parent.right
-             anchors.rightMargin: 12
-             anchors.verticalCenter: parent.verticalCenter
-             height: 29
-             iconSource: "images/list-add.png"
-             onClicked:{ View.openNote(0) }
-         }
+               Rectangle{
+                   id: listHeader
 
-     }
+                   color:"#EBEBB1"
+                   width: notesApp.width
+                   implicitWidth: notesApp.width
+                   height: 35
+                   TextInput {
+                       id: noteTitle
+                       anchors.horizontalCenter: parent.horizontalCenter
+                       anchors.verticalCenter: parent.verticalCenter
+                       text: qsTr(noteTitel)
+                       readOnly: isNote ? false : true;
+                   }
+
+                   Button{
+                       width: 30
+                       anchors.right: parent.right
+                       anchors.rightMargin: 20
+                       anchors.verticalCenter: parent.verticalCenter
+                       height: 29
+                       iconSource:  isNote ? "images/icon-back.png" : "images/list-add.png"
+                       onClicked:{
+                           if (isNote)
+                           {
+                                var Note = stackview.pop();
+                               DB.initDB()
+                               //+ Note.noteTxt.text
+                               console.log("noteId: "+ noteID+ " "+noteTitle.text )
 
 
-/*
- * Ownnotes Datamodel
- * id: integer
- * modified: time in s since
- * titel: String
- * content: String
- *
- */
+                               if (noteID == 0) {
+                                   var inId = DB.insertData(noteTitle.text,   newText.text)
+                                   //console.log("NewNote Text: "+newText.text)
 
-     ScrollView{
-         implicitWidth: notesApp.width
-         implicitHeight: notesApp.height - listHeader.height - toolbar.height
-         style: ScrollViewStyle{
-            frame: Rectangle{
-                 color: "#eeec52"
-                 border.color: "#141312"
-                // opacity: 0.7
-             }
+                                   if (inId > 0)
+                                      View.addToList(inId, noteTitle.text)
+                               } else {
+                                   DB.updateData(noteID, noteTitle.text, Note.noteTxt.text)
 
-             scrollBarBackground : Item  {
-                 implicitWidth: 14
-                 implicitHeight: 26
-             }
-         }
+                                    View.updateList(curIndex, noteTitle.text)
+                               }
 
-         ListView {
-             id: listview
-             model: notesModel
-             delegate: Elements {}
+                               isNote = false;
+                              noteTitel = "New Note";
 
-         }
-     }
-}
+                           }else{
+                              // View.showNote(0);
+                               isNote = true
+                               stackview.push({item:newNote, properties:{visible: true}, destroyOnPop: true})
+                           }
+                       }
+                   }
+
+               }
+
+               StackView{
+                   id: stackview
+                   initialItem: scrollview
+                    implicitWidth: notesApp.width-3
+                   width: notesApp.width-3
+                   implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
+
+                   ScrollView{
+                       id: scrollview
+                       implicitHeight: notesApp.height - listHeader.height - toolbar.height
+                       style: ScrollViewStyle{
+                           frame: Rectangle{
+                               color: "#eeec52"
+                               border.color: "#141312"
+                           }
+
+                           scrollBarBackground : Item  {
+                               implicitWidth: 14
+                               implicitHeight: 26
+                           }
+                       }
+
+                       ListView {
+                           id: listview
+                           model: notesModel
+                           delegate: Elements {}
+
+                       }
+                       // Stack.onStatusChanged:  console.log("Stackstatus: "+Stack.status )
+                   }
+
+               }
+           }
+       }
+   }
     Item {
 
         Component.onCompleted:{
@@ -150,6 +200,32 @@ ColumnLayout {
     ToolBarDialog{
         id: configDlg
     }
+
+        Rectangle {
+
+            id: newNote
+            objectName: "noteWindow"
+            color: "#FFFF00"
+            visible: false
+            width: 300
+            height: 300
+
+            TextArea {
+                width: parent.width
+                id: newText
+                objectName: "noteText"
+                 Accessible.name: "mnotesHandler"
+                 focus: true
+                backgroundVisible: false
+                selectByMouse: true
+                anchors.fill: parent
+                text:  ""
+               // textFormat: TextEdit.RichText
+
+            }
+            Component.onCompleted: {noteID = 0}
+
+        }
 
 
 }
