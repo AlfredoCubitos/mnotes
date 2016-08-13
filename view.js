@@ -40,7 +40,6 @@ function showNote(id)
 
 }
 
-
 function menuItemAction(item)
 {
     console.log("Item:"+item)
@@ -104,5 +103,3 @@ function search()
         console.log("c start: "+searchBox.selectionStart)
     }
 }
-
-

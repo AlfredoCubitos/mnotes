@@ -5,7 +5,6 @@ import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Controls.Styles 1.4
-import "."
 
 import "backend.js" as DB
 import "view.js" as View
@@ -18,6 +17,10 @@ import "view.js" as View
 * content: String
 *
 */
+
+/**
+  MNotes Microsoft APPID: 0006d636-2cd2-47fd-b506-5239c842a064
+  **/
 
 ApplicationWindow  {
     id: notesApp
@@ -43,6 +46,11 @@ ApplicationWindow  {
    property int noteID
    property int btnHeight: 38 // = Elements.container.height
    property int stackIndex
+
+   property var curpos: []
+   property int countPos: 0
+
+
 
 
    Action{
@@ -77,6 +85,7 @@ ApplicationWindow  {
    }
 
    TabView{
+       id: tabView
 
        Tab{
            id: localTab
@@ -178,6 +187,10 @@ ApplicationWindow  {
                }
            }
        }
+       Tab{
+           id: owncloud
+           title: qsTr("Owncloud")
+       }
    }
     Item {
 
@@ -234,11 +247,6 @@ ApplicationWindow  {
 
             }
             Keys.onPressed: {
-                if (event.key == Qt.Key_F3  )
-                {
-                    if (curpos.length > 0)
-                        foundPos();
-                }
 
                 if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) && (stackIndex  > 1))
                 {
@@ -269,7 +277,6 @@ ApplicationWindow  {
                             id: searchBox
                             objectName: "searchbox"
                             property var svalues: []
-               //             anchors.topMargin: 3
                             width: 180
                             height: 18
                             focus: true
@@ -286,14 +293,19 @@ ApplicationWindow  {
 
                 }
 
-                Keys.onPressed: {
-                    if (event.key == Qt.Key_F3  )
+             /*   Keys.onPressed: {
+                    if (event.key === Qt.Key_F3  )
                     {
-                        if (curpos.length > 0)
+
+
+                        console.log("F3 2 ")
+
+
+                        if ( curpos.length > 0)
                             foundPos();
                     }
 
-                }
+                }*/
 
 
             }

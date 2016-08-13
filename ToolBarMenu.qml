@@ -63,6 +63,8 @@ Item {
                 Layout.fillWidth: true
                 onClicked: {
                   // export click event
+                    tbRoot.title = text
+
                     tbRoot.clicked()
                 }
             }

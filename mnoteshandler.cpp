@@ -215,6 +215,7 @@ void MNotesHandler::winSignal(const QVariant &obj)
        QQuickItem *item = qobject_cast<QQuickItem*>(obj.value<QObject*>());
        m_target = item;
 
+
     }
 
 /**

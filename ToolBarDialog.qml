@@ -13,6 +13,11 @@ Window {
     flags: Qt.Dialog
     modality: Qt.WindowModal
 
+    onActiveChanged:{
+            if (tbmenu.title == "OneNote")
+                dlgUrl.text = "https://"
+    }
+
 
     GridLayout {
         columns: 2
@@ -107,6 +112,7 @@ Window {
                     configDlg.close()
                 }
             }
+
         }
     }
 

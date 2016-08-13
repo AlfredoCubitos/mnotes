@@ -20,14 +20,14 @@ Rectangle {
 
     function foundPos()
     {
-        if (countPos > curpos.length-1)
+        if (countPos >  curpos.length-1)
             countPos = 0;
 
         if (curpos[ countPos])
             noteText.cursorPosition = curpos[ countPos];
 
         countPos++;
-      //  console.log(countPos)
+     //   console.log(countPos)
 
     }
 
@@ -58,6 +58,14 @@ Rectangle {
 
         }
 
+        Keys.onPressed: {
+            if (event.key == Qt.Key_F3  )
+            {
+              //  console.log("F3")
+                if (curpos.length > 0)
+                    foundPos();
+            }
+        }
     }
 
 
@@ -66,7 +74,7 @@ Rectangle {
         target: noteText
 
         onCurposChanged: {
-           // console.log("curpos:" + curpos)
+            console.log("curpos:" + curpos)
         }
 
     }
