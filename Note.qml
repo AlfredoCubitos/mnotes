@@ -7,15 +7,18 @@ import de.bibuweb.mnotes 1.0
 
 import "backend.js" as DB
 import "view.js" as View
+import "OneNote.js" as OneNote
+
 
 Rectangle {
 
     property int noteId
+    property string noteTab
+
     property string content: ""
     property var curpos: []
     property int countPos: 0
     property alias noteTxt: noteText
-
 
 
     function foundPos()
@@ -49,11 +52,24 @@ Rectangle {
         selectByMouse: true
         anchors.fill: parent
         text:  mnotesHandler.text = content
-       // textFormat: TextEdit.RichText
+        textFormat: TextEdit.AutoText
         Component.onCompleted: {
-            DB.initDB()
-            DB.getNoteData(noteId)
-           console.log("Note: ")
+
+            switch(noteTab)
+            {
+            case "Local":
+                DB.initDB();
+                DB.getNoteData(noteId);
+                break;
+            case "OneNote":
+                OneNote.getContent(buttonLabel.url)
+                break;
+            }
+
+
+
+
+          // console.log("Note: ")
             notesApp.winSignal(noteText)
 
         }

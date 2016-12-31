@@ -1,11 +1,11 @@
 # MNotes
 
-The master branch version is now ready to include different backends.
-The UI has also changed so there is no extra window showing the content.
-The app may run on mobile devices as well.
+MNotes now give you access to MS OneNote.
+In this version its a readonly access.
 
-Other backends like OwnCloud/Nextcloud or MS Notes are planned
 
-This version needs Qt >= 5.5 to run
+The UI has also changed so that it is easier to port it to a mobile deice.
+
+This version needs Qt >= 5.7 to run
 
  

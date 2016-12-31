@@ -29,6 +29,10 @@
   
   function getTitels()
   {
+      /**
+        * all properties in ELements.qml are initilized first here
+        * see note in Elements.qml
+        **/
 	  var data;
 	  
 	  db.transaction( function(tx){
@@ -42,7 +46,8 @@
 			var titel = data.rows.item(i).titel;
 			var id = data.rows.item(i).id;
 			
-            notesModel.append({"nId": id, "titel": titel})
+            notesModel.append({"nId": id, "titel": titel,"oneNoteUrl": ""})
+          //console.log(titel)
 		}
 	  
   }

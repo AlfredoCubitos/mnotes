@@ -29,20 +29,21 @@ Item {
 
 
                 height: menuName.height+5
-                width: tbRoot.width-8
+
+          //      width: tbRoot.width-8
                 Layout.alignment: Qt.AlignHCenter | Qt.AlignTop
                 Text {
                     width: parent.width
                     horizontalAlignment:  Text.AlignHCenter
                     id: menuName
-                    style: Text.Sunken
+                   // style: Text.Sunken
                     text: qsTr("Available Backends")
                 }
 
             }
             Button{
                 id: ownCloudBtn
-                width: parent.width
+                anchors.bottom: newBtn.top
 
                 text: qsTr("OwnCloud")
                 Layout.alignment: Qt.AlignHCenter
@@ -56,8 +57,6 @@ Item {
 
             Button{
                 id: newBtn
-                width: parent.width
-                anchors.bottom: parent.bottom
                 text: qsTr("OneNote")
                 Layout.alignment: Qt.AlignHCenter
                 Layout.fillWidth: true

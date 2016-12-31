@@ -4,14 +4,27 @@ import QtQuick.Layouts 1.2
 import "."
 import "view.js" as View
 import "backend.js" as DB
+import "OneNote.js" as OneNote
+
+
+/**
+  * note: properties are initialized by a js function the first time
+  * A new initialization of properties later is not possible !
+  * This means properties not initalized could not initalize later
+  * Also a new initialization e.g. with a a different type ist not possible
+  * So the OneNoteUrl property used in OneNote.js has to be initilized in backend.js
+  *
+  **/
 
 Rectangle {
 	  id: container
       property int curIdx
-      property alias btnLabel: buttonLabel.iD
+   //   property string oneNoteUrl
 
+     // property alias btnLabel: buttonLabel.iD
+     // property Component tab: TabElement{}
 
-      width: notesApp.width
+      width: notesApp.width - 4
 	  height:38
       color: "#eeed94"
 	  
@@ -44,9 +57,24 @@ Rectangle {
             width: container.width - del.width - 8
             onClicked: {
               // View.openNote(buttonLabel.iD);
-                View.showNote(buttonLabel.iD);
-                notesApp.curIndex = index;
-                notesApp.noteID = buttonLabel.iD;
+                console.log("Tab "+tabView.getTab( tabView.currentIndex).title)
+                var tabTitle = tabView.getTab( tabView.currentIndex).title;
+                switch(tabTitle)
+                {
+                case "Local":
+                    View.showNote(buttonLabel.iD, tabTitle);
+                    notesApp.curIndex = index;
+                    notesApp.noteID = buttonLabel.iD;
+                    break;
+                case "OneNote":
+                    OneNote.showNote(0, tabTitle);
+                    notesApp.noteTitel = buttonLabel.text
+                    // console.log("click: " +  )
+                    notesApp.curIndex = index;
+                    break;
+                }
+
+
                 //curIdx = index;
             }
             hoverEnabled: true
@@ -71,7 +99,8 @@ Rectangle {
 
                     styleColor: "white"
                     style: Text.Raised
-                    property int iD: nId
+                    property var iD: nId
+                    property string url: typeof oneNoteUrl === "undefined" ? "?" : oneNoteUrl;
 
                 }
 

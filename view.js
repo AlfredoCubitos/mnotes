@@ -4,6 +4,7 @@ var win;
 var note;
 var countPos =0;
 
+
 function openNote(id)
 {
 
@@ -23,12 +24,12 @@ function openNote(id)
 
 }
 
-function showNote(id)
+function showNote(id, tab)
 {
     var component = Qt.createComponent("Note.qml");
-      if (component.status == Component.Ready)
+      if (component.status === Component.Ready)
       {
-          note = component.createObject(notesApp,{"noteId":id});
+          note = component.createObject(notesApp,{"noteId":id,"noteTab":tab});
 
       }else{
           console.log(component.errorString())
@@ -36,7 +37,7 @@ function showNote(id)
 
       isNote = true;
 
-      stackview.push({item:note});
+       stack.push({item:note});
 
 }
 

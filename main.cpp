@@ -1,24 +1,34 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
-
 #include <QtGui>
 #include <QtQml>
-
 #include <QDebug>
+#include <QtWebView/QtWebView>
 
 #include "mnoteshandler.h"
 #include "mnotesconfig.h"
+#include "mnotesnetwork.h"
+#include "msonenoteapi.h"
+
+#include "OAuth/o2.h"
+#include "OAuth/o2msgraph.h"
+#include "OAuth/o2requestor.h"
+
 
 int main(int argc, char *argv[])
 {
 
     QApplication app(argc, argv);
+    QtWebView::initialize();
 
     app.setWindowIcon(QIcon(QPixmap(":/images/notes.png")));
 
     QQmlApplicationEngine engine;
     QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/main.qml")));
     qmlRegisterType<MNotesHandler>("de.bibuweb.mnotes",1,0,"MNotesHandler");
+    qmlRegisterType<MSGraph>("de.bibuweb.mnotes",1,0,"MSGraph");
+    qmlRegisterType<MSOneNoteApi>("de.bibuweb.mnotes",1,0,"MSOneNoteApi");
+//    qmlRegisterType<MSOneNoteModell>("de.bibuweb.mnotes",1,0,"MSOneNoteModell");
     // engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
 
 
@@ -26,6 +36,7 @@ int main(int argc, char *argv[])
 
     MNotesHandler mnotes;
     MnotesConfig config;
+
 
     QVariantList groups = config.readGroups();
 

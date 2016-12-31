@@ -4,7 +4,6 @@
         <file>view.js</file>
         <file>backend.js</file>
         <file>Elements.qml</file>
-        <file>Window.qml</file>
         <file>images/delete_icon.png</file>
         <file>images/list-add.png</file>
         <file>images/list-remove.png</file>
@@ -16,5 +15,11 @@
         <file>DelDialog.qml</file>
         <file>Note.qml</file>
         <file>images/icon-back.png</file>
+        <file>ActionElement.qml</file>
+        <file>ownnote.js</file>
+        <file>OwnNote.qml</file>
+        <file>Local.qml</file>
+        <file>OneNote.qml</file>
+        <file>OneNote.js</file>
     </qresource>
 </RCC>

@@ -98,4 +98,4 @@ void MnotesConfig::getDlgData( const QVariant &values)
                     writeConfig(group);
             }
 
-    }
+}
