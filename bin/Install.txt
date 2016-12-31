@@ -1,6 +1,6 @@
 This binary is for testing only!
 
-Its compiled on opensuse Leap 42.1 x86_64
+Its compiled on opensuse Leap 42.2 x86_64
 If you want to test it, you can copy the binary into your home directory $HOME/bin
 If you get an error try 
     ~> ldd MNotes
