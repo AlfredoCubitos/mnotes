@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
@@ -25,8 +25,8 @@ RowLayout {
 
         Button{
             id: loginButton
-            width: 40
-            height: 29
+            implicitWidth: 60
+            implicitHeight:  29
             anchors.leftMargin: 5
             anchors.left: parent.left
             anchors.verticalCenter: parent.verticalCenter
@@ -51,7 +51,11 @@ RowLayout {
             anchors.rightMargin: 20
             anchors.verticalCenter: parent.verticalCenter
             height: 29
-            iconSource:  isNote ? "images/icon-back.png" : "images/list-add.png"
+            background: Image {
+                id: btimage
+                source: isNote ? "images/icon-back.png" : "images/list-add.png"
+            }
+            //iconSource:  isNote ? "images/icon-back.png" : "images/list-add.png"
             onClicked:{
                 backButtonClicked(noteTitle.text)
 

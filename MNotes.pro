@@ -1,6 +1,6 @@
 TEMPLATE = app
 
-QT += qml quick widgets webview
+QT += qml quick widgets webview quickcontrols2
 
 
 SOURCES += main.cpp \

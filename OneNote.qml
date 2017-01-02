@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
@@ -21,7 +21,7 @@ ColumnLayout {
         scope: "wl.signin office.onenote wl.offline_access"
         onOpenBrowser: {
             msLogin.url = url
-            console.log("Request URL"+url)
+           // console.log("Request URL"+url)
         }
 
         onCloseBrowser: {
@@ -37,16 +37,13 @@ ColumnLayout {
         onLinkingSucceeded: {
             listHeader.actionlogin.visible = false
           //  noteStack.pop()
-            noteStack.push(scrollview)
+            noteStack.push(listview)
 
         //    console.log("linking succeeded "+ token)
 
             OneNote.getPages(token)
 
         }
-
-
-
     }
 
     MSOneNoteApi{
@@ -78,54 +75,39 @@ ColumnLayout {
     }
 
 
-   StackView{
+    StackView{
         id: noteStack
-        initialItem: scrollview
-         implicitWidth: notesApp.width-3
-        width: notesApp.width-3
+        initialItem: listview
+        implicitWidth: notesApp.width-3
         implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
-
-        ScrollView{
-            id: scrollview
-            implicitHeight: notesApp.height - listHeader.height - toolbar.height
-            style: ScrollViewStyle{
-                frame: Rectangle{
-                    color: "#eeec52"
-                    border.color: "#141312"
-                }
-
-                scrollBarBackground : Item  {
-                    implicitWidth: 14
-                    implicitHeight: 26
-                }
-            }
-
+        Rectangle{
+            id: listview
+            anchors.fill: parent
+            color: "#eeec52"
             ListView {
-                id: listview
+
+                anchors.fill: parent
                 model: notesModel
-               // delegate: Elements {}
+                // delegate: Elements {}
                 delegate: liste
+            }
+        }
+        Item {
+            id: msLogin
+            property url url: ""
 
+            WebView {
+                anchors.fill: parent
+                url: msLogin.url
+                onLoadingChanged: {
+
+                    if (url.toString().indexOf("code=M") !== -1)
+                        mslogin.redirected(url)
+                    //console.log("URLChanged: "+ url)
+
+                }
 
             }
-            Item {
-                id: msLogin
-                property url url: ""
-
-                WebView {
-                            anchors.fill: parent
-                            url: msLogin.url
-                            onLoadingChanged: {
-
-                                if (url.toString().indexOf("code=M") !== -1)
-                                    mslogin.redirected(url)
-                                    //console.log("URLChanged: "+ url)
-
-                            }
-
-                        }
-            }
-            // Stack.onStatusChanged:  console.log("Stackstatus: "+Stack.status )
         }
 
         onCurrentItemChanged: {

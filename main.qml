@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.3
+import QtQuick.Controls 1.4
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
@@ -23,8 +23,7 @@ import "OneNote.js" as One
 
 ApplicationWindow  {
     id: notesApp
-    width: 300
-    //height: 300
+    minimumWidth: 300
     minimumHeight: 300
     visible: true
 
@@ -66,7 +65,7 @@ ApplicationWindow  {
 
     toolBar: ToolBar{
         id: toolbar
-        height: 29
+        implicitHeight: 29
         RowLayout{
             anchors.fill: parent
             Item { Layout.fillWidth: true }

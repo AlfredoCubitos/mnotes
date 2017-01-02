@@ -29,7 +29,7 @@ function pagesReceived(obj){
 
 function getContent(url){
     var method = "GET";
-    console.log("getContent: "+notesApp.token)
+   // console.log("getContent: "+notesApp.token)
     var req = new XMLHttpRequest;
     req.open(method, url);
     if (notesApp.token !== undefined)

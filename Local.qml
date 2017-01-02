@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
@@ -52,43 +52,26 @@ ColumnLayout {
 
 
     StackView{
-         id: stackview
-         initialItem: scrollview
-          implicitWidth: notesApp.width-3
-         width: notesApp.width-3
-          implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
+        id: stackview
+        initialItem: listview
+        implicitWidth: notesApp.width-3
+        implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
+        Rectangle{
+            id: listview
+            anchors.fill: parent
+            color: "#eeec52"
+            ListView {
+                anchors.fill: parent
+                model: notesModel
+                delegate: liste
+            }
+        }
 
-         ScrollView{
-             id: scrollview
-             implicitHeight: notesApp.height - listHeader.height - toolbar.height
-             style: ScrollViewStyle{
-                 frame: Rectangle{
-                     color: "#eeec52"
-                     border.color: "#141312"
-                 }
+        onCurrentItemChanged: {
+            stackIndex = stackview.depth
+            console.log("idx: "+stackIndex)
+        }
 
-                 scrollBarBackground : Item  {
-                     implicitWidth: 14
-                     implicitHeight: 26
-                 }
-             }
-
-             ListView {
-                 id: listview
-                 model: notesModel
-                // delegate: Elements {}
-                 delegate: liste
-
-
-             }
-             // Stack.onStatusChanged:  console.log("Stackstatus: "+Stack.status )
-         }
-
-         onCurrentItemChanged: {
-             stackIndex = stackview.depth
-             console.log("idx: "+stackIndex)
-         }
-
-     }
+    }
     Component.onCompleted: {stack = stackview} //make stackview visible in view.js
 }

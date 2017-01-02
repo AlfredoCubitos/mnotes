@@ -25,7 +25,7 @@ Rectangle {
      // property Component tab: TabElement{}
 
       width: notesApp.width - 4
-	  height:38
+      implicitHeight:38
       color: "#eeed94"
 	  
       gradient: Gradient {
