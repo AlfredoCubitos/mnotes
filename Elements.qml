@@ -57,8 +57,8 @@ Rectangle {
             width: container.width - del.width - 8
             onClicked: {
               // View.openNote(buttonLabel.iD);
-                console.log("Tab "+tabView.getTab( tabView.currentIndex).title)
-                var tabTitle = tabView.getTab( tabView.currentIndex).title;
+                console.log("Tab "+tabView.currentItem.text)
+                var tabTitle = tabView.currentItem.text;
                 switch(tabTitle)
                 {
                 case "Local":

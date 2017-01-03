@@ -1,9 +1,9 @@
 import QtQuick 2.4
-import QtQuick.Controls 1.4
+import QtQuick.Controls 2.0
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
-import QtQuick.Layouts 1.2
+import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 
 import "backend.js" as DB
@@ -26,7 +26,9 @@ ApplicationWindow  {
     minimumWidth: 300
     minimumHeight: 300
     visible: true
-
+    background: Rectangle {
+        color: "#eeeeee"
+    }
 
     signal sbSignal(string txt)
     signal winSignal(var win)
@@ -63,7 +65,7 @@ ApplicationWindow  {
   * Menubar
   **/
 
-    toolBar: ToolBar{
+    header: ToolBar{
         id: toolbar
         implicitHeight: 29
         RowLayout{
@@ -72,7 +74,10 @@ ApplicationWindow  {
             ToolButton {
                 implicitHeight: 22
                 implicitWidth: 22
-                iconSource: "images/menu.png"
+                background: Image {
+                    source: "images/menu.png"
+                }
+
                 //onClicked: configDlg.open()
                 onClicked:tbmenu.visible ? tbmenu.visible=false : tbmenu.visible= true
 
@@ -80,49 +85,85 @@ ApplicationWindow  {
 
         }
     }
+    ColumnLayout{
+        TabBar{
+            id: tabView
+            width: parent.width
+            background: Rectangle {
+                    color: "#eeeeee"
+                }
+            TabButton{
+                text: qsTr("Local")
+                width: implicitWidth
+                height: implicitHeight
+                /*background: Rectangle{
+                    width: implicitWidth
+                    height: implicitHeight
+                    color: "#eeeeee"
+                    border.width: 1
+                    border.color: "#ffffff"
+                    radius: 4
+                }
+                contentItem: Text {
+                    text: parent.text
+                    font: parent.font
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }*/
+            }
+            TabButton{
+                width: implicitWidth
+                text: qsTr("OneNote")
+            }
 
-    TabView{
-        id: tabView
-        Tab{
-            id: localTab
-            title: qsTr("Local")
-            active: true
 
-            Loader{
-                id: tabloader
-                property Component liste: Elements{}
-                property string backend: "local"
-                source:  "Local.qml"
+            onCurrentIndexChanged:
+            {
+                //console.log("Tab:" + tabView.getTab(tabView.currentIndex).title)
+                console.log("Tab:" + tabView.currentItem.text)
+                notesModel.clear();
+                //switch(tabView.getTab(tabView.currentIndex).title){
+                switch(tabView.currentItem.text){
+
+                case "Local":
+                    DB.getTitels();
+                    break;
+                case "OneNote":
+                    /*open sign in for MS here*/
+
+
+                    break;
+                }
+            }
+
+        }
+        StackLayout {
+            width: parent.width
+            currentIndex: tabView.currentIndex
+
+            Item {
+                id: localTab
+                anchors.fill: parent
+                width: implicitWidth
+                Loader{
+                    id: tabloader
+                    property Component liste: Elements{}
+                    property string backend: "local"
+                    source:  "Local.qml"
+
+                }
 
             }
-        }
-       Tab{
-            id: oneNote
-            active: true
-            title: qsTr("OneNote")
-            Loader{
-                property Component liste: Elements {}
-                property string oneNoteToken
-                source: "OneNote.qml"
+            Item {
+                id: oneNote
+                Loader{
+                    property Component liste: Elements {}
+                    property string oneNoteToken
+                    source: "OneNote.qml"
+                }
             }
         }
-        onCurrentIndexChanged:
-        {
-            console.log("Tab:" + tabView.getTab(tabView.currentIndex).title)
-            notesModel.clear();
-            switch(tabView.getTab(tabView.currentIndex).title){
-
-            case "Local":
-                DB.getTitels();
-                break;
-            case "OneNote":
-                /*open sign in for MS here*/
-
-
-                break;
-            }
-        }
-
     }
     Item {
 
@@ -173,7 +214,7 @@ ApplicationWindow  {
             objectName: "noteText"
             Accessible.name: "mnotesHandler"
             focus: true
-            backgroundVisible: false
+           // backgroundVisible: false
             selectByMouse: true
             anchors.fill: parent
             text:  ""
@@ -198,7 +239,7 @@ ApplicationWindow  {
         }
 
     }
-    statusBar: StatusBar {
+    footer: Item {
         id: statusbar
         objectName: "statusBar"
         visible: false

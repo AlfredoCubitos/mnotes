@@ -21,7 +21,7 @@ RowLayout {
         color:"#EBEBB1"
         width: notesApp.width
         implicitWidth: notesApp.width
-        height: 35
+        implicitHeight: 35
 
         Button{
             id: loginButton
@@ -53,6 +53,7 @@ RowLayout {
             height: 29
             background: Image {
                 id: btimage
+                fillMode: Image.PreserveAspectFit
                 source: isNote ? "images/icon-back.png" : "images/list-add.png"
             }
             //iconSource:  isNote ? "images/icon-back.png" : "images/list-add.png"

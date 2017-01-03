@@ -39,8 +39,7 @@ Rectangle {
     objectName: "noteWindow"
     color: "#FFFF00"
     visible: true
-    width: 300
-    height: 300
+    anchors.fill: parent
 
     TextArea {
         width: note.width
