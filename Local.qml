@@ -10,6 +10,7 @@ import "view.js" as View
 ColumnLayout {
 
     spacing: 0
+  //  property var stack
 
     ActionElement{
         id: listHeader

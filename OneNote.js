@@ -90,7 +90,7 @@ function showNote(id, tab)
 
       isNote = true;
 
-       oneNoteStack.push({item:note});
+       oneNoteStack.push(note);
 
 
 }

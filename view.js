@@ -37,7 +37,8 @@ function showNote(id, tab)
 
       isNote = true;
 
-       stack.push({item:note});
+      // stack.push({item:note});
+      stack.push(note);
 
 }
 
