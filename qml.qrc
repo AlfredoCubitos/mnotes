@@ -5,7 +5,6 @@
         <file>backend.js</file>
         <file>Elements.qml</file>
         <file>images/delete_icon.png</file>
-        <file>images/list-add.png</file>
         <file>images/list-remove.png</file>
         <file>images/notes.png</file>
         <file>README.md</file>
@@ -14,12 +13,14 @@
         <file>ToolBarMenu.qml</file>
         <file>DelDialog.qml</file>
         <file>Note.qml</file>
-        <file>images/icon-back.png</file>
         <file>ActionElement.qml</file>
         <file>ownnote.js</file>
         <file>OwnNote.qml</file>
         <file>Local.qml</file>
         <file>OneNote.qml</file>
         <file>OneNote.js</file>
+        <file>images/delete.png</file>
+        <file>images/go-previous.png</file>
+        <file>images/list.png</file>
     </qresource>
 </RCC>

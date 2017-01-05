@@ -80,16 +80,19 @@ ColumnLayout {
         initialItem: listview
         implicitWidth: notesApp.width-3
         implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
-        Rectangle{
+        Item {
             id: listview
-            anchors.fill: parent
-            color: "#eeec52"
-            ListView {
+            Rectangle{
 
                 anchors.fill: parent
-                model: notesModel
-                // delegate: Elements {}
-                delegate: liste
+                color: "#eeec52"
+                ListView {
+
+                    anchors.fill: parent
+                    model: notesModel
+                    // delegate: Elements {}
+                    delegate: liste
+                }
             }
         }
         Item {

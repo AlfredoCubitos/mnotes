@@ -91,30 +91,47 @@ ApplicationWindow  {
             width: parent.width
             background: Rectangle {
                     color: "#eeeeee"
-                }
+
+            }
             TabButton{
                 text: qsTr("Local")
-                width: implicitWidth
-                height: implicitHeight
-                /*background: Rectangle{
-                    width: implicitWidth
-                    height: implicitHeight
-                    color: "#eeeeee"
-                    border.width: 1
-                    border.color: "#ffffff"
-                    radius: 4
+                width: 80
+                height: 40
+                background: Rectangle{
+                    opacity: parent.checked ? 1.0 : 0.3
+                    color: parent.checked ? "#eeeeee" : "#999797"
+                   // border.width: 1
+                  //  radius: 4
+                  //  border.color: "#a09f9f"
                 }
                 contentItem: Text {
                     text: parent.text
                     font: parent.font
+                    opacity: parent.checked ? 1.0 : 0.3
                     horizontalAlignment: Text.AlignHCenter
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
-                }*/
+                }
             }
             TabButton{
-                width: implicitWidth
+                width: 80
                 text: qsTr("OneNote")
+                height: 40
+                background: Rectangle{
+                    opacity: parent.checked ? 1.0 : 0.3
+                    color: parent.checked ? "#eeeeee" : "#999797"
+                   // border.width: 1
+                   // radius: 4
+                   // border.color: "#999f9f"
+                }
+                contentItem: Text {
+                    text: parent.text
+                    font: parent.font
+                    opacity: parent.checked ? 1.0 : 0.3
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
             }
 
 
@@ -150,6 +167,8 @@ ApplicationWindow  {
                     id: tabloader
                     property Component liste: Elements{}
                     property string backend: "local"
+                    anchors.top: parent.top
+                    anchors.topMargin: 0
                     source:  "Local.qml"
 
                 }
@@ -187,10 +206,10 @@ ApplicationWindow  {
         height: 32
         anchors.right: parent.right
         visible: false
-        onClicked: {
+     /*   onClicked: {
             configDlg.show()
             tbmenu.visible = false
-        }
+        }*/
     }
 
     ToolBarDialog{
@@ -205,8 +224,8 @@ ApplicationWindow  {
         objectName: "noteWindow"
         color: "#FFFF00"
         visible: false
-        width: 300
-        height: 300
+      //  width: 300
+      //  height: 300
 
         TextArea {
             width: parent.width

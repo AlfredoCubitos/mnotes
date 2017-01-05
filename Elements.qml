@@ -21,11 +21,11 @@ Rectangle {
       property int curIdx
    //   property string oneNoteUrl
 
-     // property alias btnLabel: buttonLabel.iD
+      property alias btnLabel: buttonLabel.iD //used in DelDialog
      // property Component tab: TabElement{}
 
       width: notesApp.width - 4
-      implicitHeight:38
+      implicitHeight:48
       color: "#eeed94"
 	  
       gradient: Gradient {
@@ -53,8 +53,9 @@ Rectangle {
 		 
         MouseArea {
             id: mouseArea
-            height: container.height
-            width: container.width - del.width - 8
+            height: container.height - 4
+            // width: container.width - del.width - 8
+            width: buttonLabel.width + 10
             onClicked: {
               // View.openNote(buttonLabel.iD);
                 console.log("Tab "+tabView.currentItem.text)
@@ -95,7 +96,7 @@ Rectangle {
 
                     text: titel
                     color: "black"
-                    font.pixelSize: 12
+                    font.pixelSize: 14
 
                     styleColor: "white"
                     style: Text.Raised
@@ -109,14 +110,17 @@ Rectangle {
 
                 Image{
                     id: del
-                    source: "images/list-remove.png"
+                    fillMode: Image.PreserveAspectFit
+                    source: "images/delete.png"
                     anchors.right:  parent.right
                     anchors.verticalCenter: parent.verticalCenter
                     anchors.rightMargin: 25
 
                     MouseArea {
                         id: remove
-                        anchors.fill: parent
+                        //anchors.fill: parent
+                        width: 40
+                        height: 40
                         onClicked:  delDialog.visible = true
                         hoverEnabled: true
 

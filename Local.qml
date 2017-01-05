@@ -20,7 +20,7 @@ ColumnLayout {
                 var Note = stackview.pop();
                 DB.initDB()
                 //+ Note.noteTxt.text
-                //  console.log("noteId: "+ noteID+ " "+noteTitle.text )
+                //  console.log("noteId: "+ noteID+ " "+Note )
 
 
                 if (noteID == 0) {
@@ -40,13 +40,13 @@ ColumnLayout {
 
                 isNote = false;
                 noteTitel = "New Note";
-                console.log("Ende")
+                // console.log("Ende")
 
             }else{
 
                // console.log("ELSE")
                 isNote = true
-                stackview.push({item:newNote, properties:{visible: true}, destroyOnPop: false})
+                stackview.push(newNote, {visible: true})
             }
         }
     }
@@ -57,20 +57,26 @@ ColumnLayout {
         initialItem: listview
         implicitWidth: notesApp.width-3
         implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
-        Rectangle{
+        Item{
             id: listview
-            anchors.fill: parent
-            color: "#eeec52"
-            ListView {
+            Rectangle{
+
                 anchors.fill: parent
-                model: notesModel
-                delegate: liste
+                color: "#eeec52"
+
+                ListView {
+                    anchors.fill: parent
+                    model: notesModel
+                    delegate: liste
+                    ScrollBar.vertical: ScrollBar { }
+                }
+
             }
         }
 
         onCurrentItemChanged: {
             stackIndex = stackview.depth
-            console.log("idx: "+stackIndex)
+            //console.log("idx: "+stackIndex)
         }
 
     }

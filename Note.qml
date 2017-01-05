@@ -39,7 +39,11 @@ Rectangle {
     objectName: "noteWindow"
     color: "#FFFF00"
     visible: true
-    anchors.fill: parent
+    /**
+    * Using anchors on the items added to a StackView is not supported.
+    * Error message: "QML Note: StackView has detected conflicting anchors."
+    **/
+   // anchors.fill: parent
 
     TextArea {
         width: note.width
