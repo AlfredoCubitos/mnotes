@@ -102,7 +102,7 @@
 	  
 	  if (data.rows.length > 0)
 	  {
-			noteText.text = data.rows.item(0).content;
+            noteTxt.text = data.rows.item(0).content;
             notesApp.noteTitel = data.rows.item(0).titel;
           //note.noteId = id;
 	  }

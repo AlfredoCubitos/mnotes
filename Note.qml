@@ -44,52 +44,54 @@ Rectangle {
     * Error message: "QML Note: StackView has detected conflicting anchors."
     **/
    // anchors.fill: parent
-
-    TextArea {
-        width: note.width
-        id: noteText
-        objectName: "noteText"
-         Accessible.name: "mnotesHandler"
-         focus: true
-        selectByMouse: true
+    Flickable{
+        id: flickTxt
         anchors.fill: parent
-        text:  mnotesHandler.text = content
-        textFormat: TextEdit.AutoText
-        Component.onCompleted: {
+        TextArea.flickable:  TextArea {
+            width: note.width
+            id: noteText
+            objectName: "noteText"
+            Accessible.name: "mnotesHandler"
+            focus: true
+            selectByMouse: true
+            anchors.fill: parent
+            text:  mnotesHandler.text = content
+            textFormat: TextEdit.AutoText
 
-            switch(noteTab)
-            {
-            case "Local":
-                DB.initDB();
-                DB.getNoteData(noteId);
-                break;
-            case "OneNote":
-                OneNote.getContent(buttonLabel.url)
-                break;
+            Component.onCompleted: {
+
+                switch(noteTab)
+                {
+                case "Local":
+                    DB.initDB();
+                    DB.getNoteData(noteId);
+                    break;
+                case "OneNote":
+                    OneNote.getContent(buttonLabel.url)
+                    break;
+                }
+
+                 //console.log("Note: "+noteTxt.text)
+                notesApp.winSignal(noteText)
+
             }
 
-
-
-
-          // console.log("Note: ")
-            notesApp.winSignal(noteText)
-
-        }
-
-        Keys.onPressed: {
-            if (event.key == Qt.Key_F3  )
-            {
-              //  console.log("F3")
-                if (curpos.length > 0)
-                    foundPos();
+            Keys.onPressed: {
+                if (event.key == Qt.Key_F3  )
+                {
+                    //  console.log("F3")
+                    if (curpos.length > 0)
+                        foundPos();
+                }
             }
         }
+        ScrollBar.vertical: ScrollBar { }
+
     }
 
-
-   MNotesHandler{
+    MNotesHandler{
         id: mnotesHandler
-        target: noteText
+        target: noteTxt
 
         onCurposChanged: {
             console.log("curpos:" + curpos)
