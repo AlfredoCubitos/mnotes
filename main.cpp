@@ -30,16 +30,11 @@ int main(int argc, char *argv[])
     qmlRegisterType<MSGraph>("de.bibuweb.mnotes",1,0,"MSGraph");
     qmlRegisterType<MSOneNoteApi>("de.bibuweb.mnotes",1,0,"MSOneNoteApi");
 //    qmlRegisterType<MSOneNoteModell>("de.bibuweb.mnotes",1,0,"MSOneNoteModell");
-    // engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
-
-
-
 
     MNotesHandler mnotes;
     MnotesConfig config;
 
-
-    QVariantList groups = config.readGroups();
+  //  QVariantList groups = config.readGroups();
 
     QObject *noteApp = component.create();
 
@@ -50,9 +45,7 @@ int main(int argc, char *argv[])
     QObject::connect(noteApp,SIGNAL(winSignal(QVariant)),&mnotes,SLOT(winSignal(QVariant)));
     QObject::connect(noteApp,SIGNAL(dialogOkSignal(QVariant)),&config,SLOT(getDlgData(QVariant)));
     QObject::connect(noteApp,SIGNAL(dialogSetGroups()),&mnotes,SLOT(setDialogGroups()));
-    QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
-
-
+  //  QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
 
     return app.exec();
 }

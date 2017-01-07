@@ -68,14 +68,14 @@ RowLayout {
                 fillMode: Image.PreserveAspectFit
                 source: isNote ? "images/go-previous.png" : "images/list.png"
             }
-            //iconSource:  isNote ? "images/icon-back.png" : "images/list-add.png"
+
             onClicked:{
                 backButtonClicked(noteTitle.text)
+                isNote ? null : statusbar.visible = false
 
             }
         }
 
     }
-
 
 }

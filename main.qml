@@ -224,8 +224,6 @@ ApplicationWindow  {
         objectName: "noteWindow"
         color: "#FFFF00"
         visible: false
-      //  width: 300
-      //  height: 300
 
         TextArea {
             width: parent.width
@@ -244,26 +242,15 @@ ApplicationWindow  {
             noteID = 0;
 
         }
-        Keys.onPressed: {
 
-            if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) && (stackIndex  > 1))
-            {
-                console.log("StackStatus: " + stackIndex)
-                statusbar.visible = true;
-                searchBox.focus = true;
-                notesApp.sbActiveSignal(searchBox)
-
-            }
-
-        }
 
     }
-    footer: Item {
+    footer: ToolBar{
         id: statusbar
         objectName: "statusBar"
         visible: false
-        height: 30
-        Row {
+        height: 40
+        RowLayout {
             anchors.fill: parent
             spacing: 5
 
@@ -276,35 +263,25 @@ ApplicationWindow  {
                 objectName: "searchbox"
                 property var svalues: []
                 width: 180
-                height: 18
+                height: 25
                 focus: true
                 onEditingFinished:  {
 
                     notesApp.sbSignal(searchBox.text)
 
-                    //noteText.focus = true;
                 }
-
 
             }
 
-
         }
+        Keys.onPressed: {
+            if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier))
+            {
+                // console.log("StackStatus: " + stackIndex)
+                statusbar.visible = statusbar.visible ? false: true;
 
-        /*   Keys.onPressed: {
-                    if (event.key === Qt.Key_F3  )
-                    {
-
-
-                        console.log("F3 2 ")
-
-
-                        if ( curpos.length > 0)
-                            foundPos();
-                    }
-
-                }*/
-
+            }
+        }
 
     }
 

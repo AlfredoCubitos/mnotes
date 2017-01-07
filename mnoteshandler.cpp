@@ -196,7 +196,8 @@ void MNotesHandler::setCurpos(const QVariant cur)
  */
 void MNotesHandler::callQmlFuntion(const char *fn, QObject *obj)
     {
-        QMetaObject::invokeMethod(m_target->parent(),fn);
+       // qDebug() << "Obj: "<<m_target->parent() << "Function: " << fn;
+       // QMetaObject::invokeMethod(m_target->parent(),fn);
     }
 
 

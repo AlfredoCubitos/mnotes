@@ -20,7 +20,6 @@ Rectangle {
     property int countPos: 0
     property alias noteTxt: noteText
 
-
     function foundPos()
     {
         if (countPos >  curpos.length-1)
@@ -39,6 +38,7 @@ Rectangle {
     objectName: "noteWindow"
     color: "#FFFF00"
     visible: true
+    focus: true
     /**
     * Using anchors on the items added to a StackView is not supported.
     * Error message: "QML Note: StackView has detected conflicting anchors."
@@ -47,6 +47,7 @@ Rectangle {
     Flickable{
         id: flickTxt
         anchors.fill: parent
+
         TextArea.flickable:  TextArea {
             width: note.width
             id: noteText
@@ -57,6 +58,8 @@ Rectangle {
             anchors.fill: parent
             text:  mnotesHandler.text = content
             textFormat: TextEdit.AutoText
+
+
 
             Component.onCompleted: {
 
@@ -77,13 +80,26 @@ Rectangle {
             }
 
             Keys.onPressed: {
-                if (event.key == Qt.Key_F3  )
+                if (event.key === Qt.Key_F3  )
                 {
-                    //  console.log("F3")
+                     console.log("F3")
                     if (curpos.length > 0)
                         foundPos();
                 }
+
+             //   if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier) && (stackIndex  > 1))
+                if (( event.key === Qt.Key_F)  && (event.modifiers & Qt.ControlModifier))
+                {
+                    console.log("StackStatus: " + stackIndex)
+                    statusbar.visible = statusbar.visible ? false: true;
+                    searchBox.focus = true;
+                    notesApp.sbActiveSignal(searchBox)
+                    notesApp.height = 340
+
+                }
             }
+
+
         }
         ScrollBar.vertical: ScrollBar { }
 
