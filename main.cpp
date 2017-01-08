@@ -45,7 +45,7 @@ int main(int argc, char *argv[])
     QObject::connect(noteApp,SIGNAL(winSignal(QVariant)),&mnotes,SLOT(winSignal(QVariant)));
     QObject::connect(noteApp,SIGNAL(dialogOkSignal(QVariant)),&config,SLOT(getDlgData(QVariant)));
     QObject::connect(noteApp,SIGNAL(dialogSetGroups()),&mnotes,SLOT(setDialogGroups()));
-  //  QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
+    QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
 
     return app.exec();
 }

@@ -178,12 +178,13 @@ void MNotesHandler::setText(const QString &arg)
  * @brief MNotesHandler::setCurpos
  * @param cur
  *
- * adds the cursor position into an array in Window.qml
+ * adds the cursor position into an array in Note.qml
  */
 
 void MNotesHandler::setCurpos(const QVariant cur)
     {
-       m_target->parent()->setProperty("curpos",cur);
+      //  qDebug()<< "setcupos " << cur;
+       m_target->parent()->parent()->parent()->setProperty("curpos",cur);
        emit curposChanged("foundPos",App);
     }
 
@@ -196,8 +197,8 @@ void MNotesHandler::setCurpos(const QVariant cur)
  */
 void MNotesHandler::callQmlFuntion(const char *fn, QObject *obj)
     {
-       // qDebug() << "Obj: "<<m_target->parent() << "Function: " << fn;
-       // QMetaObject::invokeMethod(m_target->parent(),fn);
+        //qDebug()  << "Function: " << fn;
+        QMetaObject::invokeMethod(m_target->parent()->parent()->parent(),fn);
     }
 
 
@@ -225,7 +226,6 @@ void MNotesHandler::winSignal(const QVariant &obj)
  */
 void MNotesHandler::searchSignal(const QString &str)
     {
-
         if (!m_target)
             return;
 
@@ -234,13 +234,10 @@ void MNotesHandler::searchSignal(const QString &str)
             QQuickTextDocument *qqdoc = doc.value<QQuickTextDocument*>();
             if (qqdoc)
                 {
-
                     d_mnote = qqdoc->textDocument();
                      setStatusBar();
                      highLighter(str);
-
                 }
-
         }
     }
 

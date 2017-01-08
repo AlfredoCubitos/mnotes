@@ -29,7 +29,7 @@ Rectangle {
             noteText.cursorPosition = curpos[ countPos];
 
         countPos++;
-     //   console.log(countPos)
+        console.log("curpos: "+curpos.length)
 
     }
 
@@ -46,8 +46,9 @@ Rectangle {
    // anchors.fill: parent
     Flickable{
         id: flickTxt
-        anchors.fill: parent
-
+       // anchors.fill: parent
+        height: parent.height
+        width: parent.width
         TextArea.flickable:  TextArea {
             width: note.width
             id: noteText
@@ -82,7 +83,8 @@ Rectangle {
             Keys.onPressed: {
                 if (event.key === Qt.Key_F3  )
                 {
-                     console.log("F3")
+                     console.log("F3 " + noteText.cursorPosition)
+                   // noteText.cursorPosition = 1
                     if (curpos.length > 0)
                         foundPos();
                 }
@@ -94,7 +96,13 @@ Rectangle {
                     statusbar.visible = statusbar.visible ? false: true;
                     searchBox.focus = true;
                     notesApp.sbActiveSignal(searchBox)
-                    notesApp.height = 340
+                    /**
+                     * put the window to right height, because not to hide the text with the statusbar
+                     * note: this works only setting Flickable width and height manualy. This does not work with anchor.fill: parent
+                     **/
+                    notesApp.height = notesApp.height + statusbar.height + 30
+                    noteText.height = noteText.height + statusbar.height
+                    flickTxt.height = flickTxt.height + statusbar.height
 
                 }
             }
