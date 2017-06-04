@@ -42,6 +42,8 @@ ApplicationWindow  {
 
     property bool isNote: false
     property string noteTitel: "New Note"
+    property string nTitel: ""  // for saving titles when switching tabs
+    property string nextTitel: "" // for saving titles
     property int curIndex
     property int noteID
     property int btnHeight: 38 // = Elements.container.height
@@ -138,7 +140,16 @@ ApplicationWindow  {
             onCurrentIndexChanged:
             {
                 //console.log("Tab:" + tabView.getTab(tabView.currentIndex).title)
-                console.log("Tab:" + tabView.currentItem.text)
+
+                nextTitel = noteTitel;
+                if (nTitel.length == 0)
+                    noteTitel = "New Note"
+                else
+                    noteTitel = nTitel
+
+                nTitel = nextTitel;
+
+
                 notesModel.clear();
                 //switch(tabView.getTab(tabView.currentIndex).title){
                 switch(tabView.currentItem.text){
@@ -148,7 +159,9 @@ ApplicationWindow  {
                     break;
                 case "OneNote":
                     /*open sign in for MS here*/
-
+                    if (notesApp.token)
+                        One.getPages(notesApp.token)
+                    console.log("Index OneNote")
 
                     break;
                 }

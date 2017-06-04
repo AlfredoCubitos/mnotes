@@ -1,5 +1,12 @@
 # MNotes
 
+Simple notes app for KDE 
+Can also read notes from OneNote in Office 365
+
+Now using Qt 5.9
+fixed some issues
+
+-------------------------
 Switched from QtQuick.Controls 1.4 to QtQuick.Controls 2.0 so this compiles also for Android
 Now Webview works also on Android 4.2.2
 

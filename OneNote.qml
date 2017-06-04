@@ -37,9 +37,9 @@ ColumnLayout {
         onLinkingSucceeded: {
             listHeader.actionlogin.visible = false
           //  noteStack.pop()
-            noteStack.push(listview)
 
-        //    console.log("linking succeeded "+ token)
+            console.log("Notestack: "+noteStack.depth)
+            noteStack.pop()
 
             OneNote.getPages(token)
 

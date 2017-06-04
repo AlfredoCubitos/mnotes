@@ -92,6 +92,5 @@ function showNote(id, tab)
 
        oneNoteStack.push(note);
 
-
 }
 
