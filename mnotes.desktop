@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=MNotes
+Exec=mnotes
+Icon=mnotes
+Terminal=false
+Categories=Office;
