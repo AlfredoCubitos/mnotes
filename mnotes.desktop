@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=MNotes
-Exec=mnotes
-Icon=mnotes
+Exec=MNOtes
+Icon=MNotes-icon.png
 Terminal=false
 Categories=Office;

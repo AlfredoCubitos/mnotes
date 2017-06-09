@@ -13,14 +13,26 @@ android-no-sdk {
     export(target.path)
     INSTALLS += target
 } else:unix {
+
+    isEmpty(PREFIX) {
+        PREFIX = /usr
+    }
+
     isEmpty(target.path) {
         qnx {
             target.path = /tmp/$${TARGET}/bin
         } else {
-            target.path = /opt/$${TARGET}/bin
+            target.path = $${PREFIX}/bin
         }
         export(target.path)
     }
+    shortcutfiles.files = mnotes.desktop
+    shortcutfiles.path = $$PREFIX/share/applications/
+    data.files += images/MNotes-icon.png
+    data.path = $$PREFIX/share/pixmaps/
+
+    INSTALLS += shortcutfiles
+    INSTALLS += data
     INSTALLS += target
 }
 
