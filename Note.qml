@@ -8,6 +8,7 @@ import de.bibuweb.mnotes 1.0
 import "backend.js" as DB
 import "view.js" as View
 import "OneNote.js" as OneNote
+import "nextnote.js" as NN
 
 
 Rectangle {
@@ -72,6 +73,9 @@ Rectangle {
                     break;
                 case "OneNote":
                     OneNote.getContent(buttonLabel.url)
+                    break;
+                case "Notes":
+                    NN.getNote(noteId);
                     break;
                 }
 

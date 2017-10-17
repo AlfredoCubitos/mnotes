@@ -5,11 +5,13 @@ import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
+import QtQml.Models 2.2
 
 import "backend.js" as DB
+import "nextnote.js" as NN
 import "view.js" as View
 import "OneNote.js" as One
-
+import org.kde.plasma.components 3.0 as PlasmaComponents
 /*
 * Ownnotes Datamodel
 * id: integer
@@ -24,7 +26,7 @@ import "OneNote.js" as One
 ApplicationWindow  {
     id: notesApp
     minimumWidth: 300
-    minimumHeight: 300
+    minimumHeight: 400
     visible: true
     background: Rectangle {
         color: "#eeeeee"
@@ -53,9 +55,13 @@ ApplicationWindow  {
 
     property var stack
     property var oneNoteStack
+    property var nextStack
 
     property var curpos: []
     property int countPos: 0
+    property alias delDialog: delDialog
+
+
 
 
 
@@ -87,6 +93,8 @@ ApplicationWindow  {
 
         }
     }
+
+
     ColumnLayout{
         TabBar{
             id: tabView
@@ -96,6 +104,7 @@ ApplicationWindow  {
 
             }
             TabButton{
+                id: tabButton
                 text: qsTr("Local")
                 width: 80
                 height: 40
@@ -134,7 +143,31 @@ ApplicationWindow  {
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
                 }
+
             }
+            TabButton{
+                id: nextNotes
+                width: 80
+                text: qsTr("Notes")
+                height: 40
+                background: Rectangle{
+                    opacity: parent.checked ? 1.0 : 0.3
+                    color: parent.checked ? "#eeeeee" : "#999797"
+                   // border.width: 1
+                   // radius: 4
+                   // border.color: "#999f9f"
+                }
+                contentItem: Text {
+                    text: parent.text
+                    font: parent.font
+                    opacity: parent.checked ? 1.0 : 0.3
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+            }
+
 
 
             onCurrentIndexChanged:
@@ -164,6 +197,12 @@ ApplicationWindow  {
                     console.log("Index OneNote")
 
                     break;
+                case "Notes":
+
+                   NN.getList()
+
+                    console.log("Index Notes " + data["url"])
+                    break;
                 }
             }
 
@@ -176,10 +215,12 @@ ApplicationWindow  {
                 id: localTab
                 anchors.fill: parent
                 width: implicitWidth
+                property alias listview: tabloader.liste
                 Loader{
                     id: tabloader
                     property Component liste: Elements{}
                     property string backend: "local"
+                    x: 0
                     anchors.top: parent.top
                     anchors.topMargin: 0
                     source:  "Local.qml"
@@ -193,6 +234,13 @@ ApplicationWindow  {
                     property Component liste: Elements {}
                     property string oneNoteToken
                     source: "OneNote.qml"
+                }
+            }
+            Item{
+                id: notes
+                Loader{
+                    property Component liste: Elements {}
+                    source: "nextNote.qml"
                 }
             }
         }
@@ -219,10 +267,10 @@ ApplicationWindow  {
         height: 32
         anchors.right: parent.right
         visible: false
-     /*   onClicked: {
-            configDlg.show()
+        onClicked: {
+            configDlg.visible = true
             tbmenu.visible = false
-        }*/
+        }
     }
 
     ToolBarDialog{
@@ -301,6 +349,10 @@ ApplicationWindow  {
     onClosing: {
         console.log("closing: "+ noteID)
 
+    }
+
+    DelDialog{
+        id: delDialog
     }
 
 }

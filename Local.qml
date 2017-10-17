@@ -10,7 +10,8 @@ import "view.js" as View
 ColumnLayout {
 
     spacing: 0
-  //  property var stack
+
+    property alias localListview: locaListe
 
     ActionElement{
         id: listHeader
@@ -65,10 +66,16 @@ ColumnLayout {
                 color: "#eeec52"
 
                 ListView {
+                    id: locaListe
                     anchors.fill: parent
                     model: notesModel
                     delegate: liste
-                    ScrollBar.vertical: ScrollBar { }
+                    ScrollBar.vertical: ScrollBar {
+                        active: notesModel.count > 3 ? true : false
+                        parent: parent
+                        anchors.top: parent.top
+                        anchors.right: parent.right
+                    }
                 }
 
             }

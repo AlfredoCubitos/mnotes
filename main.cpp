@@ -34,11 +34,16 @@ int main(int argc, char *argv[])
     MNotesHandler mnotes;
     MnotesConfig config;
 
-  //  QVariantList groups = config.readGroups();
+    QQmlContext *context = new QQmlContext(engine.rootContext());
+    context->setContextProperty("configData",&config);
 
-    QObject *noteApp = component.create();
+
+   // QVariantList groups = config.readGroups();
+
+    QObject *noteApp = component.create(context);
 
   //  QMetaObject::invokeMethod(noteApp,"addMenuItem",Q_ARG(QVariant, groups));
+
 
     QObject::connect(noteApp,SIGNAL(sbSignal(QString)),&mnotes,SLOT(searchSignal(QString)));
     QObject::connect(noteApp,SIGNAL(sbActiveSignal(QVariant)),&mnotes,SLOT(activeSb(QVariant)));

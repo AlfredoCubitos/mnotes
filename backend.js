@@ -111,10 +111,9 @@
   
 function deleteNote(id)
 {
-      if(!db)
-          initDB();
+      initDB();
       db.transaction( function(tx){
-                                data = tx.executeSql('DELETE  FROM NotesDB WHERE id='+id);
+                               var data = tx.executeSql('DELETE  FROM NotesDB WHERE id= ?',[id]);
                             }
 
       );

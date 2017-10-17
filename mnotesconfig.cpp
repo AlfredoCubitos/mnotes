@@ -85,7 +85,6 @@ void MnotesConfig::getDlgData( const QVariant &values)
                          if (it.name() == "group")
                              {
                                  group = it.value().toString();
-                                 it.next();
                              }
                          setConfig(it.name(),it.value().toString());
                     }
@@ -98,4 +97,27 @@ void MnotesConfig::getDlgData( const QVariant &values)
                     writeConfig(group);
             }
 
+}
+/**
+ * @brief QHash<QString,QString> readConfig(QString group)
+ * @param QString group
+ * Invoked from QML to read the config
+ **/
+QJsonObject MnotesConfig::readConfig(QString group)
+{
+    settings->beginGroup(group);
+    QStringList keys = settings->allKeys();
+    int size = keys.count();
+    QJsonObject hash;
+
+    for(int i=0;i<size;++i)
+    {
+        hash.insert("url",settings->value("url").toString());
+        hash.insert("login",settings->value("login").toString());
+        hash.insert("password",settings->value("password").toString());
+        hash.insert("visible",settings->value("visible").toString());
+    }
+
+ // qDebug() << "readConfig" << group << " " << keys;
+ return hash;
 }

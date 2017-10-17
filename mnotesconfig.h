@@ -4,7 +4,7 @@
 #include <QObject>
 #include <QSettings>
 #include <QHash>
-
+#include <QJsonObject>
 
 
 
@@ -18,6 +18,7 @@ public:
     void writeConfig(const QString group);
     void readConfigGroup(const QString group);
     void setConfig(const QString key, const QString value);
+    Q_INVOKABLE QJsonObject readConfig(QString group);
     QVariantList readGroups();
     
 private:

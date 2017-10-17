@@ -1,30 +1,20 @@
 import QtQuick 2.0
 import QtQuick.Layouts 1.1
 import QtQuick.Dialogs 1.2
-import QtQuick.Controls 2.0
-import QtQuick.Window 2.2
+import QtQuick.Controls 2.2
 
-Window {
+Dialog {
     id: configDlg
     title: "Config Dialog"
-    width: 300
-    height: 250
+    implicitWidth: parent.width
+    modal: true
 
-    flags: Qt.Dialog
-    modality: Qt.WindowModal
-
-    onActiveChanged:{
-            if (tbmenu.title == "OneNote")
-                dlgUrl.text = "https://"
-    }
-
+    standardButtons: Dialog.Ok | Dialog.Cancel
 
     GridLayout {
         columns: 2
         rowSpacing: 5
-        columnSpacing: 5
-        anchors.leftMargin: 10
-        anchors.rightMargin: 10
+        columnSpacing: 0
 
         anchors.fill: parent
 
@@ -47,7 +37,7 @@ Window {
         }
 
         Label {
-            text: qsTr("URL")
+            text: qsTr("URL: ")
         }
         TextField{
             id: dlgUrl
@@ -55,7 +45,7 @@ Window {
         }
 
         Label {
-            text: qsTr("Login")
+            text: qsTr("Login: ")
         }
         TextField{
             id: dlgLogin
@@ -63,7 +53,7 @@ Window {
         }
 
         Label {
-            text: qsTr("Password")
+            text: qsTr("Password: ")
         }
         TextField{
             id: dlgPassword
@@ -76,44 +66,36 @@ Window {
         CheckBox{
             id: dlgVisible
         }
+    }
 
-        Item {
-            id: cancel
-            implicitHeight: cancelBtn.height
-            implicitWidth: cancelBtn.width
+    onOpened: {
 
-            Button {
-                id: cancelBtn
-                text: qsTr("cancel")
-                onClicked: configDlg.close()
-
-            }
-        }
-        Item {
-            id: ok
-            implicitHeight: okBtn.height
-            Layout.fillWidth: true
-
-            Button {
-                id: okBtn
-                anchors.right: parent.right
-                anchors.rightMargin:  10
-                text: qsTr("save")
-                onClicked: {
-                    var config = {}
-                    config["group"] = tbmenu.title
-                    config["url"] = dlgUrl.text
-                    config["login"] = dlgLogin.text
-                    config["password"] = dlgPassword.text
-                    config["visible"] = dlgVisible.checked
-
-                    dialogOkSignal(config)
-
-                    configDlg.close()
-                }
-            }
+        switch(tbmenu.title)
+        {
+            case "OwnCloud":
+                var data = configData.readConfig("OwnCloud");
+                dlgUrl.text = data["url"];
+                dlgLogin.text = data["login"];
+                dlgPassword.text = data["password"];
+                dlgVisible.checked = data["visible"];
+                break;
 
         }
+
+
+    }
+
+    onAccepted: {
+        var config = {}
+        config["group"] = tbmenu.title
+        config["url"] = dlgUrl.text
+        config["login"] = dlgLogin.text
+        config["password"] = dlgPassword.text
+        config["visible"] = dlgVisible.checked
+
+        dialogOkSignal(config)
+
+        configDlg.close()
     }
 
 }

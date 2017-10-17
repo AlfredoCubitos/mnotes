@@ -1,4 +1,4 @@
-var inc = Qt.include("file:./plugin.js")
+//var inc = Qt.include("file:./plugin.js")
 
 var win;
 var note;
@@ -67,7 +67,7 @@ function updateList(id, titel)
 }
 function removeFromList(idx)
 {
-     notesModel.remove(index);
+     notesModel.remove(idx);
 }
 function search()
 {

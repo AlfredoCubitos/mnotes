@@ -14,8 +14,8 @@
         <file>DelDialog.qml</file>
         <file>Note.qml</file>
         <file>ActionElement.qml</file>
-        <file>ownnote.js</file>
-        <file>OwnNote.qml</file>
+        <file>nextnote.js</file>
+        <file>nextNote.qml</file>
         <file>Local.qml</file>
         <file>OneNote.qml</file>
         <file>OneNote.js</file>

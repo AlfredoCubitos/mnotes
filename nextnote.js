@@ -1,44 +1,68 @@
-function ownNote_Client(method)
+var note;
+
+function ownNote_Client(method,dataObj)
 {
     var request = new XMLHttpRequest();
 
+    var data = configData.readConfig("OwnCloud")
+    var url = data["url"];
 
     request.onreadystatechange = function(){
-        if (request.readyState === 4 && request.status === 200) {
+
+        if (request.readyState == XMLHttpRequest.OPENED)
+        {
+            request.setRequestHeader("Authorization",  "Basic " + Qt.btoa(data["login"] + ":" + data["password"]))
+        }
+
+        if( request.readyState == XMLHttpRequest.DONE){
             var type = request.getResponseHeader("Content-Type");
-           if (type.indexOf( "json"))
-           {
+
+            if (type.indexOf( "json"))
+            {
                 switch(method)
                 {
-                    case "list":
-                        parseJson(JSON.parse(request.responseText));
-                        break;
-                    case "edit":
-                        edit(request.responseText)
-                        break;
+                case "list":
+                    parseJson(JSON.parse(request.responseText));
+                    break;
+                case "note":
+                    parseNote(JSON.parse(request.responseText))
+                    break;
 
                 }
 
 
-           }else{
-               console.log("got no json data")
-           }
+            }else{
+                console.log("got no json data")
+            }
 
-        }else{
-            console.log("State: "+ request.readyState)
         }
     }
 
-    return request;
+    switch (method)
+    {
+
+        case "list":
+            url = url + "/index.php/apps/notes/api/v0.2/notes";
+            request.open("GET",url, true);
+            break;
+        case "note":
+            console.log(dataObj["id"])
+            url = url + "/index.php/apps/notes/api/v0.2/notes/" +dataObj["id"];
+            request.open("GET",url, true);
+            break;
+
+    }
+
+    request.send();
+
+
 }
 
-function getList(name,pw,url)
+
+
+function getList()
 {
-    var request = ownNote_Client("list");
-    request.open("GET",url, true);
-    request.setRequestHeader("Authorization",  "Basic " + Qt.btoa(name + ":" + pw))
-    request.send();
-    
+    ownNote_Client("list");
 }
 
 
@@ -46,32 +70,43 @@ function parseJson(json)
 {
     for (var i in json)
     {
-        //console.log(json[i].name)
-        notesModel.append({"nId": json[i].toString().id,"titel": json[i].name,})
+        console.log(json[i].id)
+        notesModel.append({"nId": json[i].id,"titel": json[i].title,})
 
     }
 
 }
 
-function getNote(name,pw,url,note,group)
+function getNote(id)
 {
-     var request = ownNote_Client("edit");
-    var data =  JSON.stringify({"name":note,"group":group})
-    console.log("Data: "+data)
-    request.open("POST",url, true);
-    request.setRequestHeader("Authorization",  "Basic " + Qt.btoa(name + ":" + pw))
-    request.setRequestHeader("Content-type", "application/json");
-    request.send(data);
+     var data = {"id": id}
+     var request = ownNote_Client("note",data);
+
 }
 
-function edit(txt)
+function parseNote(json)
 {
-
-    console.log("Text:" +  normalize(txt) )
-    noteText.text = txt;
+   noteTxt.text = json.content;
+   notesApp.noteTitel = json.title;
 }
 
-function normalize(str)
+function showNote(id, tab)
 {
-    return txt
+    var component = Qt.createComponent("Note.qml");
+      if (component.status === Component.Ready)
+      {
+          note = component.createObject(notesApp,{"noteId":id,"noteTab":tab});
+
+      }else{
+          console.log(component.errorString())
+      }
+
+      isNote = true;
+
+      // stack.push({item:note});
+      nextStack.push(note);
+
 }
+
+
+

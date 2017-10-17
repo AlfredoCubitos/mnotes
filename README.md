@@ -1,8 +1,18 @@
 # MNotes
 
-Simple notes app for KDE 
-Can also read notes from OneNote in Office 365
+## Multinotes tracker for Linux
 
+Read and/or write notes from multiple locations
+Each location has its own tabbutton in a tabbar
+
+**Features in this version:**
+-----------------------------
+
+* Read and write notes locally
+* Read notes from Next-/Owncloud
+* Read notes from O365/OneNote 
+
+-------------------------
 Now using Qt 5.9
 fixed some issues
 

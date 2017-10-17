@@ -1,10 +1,11 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.2
-import "."
+//import "."
 import "view.js" as View
 import "backend.js" as DB
 import "OneNote.js" as OneNote
+import "nextnote.js" as NN
 
 
 /**
@@ -73,6 +74,11 @@ Rectangle {
                     // console.log("click: " +  )
                     notesApp.curIndex = index;
                     break;
+                case "Notes":
+                    NN.showNote(buttonLabel.iD, tabTitle)
+                    notesApp.curIndex = index;
+                    notesApp.noteID = buttonLabel.iD;
+                    break;
                 }
 
 
@@ -121,7 +127,11 @@ Rectangle {
                         //anchors.fill: parent
                         width: 40
                         height: 40
-                        onClicked:  delDialog.visible = true
+                        onClicked:  {
+                            notesApp.curIndex = index;
+                            notesApp.noteID = buttonLabel.iD;
+                            notesApp.delDialog.visible = true
+                        }
                         hoverEnabled: true
 
                     }
@@ -131,9 +141,7 @@ Rectangle {
         }
     }
 
-      DelDialog{
-          id: delDialog
-      }
+
 	  
 }
 
