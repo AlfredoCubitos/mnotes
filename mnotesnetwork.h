@@ -15,8 +15,7 @@ class MNotesNetwork : public QObject
   // QString group;
 
 public:
-    explicit MNotesNetwork(QObject *parent = 0);
-    explicit MNotesNetwork(QString group);
+    explicit MNotesNetwork(QString group,QObject *parent = 0);
 
 
    void getMNotesJson(const QByteArray data);

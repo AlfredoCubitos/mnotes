@@ -1,14 +1,7 @@
 #include "mnotesnetwork.h"
 
 
-MNotesNetwork::MNotesNetwork(QObject *parent) : QObject(parent)
-{
-
-    MNotesConnect();
-
-}
-
-MNotesNetwork::MNotesNetwork(QString group)
+MNotesNetwork::MNotesNetwork(QString group,QObject *parent)
 {
 
     MNotesConnect();

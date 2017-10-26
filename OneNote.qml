@@ -30,12 +30,12 @@ ColumnLayout {
         }
 
         onLinkedChanged: {
-            listHeader.actionlogin.visible = true
+            oneNotelistHeader.actionlogin.visible = true
 
 
         }
         onLinkingSucceeded: {
-            listHeader.actionlogin.visible = false
+            oneNotelistHeader.actionlogin.visible = false
           //  noteStack.pop()
 
             console.log("Notestack: "+noteStack.depth)
