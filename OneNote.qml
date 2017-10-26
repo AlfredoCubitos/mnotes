@@ -57,7 +57,7 @@ ColumnLayout {
     }
 
     ActionElement{
-        id: listHeader
+        id: oneNotelistHeader
         actionlogin.visible:  mslogin.linked ? false:true
 
         onBackButtonClicked: {
@@ -79,7 +79,7 @@ ColumnLayout {
         id: noteStack
         initialItem: listview
         implicitWidth: notesApp.width-3
-        implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
+        implicitHeight: notesApp.height - oneNotelistHeader.height - toolbar.height - btnHeight
         Item {
             id: listview
             Rectangle{

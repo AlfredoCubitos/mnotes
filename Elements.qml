@@ -25,6 +25,7 @@ Rectangle {
       property alias btnLabel: buttonLabel.iD //used in DelDialog
      // property Component tab: TabElement{}
 
+
       width: notesApp.width - 4
       implicitHeight:48
       color: "#eeed94"
@@ -78,6 +79,9 @@ Rectangle {
                     NN.showNote(buttonLabel.iD, tabTitle)
                     notesApp.curIndex = index;
                     notesApp.noteID = buttonLabel.iD;
+                    notesApp.category = buttonLabel.category
+                    notesApp.favorite = buttonLabel.favorite
+
                     break;
                 }
 
@@ -107,6 +111,8 @@ Rectangle {
                     styleColor: "white"
                     style: Text.Raised
                     property var iD: nId
+                    property string category
+                    property bool favorite
                     property string url: typeof oneNoteUrl === "undefined" ? "?" : oneNoteUrl;
 
                 }

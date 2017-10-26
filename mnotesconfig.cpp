@@ -8,6 +8,7 @@
 MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
     {
         settings = new QSettings("MNotes","Mnotes");
+
     }
 
 void MnotesConfig::writeConfig(const QString group)
@@ -110,14 +111,16 @@ QJsonObject MnotesConfig::readConfig(QString group)
     int size = keys.count();
     QJsonObject hash;
 
+
+
     for(int i=0;i<size;++i)
     {
-        hash.insert("url",settings->value("url").toString());
-        hash.insert("login",settings->value("login").toString());
-        hash.insert("password",settings->value("password").toString());
-        hash.insert("visible",settings->value("visible").toString());
+        hash.insert("url",settings->value(group+"/url").toString());
+        hash.insert("login",settings->value(group+"/login").toString());
+        hash.insert("password",settings->value(group+"/password").toString());
+        hash.insert("visible",settings->value(group+"/visible").toString());
     }
 
- // qDebug() << "readConfig" << group << " " << keys;
+  qDebug() << "readConfig" << hash;
  return hash;
 }

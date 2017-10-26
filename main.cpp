@@ -30,12 +30,17 @@ int main(int argc, char *argv[])
     qmlRegisterType<MSGraph>("de.bibuweb.mnotes",1,0,"MSGraph");
     qmlRegisterType<MSOneNoteApi>("de.bibuweb.mnotes",1,0,"MSOneNoteApi");
 //    qmlRegisterType<MSOneNoteModell>("de.bibuweb.mnotes",1,0,"MSOneNoteModell");
+    qmlRegisterType<MnotesConfig>("de.bibuweb.mnotes",1,0,"MnotesConfig");
 
     MNotesHandler mnotes;
     MnotesConfig config;
+    MNotesNetwork network("OwnCloud");
+
 
     QQmlContext *context = new QQmlContext(engine.rootContext());
     context->setContextProperty("configData",&config);
+    context->setContextProperty("netWork",&network);
+
 
 
    // QVariantList groups = config.readGroups();
@@ -51,6 +56,7 @@ int main(int argc, char *argv[])
     QObject::connect(noteApp,SIGNAL(dialogOkSignal(QVariant)),&config,SLOT(getDlgData(QVariant)));
     QObject::connect(noteApp,SIGNAL(dialogSetGroups()),&mnotes,SLOT(setDialogGroups()));
     QObject::connect(&mnotes,SIGNAL(curposChanged(const char*,QObject*)),&mnotes,SLOT(callQmlFuntion(const char*,QObject*)));
+
 
     return app.exec();
 }

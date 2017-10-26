@@ -24,6 +24,7 @@ public:
 private:
     QSettings *settings;
     QHash<QString,QString> config;
+
    
   //  QStringList readConfigGroup();
 

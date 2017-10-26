@@ -6,6 +6,7 @@ import QtQuick.LocalStorage 2.0
 
 import "backend.js" as DB
 import "view.js" as View
+import "nextnote.js" as NN
 
 RowLayout {
 

@@ -70,10 +70,13 @@ Dialog {
 
     onOpened: {
 
+        console.log("Dlg: "+tbmenu.title)
+
         switch(tbmenu.title)
         {
             case "OwnCloud":
                 var data = configData.readConfig("OwnCloud");
+                console.log("Dlg: " +data)
                 dlgUrl.text = data["url"];
                 dlgLogin.text = data["login"];
                 dlgPassword.text = data["password"];

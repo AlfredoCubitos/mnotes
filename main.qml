@@ -38,7 +38,7 @@ ApplicationWindow  {
     signal dialogOkSignal(var values)
     signal dialogSetGroups()
 
-    property string dialogGroups: "Moin"
+ //   property string dialogGroups: "Moin"
 
     property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
 
@@ -48,6 +48,8 @@ ApplicationWindow  {
     property string nextTitel: "" // for saving titles
     property int curIndex
     property int noteID
+    property string category:  "" // Category used by notes in Nextcloud
+    property bool favorite: false // used by notes in Nextcloud
     property int btnHeight: 38 // = Elements.container.height
     property int stackIndex
 
@@ -61,8 +63,7 @@ ApplicationWindow  {
     property int countPos: 0
     property alias delDialog: delDialog
 
-
-
+    property string request // request property for nextNote
 
 
     ListModel{
@@ -125,27 +126,6 @@ ApplicationWindow  {
                 }
             }
             TabButton{
-                width: 80
-                text: qsTr("OneNote")
-                height: 40
-                background: Rectangle{
-                    opacity: parent.checked ? 1.0 : 0.3
-                    color: parent.checked ? "#eeeeee" : "#999797"
-                   // border.width: 1
-                   // radius: 4
-                   // border.color: "#999f9f"
-                }
-                contentItem: Text {
-                    text: parent.text
-                    font: parent.font
-                    opacity: parent.checked ? 1.0 : 0.3
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
-
-            }
-            TabButton{
                 id: nextNotes
                 width: 80
                 text: qsTr("Notes")
@@ -167,12 +147,34 @@ ApplicationWindow  {
                 }
 
             }
+            TabButton{
+                width: 80
+                text: qsTr("OneNote")
+                height: 40
+                background: Rectangle{
+                    opacity: parent.checked ? 1.0 : 0.3
+                    color: parent.checked ? "#eeeeee" : "#999797"
+                   // border.width: 1
+                   // radius: 4
+                   // border.color: "#999f9f"
+                }
+                contentItem: Text {
+                    text: parent.text
+                    font: parent.font
+                    opacity: parent.checked ? 1.0 : 0.3
+                    horizontalAlignment: Text.AlignHCenter
+                    verticalAlignment: Text.AlignVCenter
+                    elide: Text.ElideRight
+                }
+
+            }
+
 
 
 
             onCurrentIndexChanged:
             {
-                //console.log("Tab:" + tabView.getTab(tabView.currentIndex).title)
+                console.log("Tab changed:" )
 
                 nextTitel = noteTitel;
                 if (nTitel.length == 0)
@@ -182,9 +184,9 @@ ApplicationWindow  {
 
                 nTitel = nextTitel;
 
-
                 notesModel.clear();
-                //switch(tabView.getTab(tabView.currentIndex).title){
+
+
                 switch(tabView.currentItem.text){
 
                 case "Local":
@@ -199,9 +201,10 @@ ApplicationWindow  {
                     break;
                 case "Notes":
 
-                   NN.getList()
+                  // netWork.resultAvailable.connect(NN.parseJson)
+                    console.log("Index Notes " )
+                    NN.getList();
 
-                    console.log("Index Notes " + data["url"])
                     break;
                 }
             }
@@ -228,6 +231,14 @@ ApplicationWindow  {
                 }
 
             }
+            Item{
+                id: notes
+                Loader{
+                    property Component liste: Elements {}
+
+                    source: "nextNote.qml"
+                }
+            }
             Item {
                 id: oneNote
                 Loader{
@@ -236,13 +247,7 @@ ApplicationWindow  {
                     source: "OneNote.qml"
                 }
             }
-            Item{
-                id: notes
-                Loader{
-                    property Component liste: Elements {}
-                    source: "nextNote.qml"
-                }
-            }
+
         }
     }
     Item {
@@ -256,6 +261,10 @@ ApplicationWindow  {
             DB.initDB();
             DB.getTitels(); // create model
 
+            /**
+              * make Connection to Notes
+              **/
+            netWork.resultAvailable.connect(NN.parseJson)
 
         }
 
@@ -353,6 +362,30 @@ ApplicationWindow  {
 
     DelDialog{
         id: delDialog
+        onAccepted: {
+           // console.log("del id: " +notesApp.noteID)
+           // console.log("del index: " + curIndex)
+            var curTab = ""
+            curTab = tabView.itemAt(tabView.currentIndex).text
+           // console.log("del "+ tabView.itemAt(tabView.currentIndex).text)
+
+            switch(curTab){
+            case "Local":
+                DB.deleteNote(noteID);
+                notesModel.remove(curIndex);
+                break;
+            case "Notes":
+                NN.delNote(noteID);
+                notesModel.remove(curIndex);
+                break;
+            }
+
+
+
+
+        }
     }
+
+
 
 }

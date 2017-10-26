@@ -1,11 +1,28 @@
 # MNotes
 
 ## Multinotes tracker for Linux
+### one app for various notes
 
 Read and/or write notes from multiple locations
-Each location has its own tabbutton in a tabbar
+Each location has its own tab button
 
-**Features in this version:**
+With this actual version you can fully manage your Notes
+in a Next-/Owncloud
+
+Note:
+* MNotes is currently in an alpha version
+* login data are stored unencrypted
+* the access to OneNote in MS Office 365 is more or less a proof of concept, to see how OAuth authentication can be realized in a desktop app
+
+Note on Own-/Nexcloud:
+* notes in Next-/Owncloud are using the first line as a title.
+So titles can be changed by editing the first line in your note
+
+**New Features in this version:**
+-----------------------------
+
+* Read, write, add new, delete notes from Next-/Owncloud
+
 -----------------------------
 
 * Read and write notes locally

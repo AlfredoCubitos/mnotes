@@ -21,6 +21,9 @@ Rectangle {
     property int countPos: 0
     property alias noteTxt: noteText
 
+
+
+
     function foundPos()
     {
         if (countPos >  curpos.length-1)
@@ -75,6 +78,7 @@ Rectangle {
                     OneNote.getContent(buttonLabel.url)
                     break;
                 case "Notes":
+                    netWork.resultAvailable.connect(NN.parseJson)
                     NN.getNote(noteId);
                     break;
                 }

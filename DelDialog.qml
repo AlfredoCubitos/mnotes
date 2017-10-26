@@ -2,7 +2,6 @@ import QtQuick 2.0
 import QtQuick.Controls 2.2
 import QtQuick.LocalStorage 2.0
 
-import "backend.js" as DB
 Dialog {
      id: delDialog
      modal: true
@@ -20,11 +19,6 @@ Dialog {
          }
 
      standardButtons: Dialog.Ok | Dialog.Abort
-     onAccepted: {
-        // console.log("del id: " +notesApp.noteID)
-        // console.log("del index: " + curIndex)
-         DB.deleteNote(noteID);
-         notesModel.remove(curIndex)
 
-     }
+
  }
