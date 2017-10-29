@@ -1,6 +1,6 @@
 # MNotes
 
-## Multinotes tracker for Linux
+## Multinotes tracker for Linux and Android
 ### one app for various notes
 
 Read and/or write notes from multiple locations
@@ -17,6 +17,13 @@ Note:
 Note on Own-/Nexcloud:
 * notes in Next-/Owncloud are using the first line as a title.
 So titles can be changed by editing the first line in your note
+
+### Compiling for Android
+
+If you want to run this App on Android, you have to install openSSL first as descriped [here](http://doc.qt.io/qt-5/opensslsupport.html)
+I followed [this example](https://www.ip6.li/node/52) to compile libssl.
+To configure I used `./Configure shared -fPIC -fPIE -pie android-armv7` and left off the last 3 lines
+With the `shared` option the libs were installed in the source directory.
 
 **New Features in this version:**
 -----------------------------

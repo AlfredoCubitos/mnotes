@@ -41,3 +41,9 @@ DISTFILES += \
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
 
+contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
+    ANDROID_EXTRA_LIBS = \
+        /home/manni/Devel/Plasma/MNotes/MNotes/../../../openssl-1.0.2l/libcrypto.so \
+        $$PWD/../../../openssl-1.0.2l/libssl.so
+}
+

@@ -11,7 +11,7 @@ import "backend.js" as DB
 import "nextnote.js" as NN
 import "view.js" as View
 import "OneNote.js" as One
-import org.kde.plasma.components 3.0 as PlasmaComponents
+//import org.kde.plasma.components 3.0 as PlasmaComponents
 /*
 * Ownnotes Datamodel
 * id: integer
@@ -97,6 +97,7 @@ ApplicationWindow  {
 
 
     ColumnLayout{
+
         TabBar{
             id: tabView
             width: parent.width

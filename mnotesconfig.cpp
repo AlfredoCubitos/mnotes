@@ -3,12 +3,21 @@
 #include <QDebug>
 #include <QJSValue>
 #include <QJSValueIterator>
+#include <QStandardPaths>
 
-
+/**
+ * @brief MnotesConfig class
+ * @param group name to read
+ * @note on Android settings path depends on the context
+ * @note on Android there is at least a user and an application context
+ * @note path user context:
+ */
 MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
     {
         settings = new QSettings("MNotes","Mnotes");
 
+        QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+        settings->setPath(QSettings::NativeFormat, QSettings::SystemScope,path);
     }
 
 void MnotesConfig::writeConfig(const QString group)
@@ -23,6 +32,7 @@ void MnotesConfig::writeConfig(const QString group)
                     }
                 settings->endGroup();
             }
+        settings->sync();
     }
 
 void MnotesConfig::readConfigGroup(const QString group)
@@ -106,21 +116,36 @@ void MnotesConfig::getDlgData( const QVariant &values)
  **/
 QJsonObject MnotesConfig::readConfig(QString group)
 {
+
+    QString key = "";
     settings->beginGroup(group);
     QStringList keys = settings->allKeys();
     int size = keys.count();
     QJsonObject hash;
 
+    if (size > 0)
+        key = keys.at(0);
 
-
-    for(int i=0;i<size;++i)
+    if (key.contains("/"))
     {
-        hash.insert("url",settings->value(group+"/url").toString());
-        hash.insert("login",settings->value(group+"/login").toString());
-        hash.insert("password",settings->value(group+"/password").toString());
-        hash.insert("visible",settings->value(group+"/visible").toString());
+
+        for(int i=0;i<size;++i)
+        {
+            hash.insert("url",settings->value(group+"/url").toString());
+            hash.insert("login",settings->value(group+"/login").toString());
+            hash.insert("password",settings->value(group+"/password").toString());
+            hash.insert("visible",settings->value(group+"/visible").toString());
+        }
+    }else{
+        for(int i=0;i<size;++i)
+        {
+            hash.insert("url",settings->value("url").toString());
+            hash.insert("login",settings->value("login").toString());
+            hash.insert("password",settings->value("password").toString());
+            hash.insert("visible",settings->value("visible").toString());
+        }
     }
 
-  qDebug() << "readConfig" << hash;
+  qDebug() << "readConfig: "  << "\ngroup" << group << settings->scope() << "\nKey " << key << "\nfn: " <<settings->fileName();
  return hash;
 }

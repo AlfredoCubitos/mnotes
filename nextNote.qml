@@ -9,13 +9,14 @@ import QtQuick.LocalStorage 2.0
 import "nextnote.js" as NN
 import "view.js" as View
 
+
+
+
 ColumnLayout {
 
     spacing: 0
 
     property alias notesStack: notesStack
-
-
 
     ActionElement{
         id: noteslistHeader
@@ -62,6 +63,9 @@ ColumnLayout {
 
     }
 
+
+
+
    StackView{
         id: notesStack
         initialItem: listview
@@ -102,6 +106,7 @@ ColumnLayout {
     */
     Component.onCompleted: {
         nextStack = notesStack;
+
 
     }
 }
