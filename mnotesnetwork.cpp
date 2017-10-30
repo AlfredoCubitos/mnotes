@@ -6,8 +6,6 @@ MNotesNetwork::MNotesNetwork(QString group,QObject *parent)
 
     MNotesConnect();
 
-     qDebug() << "Init group: " << group;
-
     if (group.length() > 0)
     {
         account = config.readConfig(group);
@@ -24,7 +22,6 @@ void MNotesNetwork::MNotesConnect()
 void MNotesNetwork::MNotesRequestAuth(QJsonObject account)
 {
     QByteArray auth;
-    qDebug() <<"Account: "<< account;
     auth.append(account["login"].toString());
     auth.append(":");
     auth.append(account["password"].toString());
@@ -45,7 +42,7 @@ void MNotesNetwork::getMnotes(const QString url)
 {
     QString uri = account["url"].toString();
     uri.append(url);
-    qDebug() << "URI: " << uri;
+//    qDebug() << "URI: " << uri;
     request.setUrl(QUrl(uri));
     m_getRequest();
 }

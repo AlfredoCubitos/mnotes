@@ -6,21 +6,15 @@ import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtQml.Models 2.2
-
+/*use this import for Android
+  * if not it throws "component not ready" error
+*/
+import "qrc:/"
 import "backend.js" as DB
 import "nextnote.js" as NN
 import "view.js" as View
 import "OneNote.js" as One
 //import org.kde.plasma.components 3.0 as PlasmaComponents
-/*
-* Ownnotes Datamodel
-* id: integer
-* modified: time in s since
-* titel: String
-* content: String
-*
-*/
-
 
 
 ApplicationWindow  {
@@ -113,9 +107,7 @@ ApplicationWindow  {
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"
-                   // border.width: 1
-                  //  radius: 4
-                  //  border.color: "#a09f9f"
+
                 }
                 contentItem: Text {
                     text: parent.text
@@ -134,9 +126,7 @@ ApplicationWindow  {
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"
-                   // border.width: 1
-                   // radius: 4
-                   // border.color: "#999f9f"
+
                 }
                 contentItem: Text {
                     text: parent.text
@@ -155,9 +145,7 @@ ApplicationWindow  {
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"
-                   // border.width: 1
-                   // radius: 4
-                   // border.color: "#999f9f"
+
                 }
                 contentItem: Text {
                     text: parent.text
@@ -171,11 +159,9 @@ ApplicationWindow  {
             }
 
 
-
-
             onCurrentIndexChanged:
             {
-                console.log("Tab changed:" )
+                // console.log("Tab changed:" )
 
                 nextTitel = noteTitel;
                 if (nTitel.length == 0)
@@ -201,9 +187,8 @@ ApplicationWindow  {
 
                     break;
                 case "Notes":
-
-                  // netWork.resultAvailable.connect(NN.parseJson)
-                    console.log("Index Notes " )
+                  //  console.log("Index Notes " )
+                    notesBusy.visible = true;
                     NN.getList();
 
                     break;
@@ -239,14 +224,13 @@ ApplicationWindow  {
                     property Component liste: Elements {}
 
                     source: "nextNote.qml"
-                    //onLoaded: notesBusy.visible = false
+
                 }
                 BusyIndicator{
                     id: notesBusy
                     visible: true
                     y:150
                     anchors.horizontalCenter: parent.horizontalCenter
-                    //anchors.verticalCenter: parent.verticalCenter
 
                 }
             }
