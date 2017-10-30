@@ -235,9 +235,19 @@ ApplicationWindow  {
             Item{
                 id: notes
                 Loader{
+                    id: notesLoader
                     property Component liste: Elements {}
 
                     source: "nextNote.qml"
+                    //onLoaded: notesBusy.visible = false
+                }
+                BusyIndicator{
+                    id: notesBusy
+                    visible: true
+                    y:150
+                    anchors.horizontalCenter: parent.horizontalCenter
+                    //anchors.verticalCenter: parent.verticalCenter
+
                 }
             }
             Item {

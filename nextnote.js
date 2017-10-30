@@ -25,7 +25,7 @@ function parseJson(result)
 {
     // console.log("parseJson: "+ result)
      json = JSON.parse(result);
-
+    notesBusy.visible = false;
     switch (notesApp.request)
     {
     case "liste":
