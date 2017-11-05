@@ -21,6 +21,29 @@ function newNote(content)
     netWork.newMnote(url,data);
 }
 
+function updateNote(id, cat, fav, content)
+{
+    notesApp.request = "update";
+    if(!cat)
+        cat = null
+
+   // var data ={"id": id, "category":cat,"favorite":fav,"modified":Date.now(),"content":content};
+
+    var data =JSON.stringify({"id": id, "content":content});
+//    console.log("Content: "+data)
+    var url = "/index.php/apps/notes/api/v0.2/notes/" +id;
+
+    netWork.updateMnote(url, data);
+
+}
+
+function delNote(id)
+{
+    var url = "/index.php/apps/notes/api/v0.2/notes/" +id;
+    netWork.delMnote(url);
+
+}
+
 function parseJson(result)
 {
     // console.log("parseJson: "+ result)
@@ -57,27 +80,7 @@ function makeList()
     }
 }
 
-function updateNote(id, cat, fav, content)
-{
-    if(!cat)
-        cat = null
 
-   // var data ={"id": id, "category":cat,"favorite":fav,"modified":Date.now(),"content":content};
-
-    var data =JSON.stringify({"id": id, "content":content});
-//    console.log("Content: "+data)
-    var url = "/index.php/apps/notes/api/v0.2/notes/" +id;
-
-    netWork.updateMnote(url, data);
-
-}
-
-function delNote(id)
-{
-    var url = "/index.php/apps/notes/api/v0.2/notes/" +id;
-    netWork.delMnote(url);
-
-}
 
 
 
@@ -89,8 +92,8 @@ function parseNewNote()
 
 function parseNote()
 {
-   noteTxt.text = json.content;
-   notesApp.noteTitel = json.title;
+    noteTxt.text = json.content;
+    notesApp.noteTitel = json.title;
 }
 
 function showNote(id, tab)

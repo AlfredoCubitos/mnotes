@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.2
+import QtQml.Models 2.2
 //import "."
 import "view.js" as View
 import "backend.js" as DB
@@ -16,15 +17,15 @@ import "nextnote.js" as NN
   * So the OneNoteUrl property used in OneNote.js has to be initilized in backend.js
   *
   **/
+import Qt.labs.calendar 1.0
 
 Rectangle {
 	  id: container
       property int curIdx
    //   property string oneNoteUrl
 
-      property alias btnLabel: buttonLabel.iD //used in DelDialog
-     // property Component tab: TabElement{}
-
+      property alias btnLabel: buttonLabel.iD //used in DelDialog 
+      property alias dragArea: mouseArea
 
       width: notesApp.width - 4
       implicitHeight:48
@@ -32,32 +33,36 @@ Rectangle {
 	  
       gradient: Gradient {
           GradientStop {
-              position: 0
+              position: 0.0
               Behavior on color {ColorAnimation { duration: 100 }}
-              color: button.pressed ? "#C0C000" : "#EBEB00"
+              color: mouseArea.pressed ? "#C0C000" : "#EBEB00"
           }
           GradientStop {
-              position: 1
+              position: 1.0
               Behavior on color {ColorAnimation { duration: 100 }}
-              color: button.pressed ? "#C0C000" : button.containsMouse ? "#F5F4CD" : "#F3F6B9"
+              color: mouseArea.pressed ? "#dddea7" : "#F3F6B9"
           }
       }
 		
 
 
-	  Item {
+      Item {
         id: button
         anchors.top: container.top
         anchors.left: container.left
         anchors.bottom: container.bottom
 
         width: buttonLabel.width + 20
-		 
+
         MouseArea {
             id: mouseArea
+
+              property bool held: false
+
             height: container.height - 4
             // width: container.width - del.width - 8
             width: buttonLabel.width + 10
+
             onClicked: {
               // View.openNote(buttonLabel.iD);
                 console.log("Tab "+tabView.currentItem.text)
@@ -89,9 +94,33 @@ Rectangle {
                 //curIdx = index;
             }
             hoverEnabled: true
+            drag.target: held ? button : undefined
+            drag.axis: Drag.YAxis
+            onPressAndHold: {held = true
+                console.log("PressHold: " +mouseArea.held)
+            }
+            onReleased: held = false
+
+            Drag.active: mouseArea.held
+            Drag.source: mouseArea
+            Drag.hotSpot.x: width / 2
+            Drag.hotSpot.y: height / 2
+
+
+
+            states: State {
+                when: mouseArea.held
+
+
+                ParentChange { target: mouseArea; parent: container }
+                AnchorChanges {
+                    target: mouseArea
+                    anchors { horizontalCenter: undefined; verticalCenter: undefined }
+                }
+            }
 
         }
-        
+
 
         RowLayout{
             id: col

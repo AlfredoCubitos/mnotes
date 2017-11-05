@@ -53,9 +53,10 @@ Rectangle {
        // anchors.fill: parent
         height: parent.height
         width: parent.width
-        TextArea.flickable:  TextArea {
-            width: note.width
+        TextArea.flickable:  TextArea {      
             id: noteText
+
+            width: note.width
             objectName: "noteText"
             Accessible.name: "mnotesHandler"
             focus: true

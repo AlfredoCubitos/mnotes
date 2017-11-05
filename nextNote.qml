@@ -26,11 +26,10 @@ ColumnLayout {
 
         onBackButtonClicked: {
 
-             netWork.resultAvailable.connect(NN.parseJson);
-
             if (isNote)
             {
                 var Note = notesStack.pop(null);
+    //            netWork.resultAvailable.connect(NN.parseJson);
 
                 if (noteID == 0) {
                     NN.newNote(newText.text)
@@ -51,7 +50,7 @@ ColumnLayout {
 
                 isNote = false;
                 noteTitel = "New Note";
-                // console.log("Ende")
+              //  console.log("Ende")
 
             }else{
 

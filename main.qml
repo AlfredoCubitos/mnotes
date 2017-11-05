@@ -61,9 +61,17 @@ ApplicationWindow  {
 
 
     ListModel{
-        id: notesModel
+       id: notesModel
 
     }
+    DelegateModel{
+        id: delegateModel
+        model: notesModel
+        delegate: Elements{}
+    }
+
+
+
     /**
   * Menubar
   **/
