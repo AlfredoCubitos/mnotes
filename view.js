@@ -11,7 +11,7 @@ function openNote(id)
 
 //	  console.log(this.buttonLabel.text )
       var component = Qt.createComponent("Window.qml");
-        if (component.status == Component.Ready)
+        if (component.status === Component.Ready)
         {
             var	win = component.createObject(notesApp,{"noteId":id});
 

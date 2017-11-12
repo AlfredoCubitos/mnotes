@@ -28,7 +28,11 @@ With the `shared` option the libs were installed in the source directory.
 **New Features in this version:**
 -----------------------------
 
-* Read, write, add new, delete notes from Next-/Owncloud
+* drag'n drop enabled in Listview (states currently not saved)
+
+-----------------------------
+
+* Read, write, add, update and delete notes from Next-/Owncloud
 
 -----------------------------
 

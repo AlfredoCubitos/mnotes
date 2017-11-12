@@ -61,15 +61,16 @@ ColumnLayout {
         Item{
             id: listview
             Rectangle{
-
+                id: listItem
                 anchors.fill: parent
                 color: "#eeec52"
 
                 ListView {
                     id: locaListe
                     anchors.fill: parent
-                    model: notesModel
-                    delegate: liste
+                    // model: notesModel
+                    model: delegateModel
+                   // delegate: liste
                     ScrollBar.vertical: ScrollBar {
                         active: notesModel.count > 3 ? true : false
                         parent: parent

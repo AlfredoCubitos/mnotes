@@ -35,18 +35,19 @@
         **/
 	  var data;
 	  
-	  db.transaction( function(tx){
-								data = tx.executeSql('SELECT titel, id FROM NotesDB');
-							}
-				
-			)
+      db.transaction( function(tx){
+          data = tx.executeSql('SELECT titel, id FROM NotesDB');
+      }
+
+      )
 	  
 	  for (var i=0; i<= data.rows.length-1; i++)
 		{
 			var titel = data.rows.item(i).titel;
 			var id = data.rows.item(i).id;
 			
-            notesModel.append({"nId": id, "titel": titel,"oneNoteUrl": ""})
+           // notesModel.append({"nId": id, "titel": titel,"oneNoteUrl": ""})
+           notesModel.append({"nId": id, "titel": titel})
           //console.log(titel)
 		}
 	  
@@ -75,8 +76,6 @@
   function initDB()
   {
 	  createDB();
-	 // insertData("Banken", "Dies ist ein Content für Banken\n Mal sehen ob man den auch findet\n -----------------\n");
-	//  insertData("Register", "Dies ist ein Content für Register\n Mal sehen ob man den auch findet\n -----------------\n");
 
   }
   

@@ -32,7 +32,6 @@ ApplicationWindow  {
     signal dialogOkSignal(var values)
     signal dialogSetGroups()
 
- //   property string dialogGroups: "Moin"
 
     property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
 
@@ -55,15 +54,20 @@ ApplicationWindow  {
 
     property var curpos: []
     property int countPos: 0
-    property alias delDialog: delDialog
 
     property string request // request property for nextNote
+
+    property alias delDialog: delDialog
+    property alias viewModel: delegateModel
+
+
 
 
     ListModel{
        id: notesModel
 
     }
+
     DelegateModel{
         id: delegateModel
         model: notesModel
@@ -185,6 +189,7 @@ ApplicationWindow  {
                 switch(tabView.currentItem.text){
 
                 case "Local":
+                    //console.log("Index Local " + viewModel.items)
                     DB.getTitels();
                     break;
                 case "OneNote":
@@ -195,7 +200,7 @@ ApplicationWindow  {
 
                     break;
                 case "Notes":
-                  //  console.log("Index Notes " )
+                  //  console.log("Index Notes " + viewModel.items)
                     notesBusy.visible = true;
                     NN.getList();
 
@@ -205,34 +210,49 @@ ApplicationWindow  {
 
         }
         StackLayout {
+            id: stackLayout
             width: parent.width
             currentIndex: tabView.currentIndex
+            /**
+              * disable Loader before loading a new Component
+              * otherwise the new Component may not be visible
+              **/
+            onCurrentIndexChanged: {
+                switch(currentIndex)
+                {
+                    case 0:
+                        if (!tabloader.active)
+                            tabloader.active = true;
+
+                        break;
+                    case 1:
+                        if (tabloader.active)
+                            tabloader.active = false;
+                        notesLoader.active = true;
+                        break;
+                }
+
+            }
 
             Item {
                 id: localTab
                 anchors.fill: parent
                 width: implicitWidth
-                property alias listview: tabloader.liste
                 Loader{
                     id: tabloader
-                    property Component liste: Elements{}
+                    property Component liste: Elements {}
                     property string backend: "local"
-                    x: 0
-                    anchors.top: parent.top
-                    anchors.topMargin: 0
                     source:  "Local.qml"
-
                 }
 
             }
             Item{
                 id: notes
+                visible: notesBusy ? false : true
+
                 Loader{
                     id: notesLoader
-                    property Component liste: Elements {}
-
                     source: "nextNote.qml"
-
                 }
                 BusyIndicator{
                     id: notesBusy

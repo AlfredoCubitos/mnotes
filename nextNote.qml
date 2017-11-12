@@ -4,13 +4,8 @@ import QtQuick.Layouts 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
 
-//import de.bibuweb.mnotes 1.0
-
 import "nextnote.js" as NN
 import "view.js" as View
-
-
-
 
 ColumnLayout {
 
@@ -63,8 +58,6 @@ ColumnLayout {
     }
 
 
-
-
    StackView{
         id: notesStack
         initialItem: listview
@@ -82,8 +75,8 @@ ColumnLayout {
                 ListView {
                     id: locaListe
                     anchors.fill: parent
-                    model: notesModel
-                    delegate: liste
+                    model: delegateModel
+                   // delegate: liste
                     ScrollBar.vertical: ScrollBar {
                         active: notesModel.count > 3 ? true : false
                         parent: parent
@@ -105,7 +98,6 @@ ColumnLayout {
     */
     Component.onCompleted: {
         nextStack = notesStack;
-
 
     }
 }

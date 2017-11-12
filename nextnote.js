@@ -39,6 +39,7 @@ function updateNote(id, cat, fav, content)
 
 function delNote(id)
 {
+    notesApp.request = "delete";
     var url = "/index.php/apps/notes/api/v0.2/notes/" +id;
     netWork.delMnote(url);
 
@@ -49,6 +50,7 @@ function parseJson(result)
     // console.log("parseJson: "+ result)
      json = JSON.parse(result);
     notesBusy.visible = false;
+
     switch (notesApp.request)
     {
     case "liste":
