@@ -17,106 +17,101 @@ import "nextnote.js" as NN
   * So the OneNoteUrl property used in OneNote.js has to be initilized in backend.js
   *
   **/
-import Qt.labs.calendar 1.0
-
-Rectangle {
-	  id: container
-      property int curIdx
-   //   property string oneNoteUrl
-
-      property alias btnLabel: buttonLabel.iD //used in DelDialog 
-      property alias dragArea: mouseArea
-
-      width: notesApp.width - 4
-      implicitHeight:48
-      color: "#eeed94"
-	  
-      gradient: Gradient {
-          GradientStop {
-              position: 0.0
-              Behavior on color {ColorAnimation { duration: 100 }}
-              color: mouseArea.pressed ? "#C0C000" : "#EBEB00"
-          }
-          GradientStop {
-              position: 1.0
-              Behavior on color {ColorAnimation { duration: 100 }}
-              color: mouseArea.pressed ? "#dddea7" : "#F3F6B9"
-          }
-      }
-		
 
 
-      Item {
-        id: button
-        anchors.top: container.top
-        anchors.left: container.left
-        anchors.bottom: container.bottom
-
-        width: buttonLabel.width + 20
-
-        MouseArea {
-            id: mouseArea
-
-              property bool held: false
-
-            height: container.height - 4
-            // width: container.width - del.width - 8
-            width: buttonLabel.width + 10
-
-            onClicked: {
-              // View.openNote(buttonLabel.iD);
-                console.log("Tab "+tabView.currentItem.text)
-                var tabTitle = tabView.currentItem.text;
-                switch(tabTitle)
-                {
-                case "Local":
-                    View.showNote(buttonLabel.iD, tabTitle);
-                    notesApp.curIndex = index;
-                    notesApp.noteID = buttonLabel.iD;
-                    break;
-                case "OneNote":
-                    OneNote.showNote(0, tabTitle);
-                    notesApp.noteTitel = buttonLabel.text
-                    // console.log("click: " +  )
-                    notesApp.curIndex = index;
-                    break;
-                case "Notes":
-                    NN.showNote(buttonLabel.iD, tabTitle)
-                    notesApp.curIndex = index;
-                    notesApp.noteID = buttonLabel.iD;
-                    notesApp.category = buttonLabel.category
-                    notesApp.favorite = buttonLabel.favorite
-
-                    break;
-                }
+MouseArea {
+    id: mouseArea
 
 
-                //curIdx = index;
+    property bool held: false
+    anchors { left: parent.left; right: parent.right }
+    implicitHeight:48
+
+    // height: container.height - 4
+    //width: container.width - del.width - 8
+
+    onClicked: {
+
+     //   console.log("Tab "+ mouseArea.parent.parent.parent)
+        var tabTitle = tabView.currentItem.text;
+        switch(tabTitle)
+        {
+        case "Local":
+            View.showNote(buttonLabel.iD, tabTitle);
+            notesApp.curIndex = index;
+            notesApp.noteID = buttonLabel.iD;
+            break;
+        case "OneNote":
+            OneNote.showNote(0, tabTitle);
+            notesApp.noteTitel = buttonLabel.text
+            // console.log("click: " +  )
+            notesApp.curIndex = index;
+            break;
+        case "Notes":
+            NN.showNote(buttonLabel.iD, tabTitle)
+            notesApp.curIndex = index;
+            notesApp.noteID = buttonLabel.iD;
+            notesApp.category = buttonLabel.category
+            notesApp.favorite = buttonLabel.favorite
+
+            break;
+        }
+
+
+    }
+    hoverEnabled: true
+    drag.target: held ? content : undefined
+    drag.axis: Drag.YAxis
+    onPressAndHold: held = true
+    onReleased: held = false
+
+    Rectangle{
+        id: content
+        width: mouseArea.width-4
+        height: 48
+        anchors {
+            horizontalCenter: parent.horizontalCenter
+            verticalCenter: parent.verticalCenter
+            right: parent.right
+        }
+
+        color: "#eeed94"
+
+        gradient: Gradient {
+            GradientStop {
+                position: 0.0
+                Behavior on color {ColorAnimation { duration: 100 }}
+                color: mouseArea.pressed ? "#C0C000" : "#EBEB00"
             }
-            hoverEnabled: true
-            drag.target: held ? button : undefined
-            drag.axis: Drag.YAxis
-            onPressAndHold: {held = true
-                console.log("PressHold: " +mouseArea.held)
+            GradientStop {
+                position: 1.0
+                Behavior on color {ColorAnimation { duration: 100 }}
+                color: mouseArea.pressed ? "#dddea7" : "#F3F6B9"
             }
-            onReleased: held = false
+        }
 
-            Drag.active: mouseArea.held
-            Drag.source: mouseArea
-            Drag.hotSpot.x: width / 2
-            Drag.hotSpot.y: height / 2
+        scale: mouseArea.held ? 0.9 : 1.0
 
-
-
-            states: State {
-                when: mouseArea.held
+        Drag.active: mouseArea.held
+        Drag.source: mouseArea
+        Drag.hotSpot.x: width / 2
+        Drag.hotSpot.y: height / 2
 
 
-                ParentChange { target: mouseArea; parent: container }
-                AnchorChanges {
-                    target: mouseArea
-                    anchors { horizontalCenter: undefined; verticalCenter: undefined }
-                }
+
+        states: State {
+            when: mouseArea.held
+
+            /*
+              * ParentChange places the drop element into the right view position (layout hierachie)
+              * In dynamic layouts you have to find the right parent
+              * in this case its Rectangle from the Component loaded
+              */
+            ParentChange { target: content; parent: mouseArea.parent.parent.parent}
+            AnchorChanges {
+                target: content
+                anchors { horizontalCenter: undefined; verticalCenter: undefined }
+
             }
 
         }
@@ -125,58 +120,64 @@ Rectangle {
         RowLayout{
             id: col
             anchors.verticalCenter: parent.verticalCenter
-            width: notesApp.width
-            anchors.verticalCenterOffset: 0
+            width: content.width
 
-                Text {
-                    id: buttonLabel
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
+            Text {
+                id: buttonLabel
+                anchors.left: parent.left
+                anchors.leftMargin: 10
 
-                    text: titel
-                    color: "black"
-                    font.pixelSize: 14
+                text: titel
+                color: "black"
+                font.pixelSize: 14
 
-                    styleColor: "white"
-                    style: Text.Raised
-                    property var iD: nId
-                    property string category
-                    property bool favorite
-                    property string url: typeof oneNoteUrl === "undefined" ? "?" : oneNoteUrl;
+                styleColor: "white"
+                style: Text.Raised
+                property var iD: nId
+                property string category
+                property bool favorite
+                property string url: typeof oneNoteUrl === "undefined" ? "?" : oneNoteUrl;
 
-                }
+            }
 
-                /** horizontal separator **/
-                Item { Layout.fillWidth: true }
+            Image{
+                id: del
+                fillMode: Image.PreserveAspectFit
+                source: "images/delete.png"
+                anchors.right:  parent.right
+                //  anchors.verticalCenter: parent.verticalCenter
+                anchors.rightMargin: 25
 
-                Image{
-                    id: del
-                    fillMode: Image.PreserveAspectFit
-                    source: "images/delete.png"
-                    anchors.right:  parent.right
-                    anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: 25
-
-                    MouseArea {
-                        id: remove
-                        //anchors.fill: parent
-                        width: 40
-                        height: 40
-                        onClicked:  {
-                            notesApp.curIndex = index;
-                            notesApp.noteID = buttonLabel.iD;
-                            notesApp.delDialog.visible = true
-                        }
-                        hoverEnabled: true
-
+                MouseArea {
+                    id: remove
+                    //anchors.fill: parent
+                    width: 40
+                    height: 40
+                    onClicked:  {
+                        notesApp.curIndex = index;
+                        notesApp.noteID = buttonLabel.iD;
+                        notesApp.delDialog.visible = true
                     }
+                    hoverEnabled: true
 
                 }
+
+            }
+
+        }
+
+    } //Rectangle
+
+    DropArea {
+        anchors { fill: parent; margins: 10 }
+
+        onEntered: {
+            //console.log("Drop: "+ mouseArea.parent.parent.parent)
+            console.log("Drop: "+ drag.source.DelegateModel.itemsIndex+" , "+mouseArea.DelegateModel.itemsIndex)
+            viewModel.items.move( drag.source.DelegateModel.itemsIndex, mouseArea.DelegateModel.itemsIndex)
 
         }
     }
-
-
-	  
 }
+
 
