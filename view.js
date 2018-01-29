@@ -5,6 +5,7 @@ var note;
 var countPos =0;
 
 
+
 function openNote(id)
 {
 
@@ -104,4 +105,15 @@ function search()
         noteText.select(searchBox.svalues[0],searchBox.svalues[0]+3)
         console.log("c start: "+searchBox.selectionStart)
     }
+}
+
+function tabEnabled(group)
+{
+   //  var enable = configData.getVisibility(group)
+     var enable = configData.readConfig(group)
+
+    console.log("Config: " +group + " "+ enable.visible)
+    var ret = enable.visible === "false" ? false : true
+    return ret
+
 }

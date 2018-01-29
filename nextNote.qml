@@ -3,6 +3,7 @@ import QtQuick.Controls 2.0
 import QtQuick.Layouts 1.2
 import QtQuick.Controls.Styles 1.4
 import QtQuick.LocalStorage 2.0
+import QtQuick.Dialogs 1.2
 
 import "nextnote.js" as NN
 import "view.js" as View
@@ -13,6 +14,8 @@ ColumnLayout {
 
     property alias notesStack: notesStack
 
+
+
     ActionElement{
         id: noteslistHeader
 
@@ -20,11 +23,13 @@ ColumnLayout {
         property int id: 0
 
         onBackButtonClicked: {
-
+             console.log("clicked: "+ isNote)
             if (isNote)
             {
                 var Note = notesStack.pop(null);
-    //            netWork.resultAvailable.connect(NN.parseJson);
+                netWork.resultAvailable.connect(NN.parseJson);
+                if (notesApp.nTitel.length > 0)
+                    noteTitle = notesApp.nTitel;
 
                 if (noteID == 0) {
                     NN.newNote(newText.text)
@@ -33,17 +38,16 @@ ColumnLayout {
                       View.addToList(inId, noteTitle)
 
                 } else {
-                   // console.log("Title: "+noteTitle)
+                    console.log("Title: "+noteTitle)
+                    NN.updateNote(noteID, category, favorite, Note.noteTxt.text)
+                    console.log("Text ",Note.noteTxt.text)
 
 
-                   // console.log("Text ",Note.noteTxt.text)
 
-                   NN.updateNote(noteID, category, favorite, Note.noteTxt.text)
-
-                  //  View.updateList(curIndex, noteTitle)
+                    View.updateList(curIndex, noteTitle)
                 }
 
-                isNote = false;
+                notesApp.isNote = false;
                 noteTitel = "New Note";
               //  console.log("Ende")
 
@@ -100,4 +104,6 @@ ColumnLayout {
         nextStack = notesStack;
 
     }
+
+
 }

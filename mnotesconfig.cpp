@@ -17,7 +17,7 @@ MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
         settings = new QSettings("MNotes","Mnotes");
 
         QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
-        settings->setPath(QSettings::NativeFormat, QSettings::SystemScope,path);
+        settings->setPath(QSettings::IniFormat, QSettings::SystemScope,path);
     }
 
 void MnotesConfig::writeConfig(const QString group)
@@ -28,6 +28,7 @@ void MnotesConfig::writeConfig(const QString group)
                 settings->beginGroup(group);
                 while (hi.hasNext()) {
                         hi.next();
+                       // qDebug() << hi.key() << " / " << hi.value();
                         settings->setValue(hi.key(),hi.value());
                     }
                 settings->endGroup();
@@ -91,14 +92,16 @@ void MnotesConfig::getDlgData( const QVariant &values)
                 QJSValue data = values.value<QJSValue>();
                 QJSValueIterator it(data);
                 while (it.hasNext()) {
+                    it.next();
+
+                    if (it.name() == "group")
+                    {
+                        group = it.value().toString();
                         it.next();
-                         qDebug() << it.name() << it.value().toString();
-                         if (it.name() == "group")
-                             {
-                                 group = it.value().toString();
-                             }
-                         setConfig(it.name(),it.value().toString());
                     }
+                 //   qDebug() << it.name() << it.value().toString();
+                    setConfig(it.name(),it.value().toString());
+                }
 
                 /**
                   * don't write config if there is no group
@@ -112,7 +115,7 @@ void MnotesConfig::getDlgData( const QVariant &values)
 /**
  * @brief QHash<QString,QString> readConfig(QString group)
  * @param QString group
- * Invoked from QML to read the config
+ * @note Invoked from QML to read the config
  **/
 QJsonObject MnotesConfig::readConfig(QString group)
 {
@@ -126,26 +129,18 @@ QJsonObject MnotesConfig::readConfig(QString group)
     if (size > 0)
         key = keys.at(0);
 
-    if (key.contains("/"))
-    {
 
-        for(int i=0;i<size;++i)
-        {
-            hash.insert("url",settings->value(group+"/url").toString());
-            hash.insert("login",settings->value(group+"/login").toString());
-            hash.insert("password",settings->value(group+"/password").toString());
-            hash.insert("visible",settings->value(group+"/visible").toString());
-        }
-    }else{
-        for(int i=0;i<size;++i)
-        {
-            hash.insert("url",settings->value("url").toString());
-            hash.insert("login",settings->value("login").toString());
-            hash.insert("password",settings->value("password").toString());
-            hash.insert("visible",settings->value("visible").toString());
-        }
+    for(int i=0;i<size;++i)
+    {
+        hash.insert("url",settings->value("url").toString());
+        hash.insert("login",settings->value("login").toString());
+        hash.insert("password",settings->value("password").toString());
+        hash.insert("visible",settings->value("visible").toString());
     }
 
-  qDebug() << "readConfig: "  << "\ngroup" << group << settings->scope() << "\nKey " << key << "\nfn: " <<settings->fileName();
+    settings->endGroup();
+ // qDebug() << "readConfig: "  << "\ngroup" << group << settings->scope() << "\nKey " << key << "\nfn: " <<settings->fileName();
  return hash;
 }
+
+

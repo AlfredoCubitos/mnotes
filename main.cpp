@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<MNotesHandler>("de.bibuweb.mnotes",1,0,"MNotesHandler");
     qmlRegisterType<MSGraph>("de.bibuweb.mnotes",1,0,"MSGraph");
     qmlRegisterType<MSOneNoteApi>("de.bibuweb.mnotes",1,0,"MSOneNoteApi");
-//    qmlRegisterType<MSOneNoteModell>("de.bibuweb.mnotes",1,0,"MSOneNoteModell");
+
     qmlRegisterType<MnotesConfig>("de.bibuweb.mnotes",1,0,"MnotesConfig");
 
     MNotesHandler mnotes;

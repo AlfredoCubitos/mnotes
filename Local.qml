@@ -16,12 +16,18 @@ ColumnLayout {
     ActionElement{
         id: listHeader
         onBackButtonClicked: {
+          //  console.log("onButtonClicked.........")
             if (isNote)
             {
                 var Note = stackview.pop();
                 DB.initDB()
-                //+ Note.noteTxt.text
-                //  console.log("noteId: "+ noteID+ " "+Note )
+                /**
+                  * for save on exit
+                  * signal connect cannot pass a variable
+                **/
+                if (notesApp.nTitel.length > 0)
+                    noteTitle = notesApp.nTitel;
+                 // console.log("noteId: "+ noteID+ " ..."+ notesApp.nTitel +" :: "+ noteTitle)
 
 
                 if (noteID == 0) {
@@ -39,13 +45,13 @@ ColumnLayout {
                     View.updateList(curIndex, noteTitle)
                 }
 
-                isNote = false;
+                notesApp.isNote = false;
                 noteTitel = "New Note";
-                // console.log("Ende")
+                // console.log("Ende "+isNote)
 
             }else{
 
-               // console.log("ELSE")
+              //  console.log("ELSE")
                 isNote = true
                 stackview.push(newNote, {visible: true})
             }
@@ -72,11 +78,13 @@ ColumnLayout {
                     model: delegateModel
                    // delegate: liste
                     ScrollBar.vertical: ScrollBar {
-                        active: notesModel.count > 3 ? true : false
+                        active: delegateModel.items.count > 3 ? true : false
                         parent: parent
                         anchors.top: parent.top
                         anchors.right: parent.right
                     }
+
+                    cacheBuffer: 50
                 }
 
             }
@@ -88,5 +96,10 @@ ColumnLayout {
         }
 
     }
-    Component.onCompleted: {stack = stackview} //make stackview visible in view.js
+    Component.onCompleted: {
+        stack = stackview   //make stackview visible in view.js
+
+    }
+
+
 }

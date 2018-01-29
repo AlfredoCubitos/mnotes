@@ -48,7 +48,13 @@ function delNote(id)
 function parseJson(result)
 {
     // console.log("parseJson: "+ result)
-     json = JSON.parse(result);
+    if (result.length > 0)
+    {
+        json = JSON.parse(result);
+    }else{
+        errorDlg.informativeText = "No data available! \nCheck your Server if notes is active."
+        errorDlg.open()
+    }
     notesBusy.visible = false;
 
     switch (notesApp.request)
@@ -115,6 +121,7 @@ function showNote(id, tab)
       nextStack.push(note);
 
 }
+
 
 
 

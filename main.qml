@@ -1,5 +1,5 @@
 import QtQuick 2.4
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.2
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
@@ -22,6 +22,7 @@ ApplicationWindow  {
     minimumWidth: 300
     minimumHeight: 400
     visible: true
+
     background: Rectangle {
         color: "#eeeeee"
     }
@@ -31,6 +32,8 @@ ApplicationWindow  {
     signal sbActiveSignal(var obj)
     signal dialogOkSignal(var values)
     signal dialogSetGroups()
+    signal backButtonClicked(string noteTitle )
+
 
 
     property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
@@ -60,6 +63,11 @@ ApplicationWindow  {
     property alias delDialog: delDialog
     property alias viewModel: delegateModel
 
+    /**
+    * properties for "close dialog"
+    **/
+    property bool toClose: false
+    property bool edited: false
 
 
 
@@ -133,7 +141,7 @@ ApplicationWindow  {
             TabButton{
                 id: nextNotes
                 width: 80
-                text: qsTr("Notes")
+                text: qsTr("OwnCloud")
                 height: 40
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
@@ -289,6 +297,18 @@ ApplicationWindow  {
               **/
             netWork.resultAvailable.connect(NN.parseJson)
 
+            for(var i=1; i<tabView.count;i++)
+            {
+                var title = tabView.itemAt(i).text
+                console.log("tabs: "+title)
+                 tabView.itemAt(i).visible = View.tabEnabled(title)
+
+
+            }
+
+            // View.tabEnabled("OwnCloud")
+
+
         }
 
     }
@@ -379,7 +399,31 @@ ApplicationWindow  {
     }
 
     onClosing: {
-        console.log("closing: "+ noteID)
+        /* for save on exit */
+        close.accepted = toClose
+
+        if (isNote && edited)
+        {
+            closeDlg.open()
+
+
+            console.log("closing: "+ noteID + "Tab " + isNote);
+            nTitel = notesApp.noteTitel
+            edited = false
+
+
+          /*  var sTime = Date.now()
+            var eTime = 0;
+
+            do {
+                eTime = Date.now()
+                //console.log("Timer: " + sTime +" :: "+ eTime)
+            }while(eTime <= sTime + 1000) */
+        }else{
+            toClose = true
+        }
+
+       close.accepted = toClose
 
     }
 
@@ -403,10 +447,28 @@ ApplicationWindow  {
                 break;
             }
 
-
-
-
         }
+    }
+
+    MessageDialog{
+        id: closeDlg
+        title: qsTr("Warning!")
+        icon: StandardIcon.Warning
+        informativeText: qsTr("About to close without saving\nGo to Listview and quit")
+        standardButtons: Dialog.Ok
+        onAccepted: {
+           toClose = true
+        }
+
+    }
+
+    MessageDialog{
+        id: errorDlg
+        title: qsTr("Warning!")
+        icon: StandardIcon.Critical
+        informativeText: ""
+        standardButtons: Dialog.Ok
+
     }
 
 

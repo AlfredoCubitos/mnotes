@@ -24,8 +24,11 @@ MouseArea {
 
 
     property bool held: false
+    property int visualIndex: DelegateModel.itemsIndex
+    property DelegateModelGroup visualItems: delegateModel.items
+
     anchors { left: parent.left; right: parent.right }
-    implicitHeight:48
+    height: content.height
 
     // height: container.height - 4
     //width: container.width - del.width - 8
@@ -59,11 +62,13 @@ MouseArea {
 
 
     }
-    hoverEnabled: true
+   // hoverEnabled: true
+
     drag.target: held ? content : undefined
     drag.axis: Drag.YAxis
     onPressAndHold: held = true
-    onReleased: held = false
+    onReleased:    held = false
+
 
     Rectangle{
         id: content
@@ -105,9 +110,10 @@ MouseArea {
             /*
               * ParentChange places the drop element into the right view position (layout hierachie)
               * In dynamic layouts you have to find the right parent
-              * in this case its Rectangle from the Component loaded
+              * in this case its Rectangle from the Component loaded the ListView
               */
-            ParentChange { target: content; parent: mouseArea.parent.parent.parent}
+            // ParentChange { target: content; parent: mouseArea.parent.parent}
+            ParentChange { target: content; parent: mouseArea.parent.parent}
             AnchorChanges {
                 target: content
                 anchors { horizontalCenter: undefined; verticalCenter: undefined }
@@ -172,12 +178,17 @@ MouseArea {
         anchors { fill: parent; margins: 10 }
 
         onEntered: {
-            //console.log("Drop: "+ mouseArea.parent.parent.parent)
-            console.log("Drop: "+ drag.source.DelegateModel.itemsIndex+" , "+mouseArea.DelegateModel.itemsIndex)
-            viewModel.items.move( drag.source.DelegateModel.itemsIndex, mouseArea.DelegateModel.itemsIndex)
 
+            console.log("Drop: "+ drag.source.visualIndex+" , "+mouseArea.visualIndex)
+           // delegateModel.items.move( drag.source.visualIndex, mouseArea.visualIndex)
+            visualItems.move( drag.source.visualIndex, mouseArea.visualIndex)
+
+
+          // console.log("Drop: "+ mouseArea.parent.parent.parent)
         }
     }
+
+
 }
 
 

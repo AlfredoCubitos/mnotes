@@ -13,6 +13,10 @@ RowLayout {
     signal backButtonClicked(string noteTitle )
     signal loginClicked()
     property alias actionlogin: loginButton
+    property alias actionback: backBtn
+    property string noteTt: noteTitle.text
+    property bool isNote: notesApp.isNote
+
 
     spacing: 0
 
@@ -42,7 +46,7 @@ RowLayout {
             id: noteTitle
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: qsTr(noteTitel)
+            text: noteTitel
             font.pixelSize: 16
             width: implicitWidth + 14
             height: 44
@@ -57,6 +61,7 @@ RowLayout {
         }
 
         Button{
+            id: backBtn
             width: 44
             anchors.right: parent.right
             anchors.rightMargin: 20
@@ -75,6 +80,11 @@ RowLayout {
                 isNote ? null : statusbar.visible = false
 
             }
+        }
+
+        Component.onCompleted: {
+           // notesApp.closing.connect(backButtonClicked) //for save on exit
+
         }
 
     }

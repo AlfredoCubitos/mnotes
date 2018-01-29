@@ -24,6 +24,8 @@ Rectangle {
 
 
 
+
+
     function foundPos()
     {
         if (countPos >  curpos.length-1)
@@ -87,6 +89,7 @@ Rectangle {
                  //console.log("Note: "+noteTxt.text)
                 notesApp.winSignal(noteText)
 
+
             }
 
             Keys.onPressed: {
@@ -114,11 +117,18 @@ Rectangle {
                     flickTxt.height = flickTxt.height + statusbar.height
 
                 }
+
+                notesApp.edited = true;
+
             }
+
 
 
         }
         ScrollBar.vertical: ScrollBar { }
+
+
+
 
     }
 
@@ -131,5 +141,6 @@ Rectangle {
         }
 
     }
+
 
 }

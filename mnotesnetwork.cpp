@@ -32,7 +32,7 @@ void MNotesNetwork::MNotesRequestAuth(QJsonObject account)
 void MNotesNetwork::getMNotesJson(const QByteArray data)
 {
     //   qDebug() << data;
-    //  qDebug() << request.rawHeader("Authorization");
+      qDebug() << "Req:" << request.rawHeader("Authorization");
     request.setRawHeader("Content-type", "application/json");
     manager->post(request,data);
 
@@ -106,7 +106,7 @@ void MNotesNetwork::replyFinished(QNetworkReply *reply)
         QByteArray data = reply->readAll();
 
       // result = QString::fromUtf8( data);
-       // qDebug() << "Data: " << QString::fromUtf8( data);
+      //  qDebug() << "Data: " << QString::fromUtf8( data);
 
        emit resultAvailable(QString::fromUtf8( data));
 

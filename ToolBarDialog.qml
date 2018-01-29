@@ -58,6 +58,9 @@ Dialog {
         TextField{
             id: dlgPassword
             Layout.fillWidth: true
+            echoMode: TextInput.Password
+            passwordCharacter: "*"
+            passwordMaskDelay: 500
         }
 
         Label{
@@ -65,6 +68,7 @@ Dialog {
         }
         CheckBox{
             id: dlgVisible
+            checked: true
         }
     }
 
