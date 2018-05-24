@@ -75,16 +75,24 @@ Dialog {
     onOpened: {
 
         console.log("Dlg: "+tbmenu.title)
+        var data;
+
 
         switch(tbmenu.title)
         {
             case "OwnCloud":
-                var data = configData.readConfig("OwnCloud");
-                console.log("Dlg: " +data)
+                data = configData.readConfig("OwnCloud");
+               // console.log("Dlg: " +data)
                 dlgUrl.text = data["url"];
                 dlgLogin.text = data["login"];
                 dlgPassword.text = data["password"];
                 dlgVisible.checked = data["visible"];
+                break;
+            default:
+                dlgUrl.text = "";
+                dlgLogin.text = "";
+                dlgPassword.text = "";
+                dlgVisible.checked = false;
                 break;
 
         }

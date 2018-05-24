@@ -6,14 +6,16 @@ import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.3
 import QtQuick.Controls.Styles 1.4
 import QtQml.Models 2.2
+
+
+
 /*use this import for Android
   * if not it throws "component not ready" error
 */
 import "qrc:/"
 import "backend.js" as DB
 import "nextnote.js" as NN
-import "view.js" as View
-import "OneNote.js" as One
+
 //import org.kde.plasma.components 3.0 as PlasmaComponents
 
 
@@ -35,7 +37,6 @@ ApplicationWindow  {
     signal backButtonClicked(string noteTitle )
 
 
-
     property bool isPortrait: Screen.primaryOrientation === Qt.PortraitOrientation
 
     property bool isNote: false
@@ -52,7 +53,7 @@ ApplicationWindow  {
     property string token   //for oneNote Access Token
 
     property var stack
-    property var oneNoteStack
+ //   property var oneNoteStack
     property var nextStack
 
     property var curpos: []
@@ -61,7 +62,6 @@ ApplicationWindow  {
     property string request // request property for nextNote
 
     property alias delDialog: delDialog
-    property alias viewModel: delegateModel
 
     /**
     * properties for "close dialog"
@@ -71,7 +71,7 @@ ApplicationWindow  {
 
 
 
-    ListModel{
+   ListModel{
        id: notesModel
 
     }
@@ -158,25 +158,7 @@ ApplicationWindow  {
                 }
 
             }
-            TabButton{
-                width: 80
-                text: qsTr("OneNote")
-                height: 40
-                background: Rectangle{
-                    opacity: parent.checked ? 1.0 : 0.3
-                    color: parent.checked ? "#eeeeee" : "#999797"
 
-                }
-                contentItem: Text {
-                    text: parent.text
-                    font: parent.font
-                    opacity: parent.checked ? 1.0 : 0.3
-                    horizontalAlignment: Text.AlignHCenter
-                    verticalAlignment: Text.AlignVCenter
-                    elide: Text.ElideRight
-                }
-
-            }
 
 
             onCurrentIndexChanged:
@@ -200,14 +182,8 @@ ApplicationWindow  {
                     //console.log("Index Local " + viewModel.items)
                     DB.getTitels();
                     break;
-                case "OneNote":
-                    /*open sign in for MS here*/
-                    if (notesApp.token)
-                        One.getPages(notesApp.token)
-                    console.log("Index OneNote")
 
-                    break;
-                case "Notes":
+                case "OwnCloud":
                   //  console.log("Index Notes " + viewModel.items)
                     notesBusy.visible = true;
                     NN.getList();
@@ -248,8 +224,9 @@ ApplicationWindow  {
                 width: implicitWidth
                 Loader{
                     id: tabloader
-                    property Component liste: Elements {}
+                 //   property Component liste: Elements {}
                     property string backend: "local"
+
                     source:  "Local.qml"
                 }
 
@@ -270,14 +247,7 @@ ApplicationWindow  {
 
                 }
             }
-            Item {
-                id: oneNote
-                Loader{
-                    property Component liste: Elements {}
-                    property string oneNoteToken
-                    source: "OneNote.qml"
-                }
-            }
+
 
         }
     }
@@ -292,21 +262,14 @@ ApplicationWindow  {
             DB.initDB();
             DB.getTitels(); // create model
 
-            /**
-              * make Connection to Notes
-              **/
-            netWork.resultAvailable.connect(NN.parseJson)
-
             for(var i=1; i<tabView.count;i++)
             {
                 var title = tabView.itemAt(i).text
                 console.log("tabs: "+title)
-                 tabView.itemAt(i).visible = View.tabEnabled(title)
+                 tabView.itemAt(i).visible = tabView.tabEnabled(title)
 
 
             }
-
-            // View.tabEnabled("OwnCloud")
 
 
         }
@@ -441,7 +404,7 @@ ApplicationWindow  {
                 DB.deleteNote(noteID);
                 notesModel.remove(curIndex);
                 break;
-            case "Notes":
+            case "OwnCloud":
                 NN.delNote(noteID);
                 notesModel.remove(curIndex);
                 break;
@@ -470,6 +433,7 @@ ApplicationWindow  {
         standardButtons: Dialog.Ok
 
     }
+
 
 
 

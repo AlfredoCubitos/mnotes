@@ -89,9 +89,6 @@ function makeList()
 }
 
 
-
-
-
 function parseNewNote()
 {
    listHeader.id = json.id;

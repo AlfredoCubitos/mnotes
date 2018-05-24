@@ -12,6 +12,7 @@ ColumnLayout {
     spacing: 0
 
     property alias localListview: locaListe
+    property alias notesStack: stackview
 
     ActionElement{
         id: listHeader
@@ -66,6 +67,7 @@ ColumnLayout {
         implicitHeight: notesApp.height - listHeader.height - toolbar.height - btnHeight
         Item{
             id: listview
+
             Rectangle{
                 id: listItem
                 anchors.fill: parent
@@ -84,14 +86,15 @@ ColumnLayout {
                         anchors.right: parent.right
                     }
 
-                    cacheBuffer: 50
                 }
 
             }
+
         }
 
         onCurrentItemChanged: {
-            stackIndex = stackview.depth
+           // stackIndex = stackview.depth
+            stackIndex = notesStack.depth
             //console.log("idx: "+stackIndex)
         }
 

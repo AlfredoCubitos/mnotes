@@ -70,7 +70,9 @@
 			var id = data.rows.item(i).id;
 			
             notesModel.append({"nId": id, "titel": titel, "content": content})
+
 		}
+
   }
   
   function initDB()
@@ -112,8 +114,7 @@ function deleteNote(id)
 {
       initDB();
       db.transaction( function(tx){
-                               var data = tx.executeSql('DELETE  FROM NotesDB WHERE id= ?',[id]);
-                            }
-
+          var data = tx.executeSql('DELETE  FROM NotesDB WHERE id= ?',[id]);
+        }
       );
 }

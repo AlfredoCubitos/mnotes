@@ -55,18 +55,6 @@ Item {
                 }
             }
 
-            Button{
-                id: newBtn
-                text: qsTr("OneNote")
-                Layout.alignment: Qt.AlignHCenter
-                Layout.fillWidth: true
-                onClicked: {
-                  // export click event
-                    tbRoot.title = text
-
-                    tbRoot.clicked()
-                }
-            }
         }
 
     }

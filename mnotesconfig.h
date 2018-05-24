@@ -20,6 +20,7 @@ public:
     void setConfig(const QString key, const QString value);
     Q_INVOKABLE QJsonObject readConfig(QString group);
     QVariantList readGroups();
+    QSettings * getSetting();
     
 private:
     QSettings *settings;

@@ -7,7 +7,6 @@ import de.bibuweb.mnotes 1.0
 
 import "backend.js" as DB
 import "view.js" as View
-import "OneNote.js" as OneNote
 import "nextnote.js" as NN
 
 
@@ -23,9 +22,6 @@ Rectangle {
 
 
 
-
-
-
     function foundPos()
     {
         if (countPos >  curpos.length-1)
@@ -38,6 +34,7 @@ Rectangle {
         console.log("curpos: "+curpos.length)
 
     }
+
 
 
     id: note
@@ -76,9 +73,6 @@ Rectangle {
                 case "Local":
                     DB.initDB();
                     DB.getNoteData(noteId);
-                    break;
-                case "OneNote":
-                    OneNote.getContent(buttonLabel.url)
                     break;
                 case "Notes":
                     netWork.resultAvailable.connect(NN.parseJson)

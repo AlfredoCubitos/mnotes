@@ -15,7 +15,7 @@ class MNotesNetwork : public QObject
   // QString group;
 
 public:
-    explicit MNotesNetwork(QString group,QObject *parent = 0);
+    explicit MNotesNetwork(QObject *parent = 0);
 
 
    void getMNotesJson(const QByteArray data);
@@ -23,6 +23,10 @@ public:
    Q_INVOKABLE void delMnote(const QString url);
    Q_INVOKABLE void updateMnote(const QString url, const QByteArray data);
    Q_INVOKABLE void newMnote(const QString url, const QByteArray data);
+   Q_INVOKABLE void initConnect(QString group);
+  // Q_INVOKABLE void mnotesMSauth(QString code);
+  // Q_INVOKABLE void getOneNotePages(const QString url);
+   Q_INVOKABLE void clearNetwork();
 
  //  QString result;
 signals:

@@ -12,7 +12,6 @@ in a Next-/Owncloud
 Note:
 * MNotes is currently in an alpha version
 * login data are stored unencrypted
-* the access to OneNote in MS Office 365 is more or less a proof of concept, to see how OAuth authentication can be realized in a desktop app
 
 Note on Own-/Nexcloud:
 * notes in Next-/Owncloud are using the first line as a title.
@@ -26,7 +25,14 @@ To configure I used `./Configure shared -fPIC -fPIE -pie android-armv7` and left
 With the `shared` option the libs were installed in the source directory.
 
 **New Features in this version:**
------------------------------
+---------------------------------
+
+* OnenNote feature removed
+* compatible with Qt 5.10
+
+
+**Old Versions**
+---------------------------------
 
 * drag'n drop enabled in Listview (states currently not saved)
 

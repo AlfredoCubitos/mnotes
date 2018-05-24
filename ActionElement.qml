@@ -11,8 +11,7 @@ import "nextnote.js" as NN
 RowLayout {
 
     signal backButtonClicked(string noteTitle )
-    signal loginClicked()
-    property alias actionlogin: loginButton
+
     property alias actionback: backBtn
     property string noteTt: noteTitle.text
     property bool isNote: notesApp.isNote
@@ -80,11 +79,6 @@ RowLayout {
                 isNote ? null : statusbar.visible = false
 
             }
-        }
-
-        Component.onCompleted: {
-           // notesApp.closing.connect(backButtonClicked) //for save on exit
-
         }
 
     }

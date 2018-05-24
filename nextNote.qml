@@ -27,7 +27,6 @@ ColumnLayout {
             if (isNote)
             {
                 var Note = notesStack.pop(null);
-                netWork.resultAvailable.connect(NN.parseJson);
                 if (notesApp.nTitel.length > 0)
                     noteTitle = notesApp.nTitel;
 
@@ -42,12 +41,10 @@ ColumnLayout {
                     NN.updateNote(noteID, category, favorite, Note.noteTxt.text)
                     console.log("Text ",Note.noteTxt.text)
 
-
-
                     View.updateList(curIndex, noteTitle)
                 }
 
-                notesApp.isNote = false;
+                isNote = false;
                 noteTitel = "New Note";
               //  console.log("Ende")
 
@@ -102,6 +99,13 @@ ColumnLayout {
     */
     Component.onCompleted: {
         nextStack = notesStack;
+        /**
+          * make Connection to Notes
+          **/
+
+        netWork.clearNetwork();
+        netWork.initConnect("OwnCloud");
+        netWork.resultAvailable.connect(NN.parseJson);
 
     }
 

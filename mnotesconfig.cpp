@@ -50,6 +50,11 @@ void MnotesConfig::readConfigGroup(const QString group)
 
     }
 
+QSettings * MnotesConfig::getSetting()
+{
+    return settings;
+}
+
 QVariantList MnotesConfig::readGroups()
     {
         QVariantList groups;
@@ -63,7 +68,7 @@ QVariantList MnotesConfig::readGroups()
                         groups.append(grp.at(0));
             }
 
-        qDebug() << groups;
+      //  qDebug() << groups;
         return groups;
     }
 
@@ -139,7 +144,7 @@ QJsonObject MnotesConfig::readConfig(QString group)
     }
 
     settings->endGroup();
- // qDebug() << "readConfig: "  << "\ngroup" << group << settings->scope() << "\nKey " << key << "\nfn: " <<settings->fileName();
+//  qDebug() << "readConfig: "  << "\ngroup" << group << settings->scope() << "\nKey " << key << "\nfn: " <<settings->fileName();
  return hash;
 }
 

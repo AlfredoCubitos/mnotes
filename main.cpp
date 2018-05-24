@@ -3,45 +3,43 @@
 #include <QtGui>
 #include <QtQml>
 #include <QDebug>
-#include <QtWebView/QtWebView>
+
 
 #include "mnoteshandler.h"
 #include "mnotesconfig.h"
 #include "mnotesnetwork.h"
-#include "msonenoteapi.h"
 
-#include "OAuth/o2.h"
-#include "OAuth/o2msgraph.h"
-#include "OAuth/o2requestor.h"
+
+
 
 
 int main(int argc, char *argv[])
 {
+    QGuiApplication app(argc, argv);
+
     QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
-    QApplication app(argc, argv);
-    QtWebView::initialize();
+
+
 
     app.setWindowIcon(QIcon(QPixmap(":/images/notes.png")));
 
+    qmlRegisterType<MNotesHandler>("de.bibuweb.mnotes",1,0,"MNotesHandler");
+    qmlRegisterType<MnotesConfig>("de.bibuweb.mnotes",1,0,"MnotesConfig");
+
     QQmlApplicationEngine engine;
     QQmlComponent component(&engine,QUrl(QStringLiteral("qrc:/main.qml")));
-    qmlRegisterType<MNotesHandler>("de.bibuweb.mnotes",1,0,"MNotesHandler");
-    qmlRegisterType<MSGraph>("de.bibuweb.mnotes",1,0,"MSGraph");
-    qmlRegisterType<MSOneNoteApi>("de.bibuweb.mnotes",1,0,"MSOneNoteApi");
 
-    qmlRegisterType<MnotesConfig>("de.bibuweb.mnotes",1,0,"MnotesConfig");
 
     MNotesHandler mnotes;
     MnotesConfig config;
-    MNotesNetwork network("OwnCloud");
+
+    MNotesNetwork network;
 
 
     QQmlContext *context = new QQmlContext(engine.rootContext());
     context->setContextProperty("configData",&config);
     context->setContextProperty("netWork",&network);
-
-
 
    // QVariantList groups = config.readGroups();
 
