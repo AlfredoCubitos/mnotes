@@ -36,8 +36,6 @@ Component{
         // holds drag parent information
         // property Item dragparent
 
-
-
         anchors { left: parent.left; right: parent.right }
         height: content.height
 
@@ -46,8 +44,9 @@ Component{
 
         onClicked: {
 
-            //   console.log("Tab "+ mouseArea.parent.parent.parent)
+             // console.log("Tab "+ mouseArea.parent.parent.parent)
             var tabTitle = tabView.currentItem.text;
+
             switch(tabTitle)
             {
             case "Local":
@@ -55,7 +54,7 @@ Component{
                 notesApp.curIndex = index;
                 notesApp.noteID = buttonLabel.iD;
                 break;
-            case "Notes":
+            case "OwnCloud":
                 NN.showNote(buttonLabel.iD, tabTitle)
                 notesApp.curIndex = index;
                 notesApp.noteID = buttonLabel.iD;
@@ -135,8 +134,8 @@ Component{
 
                 Text {
                     id: buttonLabel
-                    anchors.left: parent.left
-                    anchors.leftMargin: 10
+                    Layout.alignment: Qt.AlignLeft
+                    Layout.leftMargin: 10
 
                     text: titel
                     color: "black"
@@ -155,9 +154,9 @@ Component{
                     id: del
                     fillMode: Image.PreserveAspectFit
                     source: "images/delete.png"
-                    anchors.right:  parent.right
-                    //  anchors.verticalCenter: parent.verticalCenter
-                    anchors.rightMargin: 25
+                    Layout.alignment: Qt.AlignRight
+                    Layout.rightMargin: 25
+
 
                     MouseArea {
                         id: remove

@@ -23,9 +23,11 @@ Item {
             anchors.fill: parent
 
             Rectangle{
-                anchors.top: parent.top
-                anchors.topMargin: 10
-                anchors.bottomMargin: 20
+                //anchors.topMargin: 10
+                //anchors.bottomMargin: 20
+
+                Layout.topMargin: 10
+                Layout.bottomMargin: 20
 
 
                 height: menuName.height+5
@@ -43,7 +45,7 @@ Item {
             }
             Button{
                 id: ownCloudBtn
-                anchors.bottom: newBtn.top
+                // anchors.bottom: newBtn.top
 
                 text: qsTr("OwnCloud")
                 Layout.alignment: Qt.AlignHCenter

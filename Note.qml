@@ -74,7 +74,7 @@ Rectangle {
                     DB.initDB();
                     DB.getNoteData(noteId);
                     break;
-                case "Notes":
+                case "OwnCloud":
                     netWork.resultAvailable.connect(NN.parseJson)
                     NN.getNote(noteId);
                     break;

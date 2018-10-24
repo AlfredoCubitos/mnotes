@@ -220,7 +220,9 @@ ApplicationWindow  {
 
             Item {
                 id: localTab
-                anchors.fill: parent
+
+                Layout.fillHeight: parent.height
+                Layout.fillWidth: parent.width
                 width: implicitWidth
                 Loader{
                     id: tabloader
@@ -262,14 +264,14 @@ ApplicationWindow  {
             DB.initDB();
             DB.getTitels(); // create model
 
-            for(var i=1; i<tabView.count;i++)
+            /*??? for(var i=1; i<tabView.count;i++)
             {
                 var title = tabView.itemAt(i).text
                 console.log("tabs: "+title)
-                 tabView.itemAt(i).visible = tabView.tabEnabled(title)
+                // tabView.itemAt(i).visible = tabView.tabEnabled(title)
 
 
-            }
+            } ???*/
 
 
         }

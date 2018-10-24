@@ -16,6 +16,11 @@ void MNotesNetwork::initConnect(QString group)
 void MNotesNetwork::MNotesConnect()
 {
     manager = new QNetworkAccessManager(this);
+    if (QSslSocket::supportsSsl())
+    {
+        qDebug() << "SSL supported" << QSslSocket::sslLibraryVersionString();
+    }else
+        qDebug() << "No SSL-Support " ;
   //  request.setSslConfiguration( QSslConfiguration::defaultConfiguration());
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
 }
@@ -59,7 +64,7 @@ void MNotesNetwork::getMnotes(const QString url)
 {
     QString uri = account["url"].toString();
     uri.append(url);
-   // qDebug() << "URI: " << uri;
+    qDebug() << "URI: " << uri;
     request.setUrl(QUrl(uri));
     m_getRequest();
 }
@@ -87,6 +92,7 @@ void MNotesNetwork::newMnote(const QString url, const QByteArray data)
     uri.append(url);
     request.setUrl(QUrl(uri));
     request.setRawHeader("Content-Type","application/json");
+
     m_postRequest(data);
 }
 
