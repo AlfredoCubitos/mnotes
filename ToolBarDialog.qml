@@ -5,6 +5,7 @@ import QtQuick.Controls 2.2
 
 Dialog {
     id: configDlg
+    property string dlgTitle: notesApp.dlgTitle
     title: "Config Dialog"
     implicitWidth: parent.width
     modal: true
@@ -28,7 +29,9 @@ Dialog {
             Text {
                 id: headText
                 height: 20
-                text: tbmenu.title
+                //text: tbmenu.title
+                text: dlgTitle
+
 
                 horizontalAlignment: Text.AlignHCenter
                 anchors.fill: parent
@@ -74,11 +77,10 @@ Dialog {
 
     onOpened: {
 
-        console.log("Dlg: "+tbmenu.title)
         var data;
 
 
-        switch(tbmenu.title)
+        switch(dlgTitle)
         {
             case "OwnCloud":
                 data = configData.readConfig("OwnCloud");

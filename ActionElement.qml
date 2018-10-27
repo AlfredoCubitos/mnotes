@@ -24,7 +24,7 @@ RowLayout {
 
         color:"#EBEBB1"
         width: notesApp.width
-        implicitWidth: notesApp.width
+     //   implicitWidth: notesApp.width
         implicitHeight: 48
 
         Button{

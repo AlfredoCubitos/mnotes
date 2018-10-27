@@ -9,7 +9,7 @@ function getList()
 
 function getNote(id)
 {
-    console.log("getNote "+id)
+   // console.log("getNote "+id)
     notesApp.request = "note";
     netWork.getMnotes("/index.php/apps/notes/api/v0.2/notes/"+id)
 }
@@ -48,7 +48,7 @@ function delNote(id)
 
 function parseJson(result)
 {
-     console.log("parseJson: "+ result)
+   //  console.log("parseJson: "+ result)
     if (result.length > 0)
     {
         json = JSON.parse(result);

@@ -1,5 +1,5 @@
-import QtQuick 2.4
-import QtQuick.Controls 2.2
+import QtQuick 2.11
+import QtQuick.Controls 2.4
 import QtQuick.Window 2.2
 import QtQuick.Dialogs 1.2
 import QtQuick.LocalStorage 2.0
@@ -24,10 +24,9 @@ ApplicationWindow  {
     minimumWidth: 300
     minimumHeight: 400
     visible: true
-
     background: Rectangle {
-        color: "#eeeeee"
-    }
+                    color: "#eeeeee"
+            }
 
     signal sbSignal(string txt)
     signal winSignal(var win)
@@ -50,7 +49,7 @@ ApplicationWindow  {
     property int btnHeight: 38 // = Elements.container.height
     property int stackIndex
 
-    property string token   //for oneNote Access Token
+    property string dlgTitle: ""
 
     property var stack
  //   property var oneNoteStack
@@ -90,7 +89,7 @@ ApplicationWindow  {
 
     header: ToolBar{
         id: toolbar
-        implicitHeight: 29
+
         RowLayout{
             anchors.fill: parent
             Item { Layout.fillWidth: true }
@@ -101,13 +100,25 @@ ApplicationWindow  {
                     source: "images/menu.png"
                 }
 
-                //onClicked: configDlg.open()
-                onClicked:tbmenu.visible ? tbmenu.visible=false : tbmenu.visible= true
+                onClicked: toolbarMenu.popup()
+            }
+
+            Menu {
+                id: toolbarMenu
+                title: "Notes Backends"
+                MenuItem {
+                    text: "OwnCloud"
+                    onTriggered: {
+                        dlgTitle = text
+                        configDlg.open()
+                    }
+                }
 
             }
 
         }
     }
+
 
 
     ColumnLayout{
@@ -172,9 +183,7 @@ ApplicationWindow  {
                     noteTitel = nTitel
 
                 nTitel = nextTitel;
-
                 notesModel.clear();
-
 
                 switch(tabView.currentItem.text){
 
@@ -187,7 +196,6 @@ ApplicationWindow  {
                   //  console.log("Index Notes " + viewModel.items)
                     notesBusy.visible = true;
                     NN.getList();
-
                     break;
                 }
             }
@@ -263,32 +271,10 @@ ApplicationWindow  {
             **/
             DB.initDB();
             DB.getTitels(); // create model
-
-            /*??? for(var i=1; i<tabView.count;i++)
-            {
-                var title = tabView.itemAt(i).text
-                console.log("tabs: "+title)
-                // tabView.itemAt(i).visible = tabView.tabEnabled(title)
-
-
-            } ???*/
-
-
         }
 
     }
 
-
-    ToolBarMenu{
-        id: tbmenu
-        height: 32
-        anchors.right: parent.right
-        visible: false
-        onClicked: {
-            configDlg.visible = true
-            tbmenu.visible = false
-        }
-    }
 
     ToolBarDialog{
         id: configDlg
@@ -318,7 +304,6 @@ ApplicationWindow  {
         }
         Component.onCompleted: {
             noteID = 0;
-
         }
 
 
@@ -344,9 +329,7 @@ ApplicationWindow  {
                 height: 25
                 focus: true
                 onEditingFinished:  {
-
                     notesApp.sbSignal(searchBox.text)
-
                 }
 
             }
@@ -371,11 +354,9 @@ ApplicationWindow  {
         {
             closeDlg.open()
 
-
             console.log("closing: "+ noteID + "Tab " + isNote);
             nTitel = notesApp.noteTitel
             edited = false
-
 
           /*  var sTime = Date.now()
             var eTime = 0;
@@ -436,7 +417,5 @@ ApplicationWindow  {
 
     }
 
-
-
-
 }
+

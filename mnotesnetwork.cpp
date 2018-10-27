@@ -64,7 +64,7 @@ void MNotesNetwork::getMnotes(const QString url)
 {
     QString uri = account["url"].toString();
     uri.append(url);
-    qDebug() << "URI: " << uri;
+  //  qDebug() << "URI: " << uri;
     request.setUrl(QUrl(uri));
     m_getRequest();
 }
