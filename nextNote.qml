@@ -23,7 +23,7 @@ ColumnLayout {
         property int id: 0
 
         onBackButtonClicked: {
-             console.log("clicked: "+ isNote)
+          //   console.log("clicked: "+ isNote)
             if (isNote)
             {
                 var Note = notesStack.pop(null);
