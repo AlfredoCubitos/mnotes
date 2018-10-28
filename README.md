@@ -9,9 +9,13 @@ Each location has its own tab button
 With this actual version you can fully manage your Notes
 in a Next-/Owncloud
 
+New:
+* Flapak version available, please try it 
+
 Note:
 * MNotes is currently in an alpha version
 * login data are stored unencrypted
+* Before click on OwnCloud tab you have to configure your connection!
 
 Note on Own-/Nexcloud:
 * notes in Next-/Owncloud are using the first line as a title.
