@@ -9,7 +9,6 @@
         <file>README.md</file>
         <file>images/menu.png</file>
         <file>ToolBarDialog.qml</file>
-        <file>ToolBarMenu.qml</file>
         <file>DelDialog.qml</file>
         <file>Note.qml</file>
         <file>ActionElement.qml</file>
