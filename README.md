@@ -10,7 +10,10 @@ With this actual version you can fully manage your Notes
 in a Next-/Owncloud
 
 New:
-* Flapak version available, please try it 
+* Flapak version available, please try it
+* May be you have to install kde runtime 
+    `flatpak install flathub org.kde.Platform//5.11`
+    `flatpak install flathub org.kde.Sdk//5.11`
 
 Note:
 * MNotes is currently in an alpha version
