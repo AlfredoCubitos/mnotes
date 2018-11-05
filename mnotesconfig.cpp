@@ -16,12 +16,16 @@ MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
     {
         settings = new QSettings("MNotes","Mnotes");
 
-        QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+        // QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
+        QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+        qDebug() << "ConfigPath: " << path;
         settings->setPath(QSettings::IniFormat, QSettings::SystemScope,path);
     }
 
 void MnotesConfig::writeConfig(const QString group)
     {
+        qDebug() << settings->fileName();
+
         if (config.keys().length() > 0)
             {
                 QHashIterator<QString,QString> hi(config);
