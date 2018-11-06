@@ -104,7 +104,7 @@ ColumnLayout {
           **/
 
         netWork.clearNetwork();
-        netWork.initConnect("OwnCloud");
+        netWork.initConnect(notesApp.cloudTitle);
         netWork.resultAvailable.connect(NN.parseJson);
 
     }

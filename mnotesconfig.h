@@ -14,13 +14,17 @@ class MnotesConfig : public QObject
 
     
 public:
-    explicit MnotesConfig(QObject *parent = 0);
+    explicit MnotesConfig(QObject *parent = nullptr);
     void writeConfig(const QString group);
     void readConfigGroup(const QString group);
     void setConfig(const QString key, const QString value);
-    Q_INVOKABLE QJsonObject readConfig(QString group);
-    QVariantList readGroups();
+
+
     QSettings * getSetting();
+
+    Q_INVOKABLE QJsonObject readConfig(QString group);
+    Q_INVOKABLE void setDlgData(const QVariant values);
+    Q_INVOKABLE QVariantList readGroups();
     
 private:
     QSettings *settings;
@@ -31,8 +35,8 @@ private:
 
 signals:
 
-public slots:
-    void getDlgData(const QVariant &values);
+public Q_SLOTS:
+
 
 
 };

@@ -2,7 +2,6 @@ TEMPLATE = app
 
 QT += qml widgets quickcontrols2 network
 
-
 SOURCES += main.cpp \
     mnoteshandler.cpp \
     mnotesconfig.cpp \

@@ -50,7 +50,7 @@ signals:
 Q_SIGNALS:
     void targetChanged();
     void textChanged();
-    void curposChanged( const char *fn, QObject* = NULL);
+    void curposChanged( const char *fn, QObject* = nullptr);
 
 public slots:
     void searchSignal(const QString &str);

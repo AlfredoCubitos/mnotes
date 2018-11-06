@@ -18,13 +18,13 @@ MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
 
         // QString path = QStandardPaths::writableLocation(QStandardPaths::ConfigLocation);
         QString path = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
-        qDebug() << "ConfigPath: " << path;
+     //   qDebug() << "ConfigPath: " << path;
         settings->setPath(QSettings::IniFormat, QSettings::SystemScope,path);
     }
 
 void MnotesConfig::writeConfig(const QString group)
     {
-        qDebug() << settings->fileName();
+        qDebug() << "Filename: " << settings->fileName();
 
         if (config.keys().length() > 0)
             {
@@ -89,11 +89,12 @@ void MnotesConfig::setConfig(const QString key, const QString value)
     }
 
 /**
- * @brief SLOT: MnotesConfig::getDlgData
+ * @brief MnotesConfig::setDlgData
  * @param values
  */
-void MnotesConfig::getDlgData( const QVariant &values)
+void MnotesConfig::setDlgData( const QVariant values)
     {
+  //  qDebug() << "DLG_DATA: "<< values;
         config.clear();
         QString group;
         if (values.canConvert<QJSValue>())
@@ -108,7 +109,7 @@ void MnotesConfig::getDlgData( const QVariant &values)
                         group = it.value().toString();
                         it.next();
                     }
-                 //   qDebug() << it.name() << it.value().toString();
+                  //  qDebug() << it.name() << it.value().toString();
                     setConfig(it.name(),it.value().toString());
                 }
 

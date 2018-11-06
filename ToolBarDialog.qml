@@ -5,7 +5,9 @@ import QtQuick.Controls 2.2
 
 Dialog {
     id: configDlg
+
     property string dlgTitle: notesApp.dlgTitle
+
     title: "Config Dialog"
     implicitWidth: parent.width
     modal: true
@@ -82,8 +84,8 @@ Dialog {
 
         switch(dlgTitle)
         {
-            case "OwnCloud":
-                data = configData.readConfig("OwnCloud");
+            case notesApp.cloudTitle:
+                data = configData.readConfig(notesApp.cloudTitle);
                // console.log("Dlg: " +data)
                 dlgUrl.text = data["url"];
                 dlgLogin.text = data["login"];
@@ -104,16 +106,17 @@ Dialog {
 
     onAccepted: {
         var config = {}
-        config["group"] = tbmenu.title
+        config["group"] = dlgTitle
         config["url"] = dlgUrl.text
         config["login"] = dlgLogin.text
         config["password"] = dlgPassword.text
         config["visible"] = dlgVisible.checked
 
-        dialogOkSignal(config)
+      //  console.debug("DLG: "+config)
+        configData.setDlgData(config);
 
-        configDlg.close()
     }
+
 
 }
 

@@ -31,7 +31,7 @@ ApplicationWindow  {
     signal sbSignal(string txt)
     signal winSignal(var win)
     signal sbActiveSignal(var obj)
-    signal dialogOkSignal(var values)
+
     signal dialogSetGroups()
     signal backButtonClicked(string noteTitle )
 
@@ -61,6 +61,7 @@ ApplicationWindow  {
     property string request // request property for nextNote
 
     property alias delDialog: delDialog
+    property string cloudTitle: "myCloud"
 
     /**
     * properties for "close dialog"
@@ -107,7 +108,7 @@ ApplicationWindow  {
                 id: toolbarMenu
                 title: "Notes Backends"
                 MenuItem {
-                    text: "OwnCloud"
+                    text: cloudTitle
                     onTriggered: {
                         dlgTitle = text
                         configDlg.open()
@@ -152,7 +153,8 @@ ApplicationWindow  {
             TabButton{
                 id: nextNotes
                 width: 80
-                text: qsTr("OwnCloud")
+                checkable: false
+                text: qsTr(cloudTitle)
                 height: 40
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
@@ -192,7 +194,7 @@ ApplicationWindow  {
                     DB.getTitels();
                     break;
 
-                case "OwnCloud":
+                case cloudTitle:
                   //  console.log("Index Notes " + viewModel.items)
                     notesBusy.visible = true;
                     NN.getList();
@@ -271,6 +273,19 @@ ApplicationWindow  {
             **/
             DB.initDB();
             DB.getTitels(); // create model
+
+            var groups=configData.readGroups();
+
+            for (var i=0; i<=tabView.count;i++)
+            {
+                for(var group in groups)
+                {
+                    if (tabView.itemAt(i).text === groups[group])
+                        tabView.itemAt(i).checkable = true;
+                }
+            }
+
+
         }
 
     }
@@ -376,8 +391,6 @@ ApplicationWindow  {
     DelDialog{
         id: delDialog
         onAccepted: {
-           // console.log("del id: " +notesApp.noteID)
-           // console.log("del index: " + curIndex)
             var curTab = ""
             curTab = tabView.itemAt(tabView.currentIndex).text
            // console.log("del "+ tabView.itemAt(tabView.currentIndex).text)
@@ -387,7 +400,7 @@ ApplicationWindow  {
                 DB.deleteNote(noteID);
                 notesModel.remove(curIndex);
                 break;
-            case "OwnCloud":
+            case cloudTitle:
                 NN.delNote(noteID);
                 notesModel.remove(curIndex);
                 break;

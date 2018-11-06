@@ -10,7 +10,7 @@
 #define BGCOLOR "#FFEBCD"
 
 
-MNotesHandler::MNotesHandler() :d_mnote(0), m_target(0)
+MNotesHandler::MNotesHandler() :d_mnote(nullptr), m_target(nullptr)
     {
 
     }
@@ -67,7 +67,7 @@ void MNotesHandler::highLighter(const QString &search)
 
 
        while (!highlightCursor.isNull() && !highlightCursor.atEnd()) {
-        highlightCursor = d_mnote->find(search, highlightCursor, 0);
+        highlightCursor = d_mnote->find(search, highlightCursor, nullptr);
 
         if (!highlightCursor.isNull()) {
 
@@ -144,7 +144,7 @@ void MNotesHandler::clearHighlight()
  */
 void MNotesHandler::setTarget(QQuickItem *target)
     {
-        d_mnote = 0;
+        d_mnote = nullptr;
         m_target = target;
         if (!m_target)
             return;

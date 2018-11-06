@@ -18,7 +18,7 @@ New:
 Note:
 * MNotes is currently in an alpha version
 * login data are stored unencrypted
-* Before click on OwnCloud tab you have to configure your connection!
+* Before click on myCloud tab you have to configure your connection!
 
 Note on Own-/Nexcloud:
 * notes in Next-/Owncloud are using the first line as a title.

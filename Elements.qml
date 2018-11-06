@@ -54,7 +54,7 @@ Component{
                 notesApp.curIndex = index;
                 notesApp.noteID = buttonLabel.iD;
                 break;
-            case "OwnCloud":
+            case notesApp.cloudTitle:
                 NN.showNote(buttonLabel.iD, tabTitle)
                 notesApp.curIndex = index;
                 notesApp.noteID = buttonLabel.iD;
