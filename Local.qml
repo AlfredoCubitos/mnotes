@@ -18,7 +18,7 @@ ColumnLayout {
         id: listHeader
         onBackButtonClicked: {
           //  console.log("onButtonClicked.........")
-            if (isNote)
+            if (notesApp.isNote)
             {
                 var Note = stackview.pop();
                 DB.initDB()
@@ -28,11 +28,11 @@ ColumnLayout {
                 **/
                 if (notesApp.nTitel.length > 0)
                     noteTitle = notesApp.nTitel;
-                 // console.log("noteId: "+ noteID+ " ..."+ notesApp.nTitel +" :: "+ noteTitle)
+                  console.log("noteId: "+ noteID+ " ..."+ notesApp.nTitel +" :: "+ noteTitle)
 
 
-                if (noteID == 0) {
-                   // console.log("NewTitle: "+noteTitle,"NewNote Text: "+newText.text)
+                if (notesApp.noteID === 0) {
+                    console.log("NewTitle: "+noteTitle,"NewNote Text: "+newText.text)
 
                     var inId = DB.insertData(noteTitle,   newText.text)
 
@@ -40,21 +40,22 @@ ColumnLayout {
                         View.addToList(inId, noteTitle)
 
                 } else {
-                   // console.log("Title: "+noteTitle)
-                    DB.updateData(noteID, noteTitle, Note.noteTxt.text)
+                    console.log("Title: "+noteTitle+" "+notesApp.noteID)
+                    DB.updateData(notesApp.noteID, noteTitle, Note.noteTxt.text)
 
                     View.updateList(curIndex, noteTitle)
                 }
 
                 notesApp.isNote = false;
-                noteTitel = "New Note";
-                // console.log("Ende "+isNote)
+               // notesApp.noteTitel = "New Note";
+              //   console.log("Ende "+notesApp.isNote)
 
             }else{
 
               //  console.log("ELSE")
-                isNote = true
+                notesApp.isNote = true
                 stackview.push(newNote, {visible: true})
+                newText.text = ""
             }
         }
     }
@@ -76,9 +77,7 @@ ColumnLayout {
                 ListView {
                     id: locaListe
                     anchors.fill: parent
-                    // model: notesModel
                     model: delegateModel
-                   // delegate: liste
                     ScrollBar.vertical: ScrollBar {
                         active: delegateModel.items.count > 3 ? true : false
                         parent: parent

@@ -27,6 +27,7 @@ function openNote(id)
 
 function showNote(id, tab)
 {
+
     var component = Qt.createComponent("Note.qml");
       if (component.status === Component.Ready)
       {
@@ -43,18 +44,6 @@ function showNote(id, tab)
 
 }
 
-function menuItemAction(item)
-{
-    console.log("Item:"+item)
-
-    if (typeof eval(item) === 'function')
-    {
-        eval(item+'()')
-    }else{
-        console.log("no function")
-    }
-
-}
 
 function addToList(id, titel)
 {
@@ -105,15 +94,4 @@ function search()
         noteText.select(searchBox.svalues[0],searchBox.svalues[0]+3)
         console.log("c start: "+searchBox.selectionStart)
     }
-}
-
-function tabEnabled(group)
-{
-   //  var enable = configData.getVisibility(group)
-     var enable = configData.readConfig(group)
-
-    console.log("Config: " +group + " "+ enable.visible)
-    var ret = enable.visible === "false" ? false : true
-    return ret
-
 }

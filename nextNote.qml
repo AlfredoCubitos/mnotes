@@ -15,44 +15,38 @@ ColumnLayout {
     property alias notesStack: notesStack
 
 
-
     ActionElement{
         id: noteslistHeader
 
-        property string title: ""
-        property int id: 0
-
         onBackButtonClicked: {
           //   console.log("clicked: "+ isNote)
-            if (isNote)
+            if (notesApp.isNote)
             {
                 var Note = notesStack.pop(null);
                 if (notesApp.nTitel.length > 0)
                     noteTitle = notesApp.nTitel;
 
-                if (noteID == 0) {
+                if (notesApp.noteID === 0) {
                     NN.newNote(newText.text)
-
-                 if (id > 0)
-                      View.addToList(inId, noteTitle)
 
                 } else {
                     console.log("Title: "+noteTitle)
-                    NN.updateNote(noteID, category, favorite, Note.noteTxt.text)
+                    NN.updateNote(notesApp.noteID, category, favorite, Note.noteTxt.text)
                     console.log("Text ",Note.noteTxt.text)
 
                     View.updateList(curIndex, noteTitle)
                 }
 
-                isNote = false;
-                noteTitel = "New Note";
+                notesApp.isNote = false;
+               // noteTitel = "New Note";
               //  console.log("Ende")
 
             }else{
 
                // console.log("ELSE")
-                isNote = true
+                notesApp.isNote = true
                 notesStack.push(newNote, {visible: true})
+                newText.text = ""
             }
         }
 

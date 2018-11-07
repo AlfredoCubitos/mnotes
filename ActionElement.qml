@@ -27,25 +27,11 @@ RowLayout {
         implicitWidth: notesApp.width
         implicitHeight: 48
 
-        Button{
-            id: loginButton
-            implicitWidth: 60
-            implicitHeight:  29
-            anchors.leftMargin: 5
-            anchors.left: parent.left
-            anchors.verticalCenter: parent.verticalCenter
-            text: "Login"
-            visible: false
-            onClicked: {
-                loginClicked();
-            }
-        }
-
         TextField {
             id: noteTitle
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
-            text: noteTitel
+            text: isNote ? notesApp.noteTitel : "New Note"
             font.pixelSize: 16
             width: implicitWidth + 14
             height: 44

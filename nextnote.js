@@ -1,5 +1,10 @@
 var json;
 
+function addToList(id, titel)
+{
+    notesModel.append({"nId": id, "titel": titel})
+
+}
 
 function getList()
 {
@@ -67,7 +72,7 @@ function parseJson(result)
         parseNote();
         break;
     case "new":
-        parseNewNote();
+        addNewNote();
         break;
     default:
         break;
@@ -90,10 +95,9 @@ function makeList()
 }
 
 
-function parseNewNote()
+function addNewNote()
 {
-   listHeader.id = json.id;
-   listHeader.title = json.title;
+    addToList(json.id,json.title);
 }
 
 function parseNote()

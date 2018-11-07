@@ -48,6 +48,7 @@ ApplicationWindow  {
     property bool favorite: false // used by notes in Nextcloud
     property int btnHeight: 38 // = Elements.container.height
     property int stackIndex
+    property bool started: false
 
     property string dlgTitle: ""
 
@@ -267,22 +268,27 @@ ApplicationWindow  {
 
         Component.onCompleted:{
 
-            /**
-            *  create initial model from local
-            *  this is only called once when the view is created the first time (I hope so)
-            **/
-            DB.initDB();
-            DB.getTitels(); // create model
-
-            var groups=configData.readGroups();
-
-            for (var i=0; i<=tabView.count;i++)
+            if (! started)
             {
-                for(var group in groups)
+                /**
+                *  create initial model from local
+                *  this is only called once when the view is created the first time (I hope so)
+                **/
+                DB.initDB();
+                DB.getTitels(); // create model
+
+                var groups=configData.readGroups();
+
+                for (var i=0; i<tabView.count;i++)
                 {
-                    if (tabView.itemAt(i).text === groups[group])
-                        tabView.itemAt(i).checkable = true;
+                    for(var group in groups)
+                    {
+                        if (tabView.itemAt(i).text === groups[group])
+                            tabView.itemAt(i).checkable = true;
+                    }
                 }
+
+                started = true
             }
 
 
@@ -401,10 +407,12 @@ ApplicationWindow  {
                 notesModel.remove(curIndex);
                 break;
             case cloudTitle:
+                console.log("Del")
                 NN.delNote(noteID);
                 notesModel.remove(curIndex);
                 break;
             }
+            noteID = 0;
 
         }
     }

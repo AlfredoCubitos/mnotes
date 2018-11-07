@@ -146,7 +146,7 @@ Component{
                     property var iD: nId
                     property string category
                     property bool favorite
-                    property string url: typeof oneNoteUrl === "undefined" ? "?" : oneNoteUrl;
+
 
                 }
 

@@ -42,14 +42,9 @@ Rectangle {
     color: "#FFFF00"
     visible: true
     focus: true
-    /**
-    * Using anchors on the items added to a StackView is not supported.
-    * Error message: "QML Note: StackView has detected conflicting anchors."
-    **/
-   // anchors.fill: parent
+
     Flickable{
         id: flickTxt
-       // anchors.fill: parent
         height: parent.height
         width: parent.width
         TextArea.flickable:  TextArea {      
@@ -63,8 +58,6 @@ Rectangle {
             anchors.fill: parent
             text:  mnotesHandler.text = content
             textFormat: TextEdit.AutoText
-
-
 
             Component.onCompleted: {
 
@@ -82,7 +75,6 @@ Rectangle {
 
                  //console.log("Note: "+noteTxt.text)
                 notesApp.winSignal(noteText)
-
 
             }
 
@@ -116,15 +108,11 @@ Rectangle {
 
             }
 
-
-
         }
         ScrollBar.vertical: ScrollBar { }
 
-
-
-
     }
+
 
     MNotesHandler{
         id: mnotesHandler
