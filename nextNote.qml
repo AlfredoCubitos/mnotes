@@ -23,16 +23,14 @@ ColumnLayout {
             if (notesApp.isNote)
             {
                 var Note = notesStack.pop(null);
-                if (notesApp.nTitel.length > 0)
-                    noteTitle = notesApp.nTitel;
 
                 if (notesApp.noteID === 0) {
                     NN.newNote(newText.text)
 
                 } else {
-                    console.log("Title: "+noteTitle)
+                   // console.log("Title: "+noteTitle)
                     NN.updateNote(notesApp.noteID, category, favorite, Note.noteTxt.text)
-                    console.log("Text ",Note.noteTxt.text)
+                  //  console.log("Text ",Note.noteTxt.text)
 
                     View.updateList(curIndex, noteTitle)
                 }
@@ -43,7 +41,7 @@ ColumnLayout {
 
             }else{
 
-               // console.log("ELSE")
+              // console.log("ELSE")
                 notesApp.isNote = true
                 notesStack.push(newNote, {visible: true})
                 newText.text = ""
