@@ -3,6 +3,7 @@
 #include <QtGui>
 #include <QtQml>
 #include <QDebug>
+#include <QScreen>
 
 
 #include "mnoteshandler.h"
@@ -17,9 +18,19 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
 
-    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
-    qputenv("QT_AUTO_SCREEN_SCALE_FACTOR", "1");
+    QScreen *screen = app.screens().at(0);
 
+    qreal dpi;
+
+#if defined (Q_OS_WIN)
+    dpi = screen->logicalDotsPerInch() * app.devicePixelRatio();
+#elif defined (Q_OS_ANDROID)
+    dpi = screen->logicalDotsPerInch() * app.devicePixelRatio();
+#else
+    dpi = screen->physicalDotsPerInch() * app.devicePixelRatio();
+#endif
+
+    qDebug() << "DPI: "<<dpi;
 
 
     app.setWindowIcon(QIcon(QPixmap(":/images/notes.png")));
@@ -40,6 +51,7 @@ int main(int argc, char *argv[])
     QQmlContext *context = new QQmlContext(engine.rootContext());
     context->setContextProperty("configData",&config);
     context->setContextProperty("netWork",&network);
+    context->setContextProperty("screendpi",dpi);
 
    // QVariantList groups = config.readGroups();
 

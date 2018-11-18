@@ -32,10 +32,10 @@ DISTFILES += \
     android/gradlew.bat
 
 ANDROID_PACKAGE_SOURCE_DIR = $$PWD/android
-
-contains(ANDROID_TARGET_ARCH,armeabi-v7a) {
-    ANDROID_EXTRA_LIBS = \
+ANDROID_EXTRA_LIBS = \
         $$PWD/libs/libcrypto.so \
-        $$PWD/libs/libssl.so
-}
+        $$PWD/libs/libssl.so \
+
+
+
 

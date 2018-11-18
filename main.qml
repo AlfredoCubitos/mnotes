@@ -21,8 +21,19 @@ import "nextnote.js" as NN
 
 ApplicationWindow  {
     id: notesApp
-    minimumWidth: 300
-    minimumHeight: 400
+
+    property int dpi: screendpi
+
+    function dp(x){
+        if(dpi < 120) {
+            return x; // For the usual computer monitor
+        } else {
+            return x*(dpi/160);
+        }
+    }
+
+    width: dp(400)
+    height: dp(500)
     visible: true
     background: Rectangle {
                     color: "#eeeeee"
@@ -96,8 +107,8 @@ ApplicationWindow  {
             anchors.fill: parent
             Item { Layout.fillWidth: true }
             ToolButton {
-                implicitHeight: 22
-                implicitWidth: 22
+                implicitHeight: dp(22)
+                implicitWidth: dp(22)
                 background: Image {
                     source: "images/menu.png"
                 }
@@ -135,8 +146,8 @@ ApplicationWindow  {
             TabButton{
                 id: tabButton
                 text: qsTr("Local")
-                width: 80
-                height: 40
+                width: dp(80)
+                height: dp(40)
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"
@@ -153,10 +164,10 @@ ApplicationWindow  {
             }
             TabButton{
                 id: nextNotes
-                width: 80
+                width: dp(80)
                 checkable: false
                 text: qsTr(cloudTitle)
-                height: 40
+                height: dp(40)
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"

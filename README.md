@@ -26,16 +26,17 @@ So titles can be changed by editing the first line in your note
 
 ### Compiling for Android
 
-If you want to run this App on Android, you have to install openSSL first as descriped [here](http://doc.qt.io/qt-5/opensslsupport.html)
-I followed [this example](https://www.ip6.li/node/52) to compile libssl.
-To configure I used `./Configure shared -fPIC -fPIE -pie android-armv7` and left off the last 3 lines
-With the `shared` option the libs were installed in the source directory.
+If you want to run this App on Android, you have to install openSSL first as descriped [here](https://bibuweb.de/2018/11/17/building-openssl-for-qt-and-android/)
+
+You can also use the ssl-libraries in the lib directory
+
+
 
 **New Features in this version:**
 ---------------------------------
 
 * OnenNote feature removed
-* compatible with Qt 5.10
+* compatible with Qt 5.11
 
 
 **Old Versions**

@@ -17,9 +17,9 @@ void MNotesNetwork::MNotesConnect()
 {
     manager = new QNetworkAccessManager(this);
     if (QSslSocket::supportsSsl())
-    {
+
         qDebug() << "SSL supported" << QSslSocket::sslLibraryVersionString();
-    }else
+    else
         qDebug() << "No SSL-Support " ;
   //  request.setSslConfiguration( QSslConfiguration::defaultConfiguration());
     connect(manager, SIGNAL(finished(QNetworkReply*)), this, SLOT(replyFinished(QNetworkReply*)));
