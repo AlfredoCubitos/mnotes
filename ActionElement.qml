@@ -25,20 +25,20 @@ RowLayout {
         color:"#EBEBB1"
         width: notesApp.width
         implicitWidth: notesApp.width
-        implicitHeight: 48
+        implicitHeight: View.dp(48)
 
         TextField {
             id: noteTitle
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.verticalCenter: parent.verticalCenter
             text: isNote ? notesApp.noteTitel : "New Note"
-            font.pixelSize: 16
+            font.pixelSize: View.dp(22)
             width: implicitWidth + 14
-            height: 44
+            height: View.dp(44)
 
             readOnly: isNote ? false : true;
             background: Rectangle{
-                implicitHeight:40
+                implicitHeight:View.dp(40)
                 color: isNote ? "#dfdfa8" : action.color
                 border.color: isNote ? "#dfdfa8" : "transparent"
 
@@ -47,16 +47,18 @@ RowLayout {
 
         Button{
             id: backBtn
-            width: 44
+            width: View.dp(44)
             anchors.right: parent.right
             anchors.rightMargin: 20
             anchors.verticalCenter: parent.verticalCenter
-            height: 44
+            height: View.dp(44)
             background: Image {
                 id: btimage
+                width: View.dp(sourceSize.width)
+                height: View.dp(sourceSize.height)
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.horizontalCenter: parent.horizontalCenter
-                fillMode: Image.PreserveAspectFit
+              //  fillMode: Image.PreserveAspectFit
                 source: isNote ? "images/go-previous.png" : "images/list.png"
             }
 

@@ -1,6 +1,7 @@
 import QtQuick 2.4
 import QtQuick.LocalStorage 2.0
 import QtQuick.Layouts 1.2
+import QtQuick.Controls 2.0
 import QtQml.Models 2.2
 
 import de.bibuweb.mnotes 1.0
@@ -33,14 +34,18 @@ Component{
         property DelegateModelGroup visualItems: delegateModel.items
         property string oneNoteUrl
 
+
         // holds drag parent information
         // property Item dragparent
 
-        anchors { left: parent.left; right: parent.right }
+      //  anchors { left: parent.left; right: parent.right}
+
         height: content.height
 
         // height: container.height - 4
-        //width: container.width - del.width - 8
+        width: notesApp.width
+
+
 
         onClicked: {
 
@@ -77,7 +82,7 @@ Component{
         Rectangle{
             id: content
             width: mouseArea.width-4
-            height: 48
+            height: View.dp(48)
             anchors {
                 horizontalCenter: parent.horizontalCenter
                 verticalCenter: parent.verticalCenter
@@ -130,7 +135,7 @@ Component{
             RowLayout{
                 id: col
                 anchors.verticalCenter: parent.verticalCenter
-                width: content.width
+                width: notesApp.width
 
                 Text {
                     id: buttonLabel
@@ -139,7 +144,7 @@ Component{
 
                     text: titel
                     color: "black"
-                    font.pixelSize: 14
+                    font.pixelSize: View.dp(18)
 
                     styleColor: "white"
                     style: Text.Raised
@@ -149,30 +154,30 @@ Component{
 
 
                 }
+                Button{
+                     id: del
+                     Layout.alignment: Qt.AlignRight
+                     Layout.rightMargin: 20
+                     width: View.dp(37)
+                     height: View.dp(37)
 
-                Image{
-                    id: del
-                    fillMode: Image.PreserveAspectFit
-                    source: "images/delete.png"
-                    Layout.alignment: Qt.AlignRight
-                    Layout.rightMargin: 25
+                     background: Image{
 
+                         width: View.dp(sourceSize.width)
+                         height: View.dp(sourceSize.height)
+                         source: "images/delete.png"
+                         anchors.verticalCenter: parent.verticalCenter
+                         anchors.horizontalCenter: parent.horizontalCenter
 
-                    MouseArea {
-                        id: remove
-                        //anchors.fill: parent
-                        width: 40
-                        height: 40
-                        onClicked:  {
-                            notesApp.curIndex = index;
-                            notesApp.noteID = buttonLabel.iD;
-                            notesApp.delDialog.visible = true
-                        }
-                        hoverEnabled: true
-
-                    }
-
+                     }
+                     onClicked:  {
+                         notesApp.curIndex = index;
+                         notesApp.noteID = buttonLabel.iD;
+                         notesApp.delDialog.visible = true
+                     }
                 }
+
+
 
             }
 
@@ -201,7 +206,6 @@ Component{
 
 
     }
-
 
 }
 

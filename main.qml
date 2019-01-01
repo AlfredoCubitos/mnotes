@@ -15,6 +15,7 @@ import QtQml.Models 2.2
 import "qrc:/"
 import "backend.js" as DB
 import "nextnote.js" as NN
+import "view.js" as V
 
 //import org.kde.plasma.components 3.0 as PlasmaComponents
 
@@ -22,18 +23,10 @@ import "nextnote.js" as NN
 ApplicationWindow  {
     id: notesApp
 
-    property int dpi: screendpi
+    property int dpi: Screen.pixelDensity * 25.4
 
-    function dp(x){
-        if(dpi < 120) {
-            return x; // For the usual computer monitor
-        } else {
-            return x*(dpi/160);
-        }
-    }
-
-    width: dp(400)
-    height: dp(500)
+    width: V.dp(400)
+    height: V.dp(500)
     visible: true
     background: Rectangle {
                     color: "#eeeeee"
@@ -107,8 +100,8 @@ ApplicationWindow  {
             anchors.fill: parent
             Item { Layout.fillWidth: true }
             ToolButton {
-                implicitHeight: dp(22)
-                implicitWidth: dp(22)
+                implicitHeight: V.dp(22)
+                implicitWidth: V.dp(22)
                 background: Image {
                     source: "images/menu.png"
                 }
@@ -146,8 +139,8 @@ ApplicationWindow  {
             TabButton{
                 id: tabButton
                 text: qsTr("Local")
-                width: dp(80)
-                height: dp(40)
+                width: V.dp(100)
+                height: V.dp(40)
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"
@@ -164,10 +157,10 @@ ApplicationWindow  {
             }
             TabButton{
                 id: nextNotes
-                width: dp(80)
+                width: V.dp(100)
                 checkable: false
                 text: qsTr(cloudTitle)
-                height: dp(40)
+                height: V.dp(40)
                 background: Rectangle{
                     opacity: parent.checked ? 1.0 : 0.3
                     color: parent.checked ? "#eeeeee" : "#999797"

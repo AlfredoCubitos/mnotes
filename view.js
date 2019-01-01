@@ -4,6 +4,13 @@ var win;
 var note;
 var countPos =0;
 
+function dp(x){
+        if(dpi < 120) {
+            return x; // For the usual computer monitor
+        } else {
+            return x*(dpi/160);
+        }
+}
 
 
 function openNote(id)
