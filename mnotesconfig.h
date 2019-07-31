@@ -15,15 +15,15 @@ class MnotesConfig : public QObject
     
 public:
     explicit MnotesConfig(QObject *parent = nullptr);
-    void writeConfig(const QString group);
-    void readConfigGroup(const QString group);
+    void writeConfig(const QString &group);
+    void readConfigGroup(const QString &group);
     void setConfig(const QString key, const QString value);
 
 
     QSettings * getSetting();
 
     Q_INVOKABLE QJsonObject readConfig(QString group);
-    Q_INVOKABLE void setDlgData(const QVariant values);
+    Q_INVOKABLE void setDlgData(const QVariant &values);
     Q_INVOKABLE QVariantList readGroups();
     
 private:

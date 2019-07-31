@@ -22,7 +22,7 @@ MnotesConfig::MnotesConfig(QObject *parent) : QObject(parent)
         settings->setPath(QSettings::IniFormat, QSettings::SystemScope,path);
     }
 
-void MnotesConfig::writeConfig(const QString group)
+void MnotesConfig::writeConfig(const QString &group)
     {
         qDebug() << "Filename: " << settings->fileName();
 
@@ -40,7 +40,7 @@ void MnotesConfig::writeConfig(const QString group)
         settings->sync();
     }
 
-void MnotesConfig::readConfigGroup(const QString group)
+void MnotesConfig::readConfigGroup(const QString &group)
     {
         config.clear();
         setConfig("group",group);
@@ -92,7 +92,7 @@ void MnotesConfig::setConfig(const QString key, const QString value)
  * @brief MnotesConfig::setDlgData
  * @param values
  */
-void MnotesConfig::setDlgData( const QVariant values)
+void MnotesConfig::setDlgData( const QVariant &values)
     {
   //  qDebug() << "DLG_DATA: "<< values;
         config.clear();

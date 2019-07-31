@@ -1,5 +1,9 @@
 # MNotes
 
+
+## This project is not longer maintained
+## Please use [MNotes2!](https://github.com/AlfredoCubitos/MNote2)
+
 ## Multinotes tracker for Linux and Android
 ### one app for various notes
 
